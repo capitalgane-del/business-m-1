@@ -14,60 +14,74 @@
 const content = {
   // <title> and meta description — shows in the browser tab and in
   // Google search results. This IS the "say what they do in 5 seconds" rule.
-  pageTitle: "[Business Name] | [Trade/Service Type] in [Suburb]",
-  metaDescription: "[One-line description of the business and service area]",
+  pageTitle: "Mimi's Pit Stop | Coffee & Food Trailer, Greenway ACT",
+  metaDescription: "Coffee and food trailer on Mortimer Lewis Dr, Greenway ACT. Barista coffee, bacon and egg rolls, toasties and fresh treats. Call 0428 720 929.",
 
-  businessName: "[Business Name]",
-  phone: "[Phone Number]",
-  phoneHref: "tel:+61400000000", // digits only after tel:, no spaces
+  businessName: "Mimi's Pit Stop",
+  phone: "0428 720 929",
+  phoneHref: "tel:+61428720929", // digits only after tel:, no spaces
 
-  trade: "[Trade/Service Type]", // e.g. "plumber" — drives Pass 3's per-trade design variation
-  suburb: "[Suburb]",
-  address: "[Address]",
+  trade: "Local Trailer Cafe", // contains "caf" → auto-selects the coffee cup trade icon
+  suburb: "Greenway",
+  address: "Mortimer Lewis Dr, Greenway ACT 2900",
 
-  heroHeading: "[What you do] in [Suburb] — Call Now",
-  ctaText: "Call Now",
+  heroHeading: "Barista Coffee & Real Food in Greenway",
+  ctaText: "Call to Order",
 
-  // Optional. Leave empty for the plain tinted hero (default, used until a
-  // client sends real photos). Set to a URL to show a photo behind the hero
-  // text — a dark overlay is applied automatically so text stays readable.
-  heroImage: "",
+  // PLACEHOLDER IMAGE — clean stock coffee shot, swap for a real photo of the
+  // trailer once Mimi's send theirs. A dark overlay is applied automatically so
+  // the hero text stays readable (and stays readable even if this URL 404s).
+  heroImage: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=70",
 
-  servicesHeading: "[Services heading]",
+  // MOCK MENU — placeholder pricing and items, written to look right until
+  // Mimi's confirm their real menu. Every line below needs client sign-off.
+  servicesHeading: "On the Menu",
   services: [
-    "[Service 1]",
-    "[Service 2]",
-    "[Service 3]"
+    "Barista Coffee — flat white, latte, cappuccino, long black · from $4.50",
+    "Iced & Cold Brew — iced latte, iced long black, cold brew · from $6.00",
+    "Tea & Chai — English breakfast, earl grey, peppermint, dirty chai · from $4.00",
+    "Bacon & Egg Rolls — with hash brown and your choice of relish · $11.00",
+    "Toasties & Wraps — ham & cheese, chicken pesto, veggie halloumi · from $9.50",
+    "Cakes & Slices — banana bread, caramel slice, muffins, brownies · from $5.00",
+    "Cold Drinks — soft drinks, sparkling water, fresh juice · from $3.50"
   ],
 
-  testimonialsHeading: "[Why us / reviews heading]",
+  // PLACEHOLDER REVIEWS — these are written examples, not real customers.
+  // Replace with genuine Google reviews (with names) before the site goes live.
+  testimonialsHeading: "What the Regulars Say",
   testimonials: [
-    { quote: "[Testimonial quote]", author: "[Customer Name]", stars: 5 },
-    { quote: "[Testimonial quote]", author: "[Customer Name]", stars: 5 }
+    { quote: "Best coffee run in Greenway. I'm there before work most days and the flat white is spot on every single time.", author: "[Placeholder — real review needed]", stars: 5 },
+    { quote: "Grabbed a bacon and egg roll on the way through and it was better than half the cafes in Tuggeranong. Lovely people too.", author: "[Placeholder — real review needed]", stars: 5 }
   ],
 
-  galleryHeading: "[Gallery heading]",
-  // No real image URLs in the master template — placeholder blocks only.
-  // Real photos get added per-client, after they send their own (blueprint
-  // rule: real photos beat stock). Each entry just needs an alt label for now.
+  galleryHeading: "A Look at the Trailer",
+  // PLACEHOLDER BLOCKS — the template renders these as tagged hatch tiles, not
+  // photos. Swap in real shots of the trailer, the coffee and the crew once
+  // Mimi's send them through (real photos beat stock every time).
   gallery: [
-    { alt: "[Photo 1 description]" },
-    { alt: "[Photo 2 description]" },
-    { alt: "[Photo 3 description]" }
+    { alt: "PLACEHOLDER — The trailer set up on Mortimer Lewis Dr" },
+    { alt: "PLACEHOLDER — Flat white being handed out the window" },
+    { alt: "PLACEHOLDER — Bacon and egg roll on the counter" },
+    { alt: "PLACEHOLDER — Cakes and slices in the display case" },
+    { alt: "PLACEHOLDER — Mimi behind the coffee machine" },
+    { alt: "PLACEHOLDER — Morning queue of regulars" }
   ],
 
-  contactHeading: "[Contact heading]",
-  formButtonText: "[Get a Quote]",
+  contactHeading: "Find Us at the Pit Stop",
+  formButtonText: "Send Us a Message",
 
-  // Swap this per client. Get it from https://web3forms.com after they sign up
-  // (or use your own key and forward leads manually — decide per client).
+  // TODO: swap for Mimi's own key from https://web3forms.com, or leave as-is
+  // and forward leads manually — decide before launch.
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY_HERE",
 
-  // Real palette gets decided properly in Pass 3 (per-trade, not generic).
-  // These are just placeholder values so the CSS variable mechanism works now.
+  // Pulled from the logo: the gold wreath and the charcoal backdrop.
+  // primary is the logo gold darkened to a deep bronze — buttons and the phone
+  // pill put white text on this colour, and the bright logo gold (~#E0A82E)
+  // only hits ~2:1 against white, which is unreadable. This keeps the hue and
+  // gets to ~5.9:1. The bright gold still lives in the logo itself.
   colours: {
-    primary: "#0057B8",
-    secondary: "#1A1A1A"
+    primary: "#8A5A11",
+    secondary: "#17161A"
   }
 };
 </script>
