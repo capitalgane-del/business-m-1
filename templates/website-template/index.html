@@ -574,20 +574,29 @@ form.addEventListener("submit", async function (e) {
 
   const formData = new FormData(form);
   formData.append("access_key", content.web3formsKey);
+  // Names the email so it's identifiable in the inbox and less likely to be
+  // filtered. Web3Forms treats both as special fields.
+  formData.append("subject", `New enquiry from the ${content.businessName} website`);
+  formData.append("from_name", content.businessName);
 
   try {
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: formData
     });
-    const result = await response.json();
+    const result = await response.json().catch(() => ({}));
 
-    if (result.success) {
+    if (response.ok && result.success) {
       form.innerHTML = '<p class="form-success">Thanks — we\'ve got your message and will call you back shortly.</p>';
     } else {
-      throw new Error(result.message || "Submission failed");
+      // Surface what the API actually said. Without this the visitor-facing
+      // message is the only signal, which makes a dead key indistinguishable
+      // from a network drop when you're trying to debug it.
+      console.error("Web3Forms rejected the submission:", response.status, result);
+      throw new Error(result.message || `HTTP ${response.status}`);
     }
   } catch (err) {
+    console.error("Web3Forms submission failed:", err);
     submitBtn.textContent = originalBtnText;
     submitBtn.disabled = false;
     let errorEl = form.querySelector(".form-error");
