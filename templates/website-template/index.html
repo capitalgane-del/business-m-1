@@ -39,7 +39,10 @@ const content = {
   // <title> and meta description — shows in the browser tab and in
   // Google search results. This IS the "say what they do in 5 seconds" rule.
   pageTitle: "Mimi's Pit Stop | Coffee Van by Lake Tuggeranong, Greenway ACT",
-  metaDescription: "Coffee van on the east side of Lake Tuggeranong, Greenway ACT. Barista coffee, tea, smoothies, shakes and fresh baking. Open Sat & Sun 8am–1pm. 0428 720 929.",
+  // Emoji stays out of pageTitle on purpose — that's the blue link in Google
+  // results, where emoji is usually stripped and reads as spam when it isn't.
+  // The description is the safer place for a bit of personality.
+  metaDescription: "☕️ Friendly little coffee van on the east side of Lake Tuggeranong, Greenway ACT. Barista coffee, tea, smoothies, shakes and fresh baking every week. Open Sat & Sun 8am–1pm.",
 
   businessName: "Mimi's Pit Stop",
   phone: "0428 720 929",
@@ -55,13 +58,13 @@ const content = {
   // alt text carries the business name for screen readers and SEO.
   logo: { src: LOGO_SRC, alt: "Mimi's Pit Stop" },
 
-  heroHeading: "Barista Coffee by Lake Tuggeranong",
-  ctaText: "Call to Order",
+  heroHeading: "Great Coffee, Right by Lake Tuggeranong ☕️",
+  ctaText: "Call to Order ☎️",
 
   // Weekends only. Shown under the hero CTA and again in the footer — for a
   // van, "when are you actually there" is the question that decides whether
   // someone turns up, so it should not be buried.
-  hours: "Open Sat & Sun · 8am – 1pm",
+  hours: "☀️ Open Sat & Sun · 8am – 1pm",
 
   // The client's own shot of the trailer set up and serving. Cropped 2:1 with
   // the trailer dead centre, because the hero renders anywhere from ~4:1 on
@@ -73,25 +76,25 @@ const content = {
   // changes week to week, so the list below is CATEGORIES ONLY, no prices and
   // no specific items that could go stale. Anything time-sensitive belongs on
   // Facebook, which is where Mimi actually posts, not here.
-  servicesHeading: "On the Menu",
+  servicesHeading: "On the Menu ☕️",
 
   // Rendered as a lead paragraph above the list. "{link}" is substituted with a
   // real anchor at render time — keep the token in the string, and keep the
   // whole thing plain text (no HTML) so nothing gets injected into the page.
   servicesNote: {
-    text: "There's no set menu here — all the classic drinks are on every day, and Mimi bakes something new most weeks. Whatever's fresh goes up on {link} first, so have a look before you head down.",
+    text: "No set menu here — and that's the fun of it! 😄 All the classics are on every day, and Mimi bakes something new most weeks. Whatever's fresh goes straight up on {link}, so have a peek before you head down 👀",
     linkText: "the Mimi's Pit Stop Facebook page",
     url: "https://www.facebook.com/Mimispitstop/"
   },
 
   services: [
-    "Barista Coffee — flat white, latte, cappuccino, long black and the rest",
-    "Tea & Chai — English breakfast, earl grey, peppermint, chai latte",
-    "Smoothies & Shakes — blended fresh to order",
-    "Hot Chocolate & Hot Cider — the cider comes out in the cooler months",
-    "Iced & Cold Drinks — iced coffee, iced chocolate and cold cans",
-    "Fresh Baking — scones, slices, cakes and muffins, changing week to week",
-    "Toast & Healthy Snacks — something light for the walk around the lake"
+    "☕️ Barista Coffee — flat white, latte, cappuccino, long black, the lot!",
+    "🫖 Tea & Chai — English breakfast, earl grey, peppermint, chai latte",
+    "🥤 Smoothies & Shakes — blended fresh to order, every time",
+    "🍫 Hot Chocolate & Hot Cider — the cider comes out when it turns chilly!",
+    "🧊 Iced & Cold Drinks — iced coffee, iced chocolate and cold cans",
+    "🧁 Fresh Baking — scones, slices, cakes and muffins, new every week!",
+    "🍞 Toast & Healthy Snacks — something light for the walk around the lake"
   ],
 
   // Real Google reviews, quoted verbatim — only whitespace was normalised.
@@ -99,7 +102,7 @@ const content = {
   // NOTE: the star ratings did not come through with the pasted text. Both read
   // as clearly positive so they are set to 5 — confirm against Google and
   // correct if either is actually a 4.
-  testimonialsHeading: "What the Regulars Say",
+  testimonialsHeading: "What the Regulars Say 💬",
   testimonials: [
     {
       quote: "Our Movers+Shakers walking group relaxes at Mimi's most Saturday mornings. We enjoy a variety of drinks, including hot cider in the cooler months, and delicious snacks at reasonable prices. The atmosphere is friendly and hospitable. We hope to continue to enjoy Saturday mornings at Mimi's for many years to come 😀.",
@@ -123,10 +126,10 @@ const content = {
   // against the full set.
   moreReviews: {
     url: "https://www.google.com/maps/place/Mimi's+Pit+Stop/@-35.405754,149.068047,16.46z/data=!4m8!3m7!1s0x6b17b5632547bc51:0x89d686a33f60fdfc!8m2!3d-35.4074555!4d149.0709704!9m1!1b1!16s%2Fg%2F11csbbv3hk?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D",
-    text: "50+ more Google reviews"
+    text: "50+ more happy reviews on Google"
   },
 
-  galleryHeading: "A Look Around the Van",
+  galleryHeading: "A Look Around the Van 📸",
   // The client's own photos — the stock Unsplash shots that stood here are gone.
   // Each is pre-cropped to the tile's 4:3 so nothing important gets trimmed off
   // by object-fit, and each keeps its labelled hatch block underneath in case an
@@ -138,8 +141,8 @@ const content = {
     { src: PHOTOS.cabinet, alt: "The cabinet stocked with fresh scones, slices and cakes" }
   ],
 
-  contactHeading: "Find Us at the Pit Stop",
-  formButtonText: "Send Us a Message",
+  contactHeading: "Come Say Hello at the Pit Stop 📍",
+  formButtonText: "Send Us a Message 💌",
 
   // Mimi's Pit Stop Web3Forms key. Web3Forms access keys are designed to sit in
   // client-side HTML — this is not a secret and is safe in the repo.
@@ -583,27 +586,27 @@ const content = {
   </section>
 
   <section id="services">
-    <span class="eyebrow">What we do</span>
+    <span class="eyebrow">What we do ☕️</span>
     <h2 id="services-heading"></h2>
     <p class="services-note" id="services-note" hidden></p>
     <ul class="services-list" id="services-list"></ul>
   </section>
 
   <section id="testimonials">
-    <span class="eyebrow">Trusted locally</span>
+    <span class="eyebrow">Loved locally 💛</span>
     <h2 id="testimonials-heading"></h2>
     <div id="testimonials-list"></div>
     <a class="reviews-link" data-field="moreReviews" href="#" target="_blank" rel="noopener noreferrer"></a>
   </section>
 
   <section id="gallery">
-    <span class="eyebrow">Down at the van</span>
+    <span class="eyebrow">Down at the van 🚐</span>
     <h2 id="gallery-heading"></h2>
     <div class="gallery-grid" id="gallery-grid"></div>
   </section>
 
   <section id="contact">
-    <span class="eyebrow">Get in touch</span>
+    <span class="eyebrow">Say hello 👋</span>
     <h2 id="contact-heading"></h2>
     <form id="contact-form">
       <label>Name
@@ -787,7 +790,7 @@ form.addEventListener("submit", async function (e) {
     const result = await response.json().catch(() => ({}));
 
     if (response.ok && result.success) {
-      form.innerHTML = '<p class="form-success">Thanks — we\'ve got your message and will call you back shortly.</p>';
+      form.innerHTML = '<p class="form-success">Thanks so much — we\'ve got your message and we\'ll call you back shortly! 🎉</p>';
     } else {
       // Surface what the API actually said. Without this the visitor-facing
       // message is the only signal, which makes a dead key indistinguishable
@@ -805,7 +808,7 @@ form.addEventListener("submit", async function (e) {
       errorEl.className = "form-error";
       form.appendChild(errorEl);
     }
-    errorEl.textContent = "Something went wrong — please call us directly instead.";
+    errorEl.textContent = "Oh no, that didn't send — please give us a call instead and we'll sort you out! ☎️";
   }
 });
 </script>
