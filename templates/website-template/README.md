@@ -14,8 +14,9 @@ Reskinning a client = editing the `content` object in `index.html` (top `<script
    - `heroHeading`, `ctaText`.
    - `heroImage` — leave `""` for the default plain tinted hero. Set to an image URL to show a photo behind the hero text (a dark overlay is applied automatically for readability).
    - `servicesHeading` / `services[]`.
+   - `servicesNote` — optional lead paragraph above the services list, for clients whose offering changes (no fixed menu, seasonal work, etc.). `{ text, linkText, url }`: put a `{link}` token in `text` where the link should sit, and it's built as a real anchor at render time. Keep `text` plain — it's rendered as text nodes, so HTML in it will not work (deliberately). Omit the whole object and the paragraph stays hidden.
    - `testimonialsHeading` / `testimonials[]` — each has `quote`, `author`, `stars` (1-5).
-   - `galleryHeading` / `gallery[]` — placeholder hatch blocks by default; swap in real `<img>` tags per client once they send real photos (real photos beat stock).
+   - `galleryHeading` / `gallery[]` — placeholder hatch blocks by default; swap in real photos per client once they send them (real photos beat stock). `src` takes a URL or an inlined `data:` URI; a tile with no `src`, or whose image fails to load, falls back to the labelled hatch block rather than a broken image icon.
    - `contactHeading`, `formButtonText`.
    - `web3formsKey` — get a key from https://web3forms.com for the client (or use your own key and forward leads manually — decide per client).
    - `colours.primary` / `colours.secondary` — CSS variables driving the whole palette; pick per-trade, not generic.
@@ -25,5 +26,6 @@ Reskinning a client = editing the `content` object in `index.html` (top `<script
 ## Notes
 
 - No build step — it's a single static HTML file.
+- Images (logo, hero, gallery) are inlined as base64 `data:` URIs so that stays true — `index.html` is the only file to ship. The cost is page weight: crop each photo to the aspect ratio its slot actually renders at and compress it before inlining, rather than dropping in camera-resolution originals. Gallery tiles render around 250px wide, so ~640px sources are already retina. Keep the originals in the repo root as the source of truth.
 - Contact form posts to Web3Forms (client-side fetch, no backend needed).
 - Mobile breakpoint at 640px; tap targets kept ≥44px per iOS/Android guidelines.
