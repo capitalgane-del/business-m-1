@@ -1,0 +1,6 @@
+# Mimi's Pit Stop
+# One-page site — everything is crawlable. No sitemap is declared here: with a
+# single URL a sitemap adds nothing Google can't find, and a sitemap has to
+# carry absolute URLs, which would mean hardcoding a domain that may change.
+User-agent: *
+Allow: /

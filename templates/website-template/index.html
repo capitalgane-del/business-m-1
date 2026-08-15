@@ -6,6 +6,40 @@
 <title>Loading…</title>
 <meta name="description" content="">
 
+<!-- Tints the browser chrome on mobile — matches the header bar so the page
+     reads as one surface rather than stopping at the top of the viewport. -->
+<meta name="theme-color" content="#19181C">
+
+<link rel="icon" href="favicon.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Link-preview tags. These have to be STATIC: Facebook's scraper does not
+     run JavaScript, so anything built at runtime is invisible to it — and
+     Facebook is where this business actually posts. The boot script below
+     re-syncs them from content.js so a reskin can't leave them stale, but the
+     values written here are what a non-JS crawler sees, so they must be right.
+
+     PATHS ARE RELATIVE ON PURPOSE. The production domain isn't known here, and
+     a wrong absolute URL is worse than a relative one. See the note in the
+     boot script — these get upgraded to absolute at runtime where possible. -->
+<link rel="canonical" href="/">
+<meta property="og:type" content="business.business">
+<meta property="og:site_name" content="Mimi's Pit Stop">
+<meta property="og:locale" content="en_AU">
+<meta property="og:url" content="/">
+<meta property="og:title" content="Mimi's Pit Stop | Coffee Van by Lake Tuggeranong, Greenway ACT">
+<meta property="og:description" content="☕ Friendly little coffee van on the east side of Lake Tuggeranong, Greenway ACT. Barista coffee, tea, smoothies, shakes and fresh baking every week. Open Sat &amp; Sun 8am–1pm.">
+<meta property="og:image" content="og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Mimi's Pit Stop coffee trailer set up and serving customers">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mimi's Pit Stop | Coffee Van by Lake Tuggeranong, Greenway ACT">
+<meta name="twitter:description" content="☕ Friendly little coffee van on the east side of Lake Tuggeranong, Greenway ACT. Barista coffee, tea, smoothies, shakes and fresh baking every week. Open Sat &amp; Sun 8am–1pm.">
+<meta name="twitter:image" content="og-image.jpg">
+<meta name="twitter:image:alt" content="The Mimi's Pit Stop coffee trailer set up and serving customers">
+
 <script>
 // Inlined logo asset — one very long line, scroll past it. Keeping the image
 // inline preserves the template's single-file deploy: index.html stays the only
@@ -35,6 +69,15 @@ const PHOTOS = {
 // Reskinning a client = editing this file only. Nothing below this file
 // should ever need touching for a normal reskin.
 
+// The business is "Mimi's Pit Stop"; the person who runs it is Vik. Two
+// different names, and the copy has to keep them straight — so the owner's
+// name lives here once rather than being retyped into each string.
+const OWNER = "Vik";
+
+// Used in the menu note and again as a sameAs signal in the structured data,
+// so it gets defined once instead of pasted in two places that can drift.
+const FACEBOOK_URL = "https://www.facebook.com/Mimispitstop/";
+
 const content = {
   // <title> and meta description — shows in the browser tab and in
   // Google search results. This IS the "say what they do in 5 seconds" rule.
@@ -51,6 +94,22 @@ const content = {
   trade: "Local Coffee Van Cafe", // contains "caf" → auto-selects the coffee cup trade icon
   suburb: "Greenway",
   address: "Mortimer Lewis Dr, Greenway ACT 2900",
+
+  // Structured-data facts. These are never rendered as visible copy — they are
+  // what gets handed to Google as machine-readable data (see the JSON-LD block
+  // near the bottom), so it reads hours and location as data rather than
+  // guessing them out of the prose.
+  geo: { lat: -35.4074555, lng: 149.0709704 }, // from the business's Google listing
+  addressParts: {
+    street: "Mortimer Lewis Dr",
+    locality: "Greenway",
+    region: "ACT",
+    postcode: "2900",
+    country: "AU"
+  },
+  // 24-hour, matching the `hours` string above. Keep the two in step.
+  openingHours: [{ days: ["Saturday", "Sunday"], opens: "08:00", closes: "13:00" }],
+  priceRange: "$",
 
   // Replaces the business name in both the header and the footer. The wordmark
   // is white, so it only works on a dark bar — that's why the header and footer
@@ -75,16 +134,16 @@ const content = {
   // There is no set menu — this is a hobby business and what's in the cabinet
   // changes week to week, so the list below is CATEGORIES ONLY, no prices and
   // no specific items that could go stale. Anything time-sensitive belongs on
-  // Facebook, which is where Mimi actually posts, not here.
+  // Facebook, which is where Vik actually posts, not here.
   servicesHeading: "On the Menu ☕️",
 
   // Rendered as a lead paragraph above the list. "{link}" is substituted with a
   // real anchor at render time — keep the token in the string, and keep the
   // whole thing plain text (no HTML) so nothing gets injected into the page.
   servicesNote: {
-    text: "No set menu here — and that's the fun of it! 😄 All the classics are on every day, and Mimi bakes something new most weeks. Whatever's fresh goes straight up on {link}, so have a peek before you head down 👀",
+    text: `No set menu here — and that's the fun of it! 😄 All the classics are on every day, and ${OWNER} bakes something new most weeks. Whatever's fresh goes straight up on {link}, so have a peek before you head down 👀`,
     linkText: "the Mimi's Pit Stop Facebook page",
-    url: "https://www.facebook.com/Mimispitstop/"
+    url: FACEBOOK_URL
   },
 
   services: [
@@ -142,6 +201,11 @@ const content = {
   ],
 
   contactHeading: "Come Say Hello at the Pit Stop 📍",
+
+  // A street address is close to useless for a van parked by a lake — this is
+  // the description a local would actually give you. Sits above the form.
+  locationNote: "We're on the east side of Lake Tuggeranong, right by the learn-to-ride park 🚲 Take a wander around the lake and you'll find us eventually — just follow your nose! 😉",
+
   formButtonText: "Send Us a Message 💌",
 
   // Mimi's Pit Stop Web3Forms key. Web3Forms access keys are designed to sit in
@@ -176,6 +240,35 @@ const content = {
   // and colour variables immediately so there's no flash of default values.
   document.title = content.pageTitle;
   document.querySelector('meta[name="description"]').setAttribute("content", content.metaDescription);
+
+  // Keep the link-preview tags in step with content.js, so a reskin that only
+  // edits content.js can't leave the static fallbacks above describing the
+  // previous client. Then absolutise the relative URLs: og:image and og:url
+  // are supposed to be absolute, and this is the only place the real origin is
+  // actually known. Consumers that run JS (Google, Slack, Discord) get exact
+  // URLs from this; Facebook's scraper does not run JS and falls back to the
+  // relative values in the markup. To make Facebook exact, hardcode the real
+  // domain into the tags above once it's known.
+  const meta = (sel, value) => {
+    const el = document.querySelector(sel);
+    if (el && value) el.setAttribute("content", value);
+  };
+  meta('meta[property="og:title"]', content.pageTitle);
+  meta('meta[name="twitter:title"]', content.pageTitle);
+  meta('meta[property="og:description"]', content.metaDescription);
+  meta('meta[name="twitter:description"]', content.metaDescription);
+  meta('meta[property="og:site_name"]', content.businessName);
+
+  const origin = location.origin;
+  if (origin && origin !== "null") { // file:// gives "null" — leave relative there
+    const abs = path => new URL(path, location.href).href;
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.href = abs(canonical.getAttribute("href"));
+    for (const sel of ['meta[property="og:url"]', 'meta[property="og:image"]', 'meta[name="twitter:image"]']) {
+      const el = document.querySelector(sel);
+      if (el) el.setAttribute("content", abs(el.getAttribute("content")));
+    }
+  }
   document.documentElement.style.setProperty("--color-primary", content.colours.primary);
   document.documentElement.style.setProperty("--color-secondary", content.colours.secondary);
   document.documentElement.style.setProperty("--color-accent", content.colours.accent);
@@ -262,6 +355,42 @@ const content = {
   a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+  }
+
+  /* Skip link — offscreen until focused, then pinned over the fixed header.
+     Keyboard and screen-reader users otherwise tab the header on every visit. */
+  .skip-link {
+    position: absolute;
+    left: 0.5rem;
+    top: -100%;
+    z-index: 20;
+    background: var(--color-accent);
+    color: var(--color-secondary);
+    font-weight: 700;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius);
+  }
+  .skip-link:focus { top: 0.5rem; }
+
+  /* Honeypot. Bots fill every field they find; people never see this one.
+     Deliberately not `display:none` — some bots skip hidden inputs, and this
+     way it stays in the form for them while being unreachable for everyone
+     else (offscreen, no tab stop, hidden from the accessibility tree). */
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  /* Sits above the contact form — the plain-English "how do I find you". */
+  .location-note {
+    max-width: 55ch;
+    margin-bottom: 2rem;
+    margin-top: -1rem;
+    font-size: 1.05rem;
+    color: color-mix(in srgb, var(--color-ink) 85%, transparent);
   }
 
   .cta {
@@ -567,16 +696,63 @@ const content = {
       font-size: 16px; /* iOS zooms in on inputs below 16px — this prevents that */
     }
   }
+
+  /* --- Print ---
+     Someone printing this for a community noticeboard currently gets a dark
+     hero, two black bars and a form they can't fill in. This strips it back to
+     the bit that's useful on paper: who, what, when, where, phone. */
+  @media print {
+    :root { --color-bg: #fff; --color-bg-alt: #fff; }
+    body { padding-top: 0; background: #fff; color: #000; }
+    section { padding: 1rem 0; break-inside: avoid; }
+
+    /* The bars are dark by design on screen; on paper that's a full ink wash. */
+    .site-header, footer {
+      position: static;
+      background: #fff !important;
+      border-bottom: 1px solid #000;
+    }
+    footer { border-top: 1px solid #000; border-bottom: none; }
+    footer p, .phone-link { color: #000 !important; background: #fff !important; }
+    /* The logo is a photo of a dark sign, so it prints as a small dark tile
+       with the wordmark reversed out. Left as-is deliberately — inverting it
+       turns the gold wreath blue, which looks worse than the ink it saves. */
+
+    /* Hero photo is a large dark rectangle in print. Drop it and the scrim. */
+    #hero { background-image: none !important; padding: 1rem 0; }
+    #hero::before { display: none !important; }
+    html[data-hero-image] #hero-heading,
+    html[data-hero-image] .trade-icon { color: #000 !important; }
+    .hero-hours { border-color: #000 !important; color: #000 !important; background: transparent !important; }
+
+    /* Nothing here works on paper: a submit button, decorative photos, and a
+       skip link that only exists for keyboard users. */
+    #contact-form, #gallery, .skip-link, .cta { display: none !important; }
+
+    /* A printed link is a dead end unless the URL comes with it — but only
+       where the URL is short enough to be typed. The Google reviews deep link
+       is a 300-character monster, so that one gets a readable label instead. */
+    .services-note a::after { content: " (" attr(href) ")"; font-size: 0.8em; word-break: break-all; }
+    .reviews-link::after { content: " — search “Mimi's Pit Stop” on Google"; }
+
+    .services-list li, .testimonial {
+      border: 1px solid #000;
+      background: #fff;
+      break-inside: avoid;
+    }
+  }
 </style>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header">
   <img class="brand-logo" data-field="logo" alt="">
   <a class="phone-link" data-field="phone" href="#"></a>
 </header>
 
-<main>
+<main id="main">
 
   <section id="hero">
     <div class="trade-icon" id="trade-icon" aria-hidden="true"></div>
@@ -608,21 +784,36 @@ const content = {
   <section id="contact">
     <span class="eyebrow">Say hello 👋</span>
     <h2 id="contact-heading"></h2>
+    <p class="location-note" id="location-note" hidden></p>
     <form id="contact-form">
+      <!-- autocomplete tokens let phones fill these from the contact card.
+           Most visitors here are on a phone, so this is the difference between
+           four taps and twenty. -->
       <label>Name
-        <input type="text" name="name" required>
+        <input type="text" name="name" autocomplete="name" required>
       </label>
       <label>Phone
-        <input type="tel" name="phone" required>
+        <input type="tel" name="phone" autocomplete="tel" required>
       </label>
       <label>Email
-        <input type="email" name="email" required>
+        <input type="email" name="email" autocomplete="email" required>
       </label>
       <label>Message
-        <textarea name="message" required></textarea>
+        <textarea name="message" autocomplete="off" required></textarea>
       </label>
+      <!-- Web3Forms treats a filled "botcheck" as spam and silently drops it.
+           Offscreen rather than display:none, and out of the tab order and the
+           accessibility tree, so only a bot ever reaches it. -->
+      <div class="hp-field" aria-hidden="true">
+        <label>Leave this field empty
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">
+        </label>
+      </div>
       <button type="submit" class="cta"></button>
     </form>
+    <!-- The success/error message replaces the form contents. Without a live
+         region a screen reader gets no announcement that anything happened. -->
+    <div id="form-status" role="status" aria-live="polite"></div>
   </section>
 
 </main>
@@ -749,6 +940,12 @@ content.gallery.forEach(photo => {
     img.src = photo.src;
     img.alt = photo.alt;
     img.loading = "lazy";
+    // Intrinsic size of the pre-cropped tiles. The .gallery-item aspect-ratio
+    // already reserves the box, so this is belt-and-braces against layout shift
+    // if that rule is ever changed or unsupported.
+    img.width = 640;
+    img.height = 480;
+    img.decoding = "async";
     // Reverting the class too, so a failed photo goes back to looking like the
     // dashed placeholder it is rather than a solid-bordered empty tile.
     img.addEventListener("error", () => {
@@ -762,10 +959,75 @@ content.gallery.forEach(photo => {
 });
 
 document.getElementById("contact-heading").textContent = content.contactHeading;
+
+// Optional — omit locationNote and the paragraph stays hidden.
+const locationNote = document.getElementById("location-note");
+if (content.locationNote) {
+  locationNote.textContent = content.locationNote;
+  locationNote.hidden = false;
+}
+
 document.querySelector('#contact-form button[type="submit"]').textContent = content.formButtonText;
+
+// --- Structured data (JSON-LD) ---
+// Hands Google the hours, phone, address and coordinates as machine-readable
+// facts instead of leaving it to infer them from the prose. This is what feeds
+// the map pin and the "Open ⋅ Closes 1pm" line in a local search result.
+//
+// Built here rather than hardcoded in the markup for two reasons: every value
+// already lives in content.js (so a reskin can't leave stale data behind), and
+// absolute URLs need the real origin, which is only knowable at runtime.
+// Google renders JavaScript before parsing structured data, so this is read.
+(function structuredData() {
+  const { geo, addressParts: a, openingHours, businessName, metaDescription } = content;
+  if (!a) return; // optional — a client without these fields just gets no JSON-LD
+
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    name: businessName,
+    description: metaDescription,
+    telephone: content.phoneHref.replace(/^tel:/, ""),
+    priceRange: content.priceRange,
+    servesCuisine: ["Coffee", "Tea", "Smoothies", "Baked goods"],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: a.street,
+      addressLocality: a.locality,
+      addressRegion: a.region,
+      postalCode: a.postcode,
+      addressCountry: a.country
+    },
+    sameAs: [FACEBOOK_URL, content.moreReviews && content.moreReviews.url].filter(Boolean)
+  };
+
+  if (geo) {
+    data.geo = { "@type": "GeoCoordinates", latitude: geo.lat, longitude: geo.lng };
+  }
+  if (openingHours) {
+    data.openingHoursSpecification = openingHours.map(h => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: h.days,
+      opens: h.opens,
+      closes: h.closes
+    }));
+  }
+  // Only meaningful once the page is served over http(s) — on file:// these
+  // resolve to file paths, which would be worse than omitting them.
+  if (location.origin && location.origin !== "null") {
+    data.url = new URL("/", location.href).href;
+    data.image = new URL("og-image.jpg", location.href).href;
+  }
+
+  const el = document.createElement("script");
+  el.type = "application/ld+json";
+  el.textContent = JSON.stringify(data);
+  document.head.appendChild(el);
+})();
 
 // --- Web3Forms submit handler ---
 const form = document.getElementById("contact-form");
+const formStatus = document.getElementById("form-status");
 
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -790,7 +1052,12 @@ form.addEventListener("submit", async function (e) {
     const result = await response.json().catch(() => ({}));
 
     if (response.ok && result.success) {
-      form.innerHTML = '<p class="form-success">Thanks so much — we\'ve got your message and we\'ll call you back shortly! 🎉</p>';
+      // Hide the form rather than blowing away its contents, and put the
+      // message in the live region so it's announced instead of silently
+      // swapped in. Replacing innerHTML moved focus nowhere and said nothing.
+      form.hidden = true;
+      formStatus.className = "form-success";
+      formStatus.textContent = "Thanks so much — we've got your message and we'll call you back shortly! 🎉";
     } else {
       // Surface what the API actually said. Without this the visitor-facing
       // message is the only signal, which makes a dead key indistinguishable
@@ -802,13 +1069,8 @@ form.addEventListener("submit", async function (e) {
     console.error("Web3Forms submission failed:", err);
     submitBtn.textContent = originalBtnText;
     submitBtn.disabled = false;
-    let errorEl = form.querySelector(".form-error");
-    if (!errorEl) {
-      errorEl = document.createElement("p");
-      errorEl.className = "form-error";
-      form.appendChild(errorEl);
-    }
-    errorEl.textContent = "Oh no, that didn't send — please give us a call instead and we'll sort you out! ☎️";
+    formStatus.className = "form-error";
+    formStatus.textContent = "Oh no, that didn't send — please give us a call instead and we'll sort you out! ☎️";
   }
 });
 </script>

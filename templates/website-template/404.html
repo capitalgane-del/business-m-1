@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found | Mimi's Pit Stop</title>
+<meta name="description" content="That page has wandered off. Head back to the Mimi's Pit Stop home page, or give us a call.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#19181C">
+<link rel="icon" href="favicon.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  /* Standalone on purpose: a 404 has to render even if something about the
+     main page is broken, so it shares no files with index.html. Palette and
+     type are copied from it rather than imported, and the logo is inlined at
+     160px instead of the full-size one index.html carries. */
+  :root {
+    --primary: #8A5A11;
+    --secondary: #19181C;
+    --accent: #E0A82E;
+    --ink: #201F1D;
+    --bg: #F0E7D8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    gap: 1.25rem;
+  }
+  img { width: 110px; height: auto; border-radius: 12px; }
+  h1 {
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    max-width: 18ch;
+  }
+  p { max-width: 46ch; font-size: 1.05rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: 0.5rem; }
+  a.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.9rem 1.75rem;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    background: var(--primary);
+    color: #fff;
+  }
+  a.btn.alt {
+    background: var(--accent);
+    color: var(--secondary);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .hours {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.9rem;
+    opacity: 0.75;
+  }
+</style>
+</head>
+<body>
+  <img src="apple-touch-icon.png" alt="Mimi's Pit Stop">
+  <h1>Well, this page has wandered off &#128373;&#65039;</h1>
+  <p>We couldn't find that one &#128533; But the coffee's still on! Head back to the home page, or just give us a ring &#9749;&#65039;</p>
+  <div class="actions">
+    <a class="btn" href="/">Back to the home page</a>
+    <a class="btn alt" href="tel:+61428720929">0428 720 929</a>
+  </div>
+  <p class="hours">&#9728;&#65039; Open Sat &amp; Sun &#183; 8am &#8211; 1pm &#183; east side of Lake Tuggeranong</p>
+</body>
+</html>
