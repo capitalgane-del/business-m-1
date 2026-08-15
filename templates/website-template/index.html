@@ -42,6 +42,11 @@ const content = {
   heroHeading: "Barista Coffee & Real Food in Greenway",
   ctaText: "Call to Order",
 
+  // Weekends only. Shown under the hero CTA and again in the footer — for a
+  // trailer, "when are you actually there" is the question that decides whether
+  // someone turns up, so it should not be buried.
+  hours: "Open Sat & Sun · 8am – 1pm",
+
   // PLACEHOLDER IMAGE — clean stock coffee shot, swap for a real photo of the
   // trailer once Mimi's send theirs. A dark overlay is applied automatically so
   // the hero text stays readable (and stays readable even if this URL 404s).
@@ -60,12 +65,23 @@ const content = {
     "Cold Drinks — soft drinks, sparkling water, fresh juice · from $3.50"
   ],
 
-  // PLACEHOLDER REVIEWS — these are written examples, not real customers.
-  // Replace with genuine Google reviews (with names) before the site goes live.
+  // Real Google reviews, quoted verbatim — only whitespace was normalised.
+  // Do not reword these; they are attributed to named people.
+  // NOTE: the star ratings did not come through with the pasted text. Both read
+  // as clearly positive so they are set to 5 — confirm against Google and
+  // correct if either is actually a 4.
   testimonialsHeading: "What the Regulars Say",
   testimonials: [
-    { quote: "Best coffee run in Greenway. I'm there before work most days and the flat white is spot on every single time.", author: "[Placeholder — real review needed]", stars: 5 },
-    { quote: "Grabbed a bacon and egg roll on the way through and it was better than half the cafes in Tuggeranong. Lovely people too.", author: "[Placeholder — real review needed]", stars: 5 }
+    {
+      quote: "Our Movers+Shakers walking group relaxes at Mimi's most Saturday mornings. We enjoy a variety of drinks, including hot cider in the cooler months, and delicious snacks at reasonable prices. The atmosphere is friendly and hospitable. We hope to continue to enjoy Saturday mornings at Mimi's for many years to come 😀.",
+      author: "Brett Gray · Local Guide, Google",
+      stars: 5
+    },
+    {
+      quote: "Great place to stop on for a coffee on the weekends whilst walking around the lake! Also there is a kids learn to ride park right next door!!! Bring your family",
+      author: "Michael McRoberts · Local Guide, Google",
+      stars: 5
+    }
   ],
 
   galleryHeading: "A Look at the Trailer",
@@ -266,6 +282,27 @@ const content = {
   html[data-hero-image] #hero-heading { color: #fff; }
   html[data-hero-image] .trade-icon { color: #fff; }
 
+  /* Sits under the hero CTA. Pill so it holds up over a photo as well as over
+     the plain tinted hero. */
+  .hero-hours {
+    /* block + fit-content so it centres on its own line under the CTA rather
+       than sitting inline beside it and competing with the button */
+    display: block;
+    width: fit-content;
+    margin: 1.5rem auto 0;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+  html[data-hero-image] .hero-hours {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.28);
+  }
+
   .trade-icon {
     color: var(--color-primary);
     width: 48px;
@@ -384,6 +421,10 @@ const content = {
     width: auto;
     margin: 0 auto 1rem;
   }
+  .footer-hours {
+    margin-top: 0.4rem;
+    color: var(--color-accent);
+  }
 
   @media (prefers-reduced-motion: reduce) {
     * { scroll-behavior: auto !important; }
@@ -428,6 +469,7 @@ const content = {
     <div class="trade-icon" id="trade-icon" aria-hidden="true"></div>
     <h1 id="hero-heading"></h1>
     <a class="cta" id="hero-cta" href="#"></a>
+    <p class="hero-hours" data-field="hours"></p>
   </section>
 
   <section id="services">
@@ -473,6 +515,7 @@ const content = {
 <footer>
   <img class="footer-logo" data-field="logo" alt="">
   <p><span data-field="phone"></span> · <span data-field="address"></span></p>
+  <p class="footer-hours" data-field="hours"></p>
 </footer>
 
 <script>
@@ -490,6 +533,9 @@ document.querySelectorAll('[data-field="phone"]').forEach(el => {
 });
 document.querySelectorAll('[data-field="address"]').forEach(el => {
   el.textContent = content.address;
+});
+document.querySelectorAll('[data-field="hours"]').forEach(el => {
+  el.textContent = content.hours;
 });
 // Logo stands in for the business name in the header and the footer, so its alt
 // text has to carry the name — it's the only place the name is announced there.
