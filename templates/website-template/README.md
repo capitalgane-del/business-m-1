@@ -20,6 +20,7 @@ Reskinning a client = editing the `content` object in `index.html` (top `<script
    - `contactHeading`, `formButtonText`.
    - `web3formsKey` — get a key from https://web3forms.com for the client (or use your own key and forward leads manually — decide per client).
    - `colours.primary` / `colours.secondary` — CSS variables driving the whole palette; pick per-trade, not generic.
+   - `colours.bg` — optional page background. Omit it for the near-neutral default; set it when the brand is dark or warm and the default reads cold against it. Keep it light (body ink is a fixed dark value) and check it against `colours.primary`, which is the tightest pairing since links use it.
 
 3. That's it — everything below the `content` object (styles, DOM, form handler) renders from that data and shouldn't need edits for a standard reskin.
 

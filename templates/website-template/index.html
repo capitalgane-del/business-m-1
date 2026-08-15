@@ -156,7 +156,15 @@ const content = {
   colours: {
     primary: "#8A5A11",
     secondary: "#19181C",
-    accent: "#E0A82E"
+    accent: "#E0A82E",
+    // bg — warm sand. The near-white default read cold and washed out against
+    // the black header, the black footer and the black trailer in the hero, and
+    // it left the white cards invisible on it. This is warm enough to sit with
+    // the logo gold and the kraft signage in the photos, and dark enough that
+    // the white cards read as cards. Checked against the fixed ink (13.4:1) and
+    // against primary, which is what the Facebook link uses (4.8:1) — both pass
+    // AA, though primary is the tight one, so darken it before lightening this.
+    bg: "#F0E7D8"
   }
 };
 </script>
@@ -168,6 +176,10 @@ const content = {
   document.documentElement.style.setProperty("--color-primary", content.colours.primary);
   document.documentElement.style.setProperty("--color-secondary", content.colours.secondary);
   document.documentElement.style.setProperty("--color-accent", content.colours.accent);
+  // Optional — omit colours.bg and the near-neutral default in :root stands.
+  if (content.colours.bg) {
+    document.documentElement.style.setProperty("--color-bg", content.colours.bg);
+  }
   if (content.heroImage) {
     document.documentElement.style.setProperty("--hero-image", `url("${content.heroImage}")`);
     document.documentElement.setAttribute("data-hero-image", "true");
@@ -181,11 +193,18 @@ const content = {
     --color-secondary: #1A1A1A;
     --color-accent: #E0A82E;
 
+    /* Page background — optional per client (colours.bg), falling back to this
+       near-neutral. Only ever go light here: ink below is fixed, so a dark value
+       would put dark text on a dark page. */
+    --color-bg: #FAFAF9;
+
     /* Fixed tokens — not client-driven. Arbitrary client hex can't be trusted
        for body text contrast, so ink stays constant regardless of brand colour. */
     --color-ink: #201F1D;
-    --color-bg: #FAFAF9;
-    --color-bg-alt: color-mix(in srgb, var(--color-primary) 6%, white);
+    /* Tint of the page itself, not of white — so it stays a shade *of* the
+       background whatever the client sets that to, instead of drifting lighter
+       than the page and inverting the relationship. */
+    --color-bg-alt: color-mix(in srgb, var(--color-primary) 8%, var(--color-bg));
     --color-border: color-mix(in srgb, var(--color-ink) 12%, transparent);
 
     --font-display: ui-sans-serif, system-ui, -apple-system, sans-serif;
