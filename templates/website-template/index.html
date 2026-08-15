@@ -81,20 +81,35 @@ const content = {
       quote: "Great place to stop on for a coffee on the weekends whilst walking around the lake! Also there is a kids learn to ride park right next door!!! Bring your family",
       author: "Michael McRoberts · Local Guide, Google",
       stars: 5
+    },
+    {
+      quote: "If you are walking around the lake this is the best place to get coffee and chat.",
+      author: "gustavo smith · Local Guide, Google",
+      stars: 5
     }
   ],
 
+  // Deep link to the Google listing's review tab (the !1b1 in the URL is what
+  // opens reviews rather than the map pin), so the three above can be checked
+  // against the full set.
+  moreReviews: {
+    url: "https://www.google.com/maps/place/Mimi's+Pit+Stop/@-35.405754,149.068047,16.46z/data=!4m8!3m7!1s0x6b17b5632547bc51:0x89d686a33f60fdfc!8m2!3d-35.4074555!4d149.0709704!9m1!1b1!16s%2Fg%2F11csbbv3hk?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D",
+    text: "50+ more Google reviews"
+  },
+
   galleryHeading: "A Look at the Trailer",
-  // PLACEHOLDER BLOCKS — the template renders these as tagged hatch tiles, not
-  // photos. Swap in real shots of the trailer, the coffee and the crew once
-  // Mimi's send them through (real photos beat stock every time).
+  // STOCK PLACEHOLDERS — none of these are Mimi's. They are generic Unsplash
+  // cafe shots standing in until the client sends real photos, and the section
+  // heading implies they are the trailer, so they should not survive to launch.
+  // Each tile keeps its labelled hatch block underneath: if a URL ever fails,
+  // the tile falls back to the placeholder rather than a broken image icon.
   gallery: [
-    { alt: "PLACEHOLDER — The trailer set up on Mortimer Lewis Dr" },
-    { alt: "PLACEHOLDER — Flat white being handed out the window" },
-    { alt: "PLACEHOLDER — Bacon and egg roll on the counter" },
-    { alt: "PLACEHOLDER — Cakes and slices in the display case" },
-    { alt: "PLACEHOLDER — Mimi behind the coffee machine" },
-    { alt: "PLACEHOLDER — Morning queue of regulars" }
+    { src: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=70", alt: "Coffee cup and beans" },
+    { src: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=70", alt: "Flat white on a table" },
+    { src: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=800&q=70", alt: "Breakfast roll and eggs" },
+    { src: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=70", alt: "Outdoor cafe seating" },
+    { src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=70", alt: "Cafe tables and chairs" },
+    { src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=70", alt: "Food being prepared" }
   ],
 
   contactHeading: "Find Us at the Pit Stop",
@@ -370,7 +385,38 @@ const content = {
     font-family: var(--font-mono);
     font-size: 0.8rem;
     color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+    position: relative;
+    overflow: hidden;
   }
+  /* Once a photo is actually in, drop the dashed placeholder outline — dashed
+     is the "nothing here yet" signal and shouldn't frame a real image. */
+  .gallery-item.has-photo {
+    border-style: solid;
+    padding: 0;
+  }
+  /* Sits over the hatch label, so the label is only seen if the photo fails */
+  .gallery-item img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .reviews-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .reviews-link::after { content: "→"; }
 
   /* --- Contact --- */
   #contact-form {
@@ -482,6 +528,7 @@ const content = {
     <span class="eyebrow">Trusted locally</span>
     <h2 id="testimonials-heading"></h2>
     <div id="testimonials-list"></div>
+    <a class="reviews-link" data-field="moreReviews" href="#" target="_blank" rel="noopener noreferrer"></a>
   </section>
 
   <section id="gallery">
@@ -595,12 +642,33 @@ content.testimonials.forEach(t => {
   testimonialsContainer.appendChild(article);
 });
 
+const moreReviewsLink = document.querySelector('[data-field="moreReviews"]');
+moreReviewsLink.href = content.moreReviews.url;
+moreReviewsLink.textContent = content.moreReviews.text;
+
 document.getElementById("gallery-heading").textContent = content.galleryHeading;
 const galleryGrid = document.getElementById("gallery-grid");
 content.gallery.forEach(photo => {
   const div = document.createElement("div");
   div.className = "gallery-item";
-  div.textContent = photo.alt; // placeholder block; swap for a real <img> per client
+  // The label always exists; a photo, when there is one, covers it. That way a
+  // dead image URL degrades to the labelled placeholder tile instead of a
+  // broken image, and entries with no src still work as before.
+  div.textContent = photo.alt;
+  if (photo.src) {
+    const img = document.createElement("img");
+    img.src = photo.src;
+    img.alt = photo.alt;
+    img.loading = "lazy";
+    // Reverting the class too, so a failed photo goes back to looking like the
+    // dashed placeholder it is rather than a solid-bordered empty tile.
+    img.addEventListener("error", () => {
+      img.remove();
+      div.classList.remove("has-photo");
+    });
+    div.appendChild(img);
+    div.classList.add("has-photo");
+  }
   galleryGrid.appendChild(div);
 });
 
