@@ -1073,94 +1073,163 @@ content.gallery.forEach(photo => {
 // The scrolling itself is entirely the browser's: every control below just
 // picks a target and calls scrollTo(), so the motion is native (and stays
 // smooth under load) rather than being animated frame by frame in JS.
+//
+// It loops rightward and only rightward. That is done with cloned slides
+// rather than any animation trickery: a couple of extra copies of the whole
+// set are appended, and once you have scrolled a full set's width the scroll
+// position is moved back by exactly that width. What is on screen at the jump
+// is pixel-identical to what is on screen after it, so the seam is invisible
+// and you can keep swiping right indefinitely. Scrolling left simply stops at
+// the first photo — there are no clones on that side, by request.
 (function galleryCarousel() {
   const viewport = galleryGrid;
   const nav = document.getElementById("gallery-nav");
   const dotsWrap = document.getElementById("gallery-dots");
   const prevBtn = document.getElementById("gallery-prev");
   const nextBtn = document.getElementById("gallery-next");
-  const slides = Array.from(viewport.children);
-  if (!slides.length) { nav.hidden = true; return; }
+  const originals = Array.from(viewport.children);
+  const count = originals.length;
+  if (!count) { nav.hidden = true; return; }
+
+  // Two spare sets. One is enough for the jump itself, but a hard flick can
+  // travel further than a single set before the scroll settles, and running
+  // out of track mid-gesture would stop the loop dead against the real end.
+  const CLONE_SETS = 2;
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const scrollTo = left =>
+  const glideTo = left =>
     viewport.scrollTo({ left, behavior: reduced.matches ? "auto" : "smooth" });
 
-  // Offset of a slide within the scroller, independent of where the scroller
-  // sits on the page.
-  const offsetOf = slide => slide.offsetLeft - viewport.offsetLeft;
-  const maxScroll = () => viewport.scrollWidth - viewport.clientWidth;
+  // The seam jump has to be instant even for viewers who have not asked to
+  // reduce motion, and `behavior: "auto"` would inherit the smooth scrolling
+  // set in CSS. Toggling the property around the assignment is the one way
+  // that is instant everywhere.
+  function jumpTo(left) {
+    const previous = viewport.style.scrollBehavior;
+    viewport.style.scrollBehavior = "auto";
+    viewport.scrollLeft = left;
+    viewport.style.scrollBehavior = previous;
+  }
 
+  // Distance from one slide's start to the next, i.e. slide width plus gap.
+  const stepPx = () => count > 1
+    ? originals[1].offsetLeft - originals[0].offsetLeft
+    : originals[0].getBoundingClientRect().width;
+  const setWidth = () => count * stepPx();
+
+  // Whether the real slides overflow. Measured off the originals so it stays
+  // correct with clones in the DOM.
+  function overflows() {
+    const last = originals[count - 1];
+    const total = (last.offsetLeft - originals[0].offsetLeft) + last.getBoundingClientRect().width;
+    return total > viewport.clientWidth + 1;
+  }
+
+  let looping = false;
+  function setLooping(on) {
+    if (on === looping) return;
+    looping = on;
+    viewport.querySelectorAll("[data-clone]").forEach(node => node.remove());
+    if (on) {
+      for (let set = 0; set < CLONE_SETS; set++) {
+        originals.forEach(slide => {
+          const clone = slide.cloneNode(true);
+          // Duplicates of photos a screen reader has already been given. The
+          // gallery is four photos, however many copies the loop needs.
+          clone.setAttribute("aria-hidden", "true");
+          clone.dataset.clone = "true";
+          viewport.appendChild(clone);
+        });
+      }
+    }
+    nav.hidden = !on;
+  }
+
+  // Which real photo is at the left edge. Modulo the set, so a clone reports
+  // the index of the original it is standing in for — which is what makes the
+  // dots keep working once you have looped past the end.
   function currentIndex() {
-    // At the far end, the last slide is showing even though its left edge
-    // never reaches the scroll position — otherwise the final dot could never
-    // light up whenever more than one slide is visible at a time.
-    if (maxScroll() > 0 && viewport.scrollLeft >= maxScroll() - 1) return slides.length - 1;
-    let best = 0, bestDist = Infinity;
-    slides.forEach((slide, i) => {
-      const dist = Math.abs(offsetOf(slide) - viewport.scrollLeft);
-      if (dist < bestDist) { bestDist = dist; best = i; }
-    });
-    return best;
+    const step = stepPx();
+    return step ? Math.round(viewport.scrollLeft / step) % count : 0;
   }
 
-  const goTo = i => scrollTo(offsetOf(slides[Math.max(0, Math.min(slides.length - 1, i))]));
-
-  // Paging steps between snap offsets rather than between slide indexes.
-  // Those are not the same thing: with a fractional --per-view the last slides
-  // share one scroll position, so the final slide is visible long before its
-  // own start offset is reachable. Stepping by index from there asks for an
-  // offset past the end, the browser clamps it to where we already are, and
-  // the button appears dead. Stepping by offset can't get into that state.
-  function step(dir) {
-    const offsets = slides.map(offsetOf);
-    const x = viewport.scrollLeft;
-    const target = dir > 0
-      ? offsets.find(o => o > x + 1)
-      : offsets.slice().reverse().find(o => o < x - 1);
-    if (target !== undefined) scrollTo(target);
-  }
-
-  const dots = slides.map((slide, i) => {
+  const dots = originals.map((slide, i) => {
     const dot = document.createElement("button");
     dot.type = "button";
     dot.className = "carousel-dot";
-    dot.setAttribute("aria-label", `Show photo ${i + 1} of ${slides.length}`);
-    dot.addEventListener("click", () => goTo(i));
+    dot.setAttribute("aria-label", `Show photo ${i + 1} of ${count}`);
+    // Jump to the nearest copy of that photo rather than always the original,
+    // so tapping a dot after looping does not drag the view back to the start.
+    dot.addEventListener("click", () => {
+      const step = stepPx();
+      const base = Math.floor(viewport.scrollLeft / setWidth()) * setWidth();
+      glideTo(base + i * step);
+    });
     dotsWrap.appendChild(dot);
     return dot;
   });
 
+  // Paging steps between snap offsets, not slide indexes. Those diverge with a
+  // fractional --per-view: several slides share the final scroll position, so
+  // stepping by index near the end asks for an offset the browser clamps, and
+  // the button appears dead. Stepping by offset cannot get into that state.
+  function step(direction) {
+    const offsets = Array.from(viewport.children).map(s => s.offsetLeft - viewport.offsetLeft);
+    const x = viewport.scrollLeft;
+    const target = direction > 0
+      ? offsets.find(o => o > x + 1)
+      : offsets.slice().reverse().find(o => o < x - 1);
+    if (target !== undefined) glideTo(target);
+  }
+
   prevBtn.addEventListener("click", () => step(-1));
   nextBtn.addEventListener("click", () => step(1));
 
-  // Arrow keys would scroll the container by a few pixels by default; snapping
-  // slide to slide is what someone pressing them actually means.
   viewport.addEventListener("keydown", e => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
     e.preventDefault();
     step(e.key === "ArrowRight" ? 1 : -1);
   });
 
+  // Rewind the seam once the scroll has come to rest. Doing it mid-gesture
+  // would fight the finger that is still dragging.
+  function rewindSeam() {
+    if (!looping) return;
+    const width = setWidth();
+    if (!width || viewport.scrollLeft < width) return;
+    let x = viewport.scrollLeft;
+    while (x >= width) x -= width;   // a fast flick can cross more than one set
+    jumpTo(x);
+    update();
+  }
+
   function update() {
     const i = currentIndex();
     dots.forEach((dot, n) => dot.setAttribute("aria-current", n === i ? "true" : "false"));
-    // Driven by scroll position, not index: with a fractional --per-view the
-    // last slide is reached before its index is.
+    // Left is a dead end by design; right never is, because of the loop.
     prevBtn.disabled = viewport.scrollLeft <= 1;
-    nextBtn.disabled = viewport.scrollLeft >= maxScroll() - 1;
-    // Nothing to page through if it all fits — e.g. a client with two photos
-    // on a wide screen.
-    nav.hidden = maxScroll() <= 1;
+    nextBtn.disabled = !looping;
   }
 
-  let queued = false;
+  let queued = false, settle;
   viewport.addEventListener("scroll", () => {
-    if (queued) return;
-    queued = true;
-    requestAnimationFrame(() => { queued = false; update(); });
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(() => { queued = false; update(); });
+    }
+    clearTimeout(settle);
+    settle = setTimeout(rewindSeam, 120);
   }, { passive: true });
-  addEventListener("resize", update);
+
+  // Debounced: mobile browsers fire resize while the URL bar hides, and
+  // rebuilding the track on every one of those would jerk the carousel.
+  let resizeTimer;
+  addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { setLooping(overflows()); update(); }, 150);
+  });
+
+  setLooping(overflows());
   update();
 })();
 
