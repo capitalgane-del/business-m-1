@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Static copies of pageTitle / metaDescription: Facebook and WhatsApp link previews do not run JavaScript. -->
+<title>Dutchies Removals | Family Removalists in Canberra</title>
+<meta name="description" content="Family owned Canberra removalists for local, country and interstate moves, backloading and packing. Free in-home quote. Call 0411 331 779.">
+<meta name="theme-color" content="#AE3E0D">
+
+<!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Icon CSS linked directly: the @phosphor-icons/web JS loader declares a global `head`
+     that clashes with the renderer below and stops every icon loading. Only bold and fill are used. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css">
+
+<script>
+/* ============================================================
+   CONTENT. Reskinning a client means editing this object only.
+   Everything below it should not need touching.
+
+   RULES
+   - sample: true shows a red SAMPLE ribbon. Set it to false only when
+     every review, photo and number below is real and from the client.
+   - Reviews: real ones from their Google listing, or delete the array.
+   - Photos: from their Facebook/Google listing. No image URL = a clean
+     brand-colour tile instead. Delete a section's array to hide it.
+   - No em dashes anywhere in the copy. Use a comma, a colon or a full stop.
+   ============================================================ */
+const content = {
+  // Keep true until the review quotes are checked against the live listings
+  // and the Web3Forms key is in. See README.md in this folder.
+  sample: true,
+
+  pageTitle: "Dutchies Removals | Family Removalists in Canberra",
+  metaDescription: "Family owned Canberra removalists for local, country and interstate moves, backloading and packing. Free in-home quote. Call 0411 331 779.",
+
+  businessName: "Dutchies Removals",
+  phone: "0411 331 779",
+  phoneHref: "tel:+61411331779",
+  email: "dutchiesremovals1@gmail.com",
+  // Suburb only: the listed street address looks like a home address. Confirm with the client.
+  address: "Monash ACT 2904",
+  // From their Yellow Pages and Localsearch listings. Their Facebook page shows shorter hours. Confirm.
+  hours: "7 days, 7am to 7pm",
+
+  ctaText: "Call Now",
+  quoteText: "Get a Free Quote",
+
+  // HERO: one headline (2 lines max), one short sentence (under 20 words).
+  heroHeading: "Family removalists in Canberra",
+  heroSub: "Local, country and interstate moves. Free in-home quote, beds rebuilt and furniture placed where you want it.",
+  // Best single upgrade on any mockup: one real photo from their Facebook or Google listing.
+  // Empty = brand-colour hero until we have a photo of their truck or crew.
+  heroImage: "",
+
+  // TRUST BAR sits directly under the hero. First cell is the rating.
+  // Muval shows 4.9 from 83 to 97 reviews depending on when it was indexed. Put in the live count.
+  rating: { score: "4.9", count: "80+", source: "Muval" },
+  trust: [
+    { icon: "users-three", value: "Family owned", label: "Locally owned and operated in Canberra" },
+    { icon: "trophy", value: "Top 10 in Canberra", label: "Service.com.au awards, 2019 and 2020" },
+    { icon: "calendar-check", value: "17+ years", label: "Local, country and interstate moves" }
+  ],
+
+  servicesHeading: "What we move",
+  servicesSub: "One couch or a whole house, across town or interstate.",
+  // 3 to 8 services. The layout adjusts so the grid never has a gap.
+  // image: "" = brand-colour tile. Drop in their own photos when we have them.
+  services: [
+    { name: "Local moves", desc: "Houses and units across Canberra and Queanbeyan.", image: "" },
+    { name: "Interstate moves", desc: "Between the ACT, NSW, Victoria and Queensland.", image: "" },
+    { name: "Country moves", desc: "Regional towns to and from Canberra.", image: "" },
+    { name: "Backloading", desc: "Share space on an interstate run and pay less than a full truck.", image: "" },
+    { name: "Packing service", desc: "We pack your home before moving day so the move itself is quicker.", image: "" },
+    { name: "Single items", desc: "One couch, fridge or washing machine, without booking a full move.", image: "" }
+  ],
+
+  // WORK: hidden until we have real job photos from the client.
+  // To show it, add workHeading, workSub, beforeAfter[] and/or gallery[] (see the template).
+
+  // REVIEWS. First one is shown large: pick a real excerpt under 90 characters. Others under 3 lines. REAL ONLY.
+  // All four are real, from their public listings. The pages were read through search snippets,
+  // so check each quote word for word against the live listing before sample is set to false.
+  reviewsHeading: "What customers say",
+  reviews: [
+    { quote: "Very professional team. Punctual, friendly and excellent problem-solving skills.", author: "Joy", meta: "Oneflare review" },
+    { quote: "Allen arrived on time, packed everything efficiently and delivered to two locations for us.", author: "Joanna", meta: "Find a Mover review" },
+    { quote: "Allan and Eli went above and beyond what we expected of them. Polite, considerate and careful with our treasures.", author: "Sirelo customer", meta: "Sirelo review" },
+    { quote: "Very polite, careful and helpful.", author: "Ann", meta: "Interstate move, Find a Mover review" }
+  ],
+
+  processHeading: "How it works",
+  processSub: "From first call to set up in your new place.",
+  steps: [
+    { icon: "phone-call", title: "Call or send the form", text: "Tell us where you are moving from and to, and roughly when." },
+    { icon: "house-line", title: "Free in-home quote", text: "We see what is moving before we give you a price." },
+    { icon: "truck", title: "Moving day", text: "We load, drive and unload. Ask about packing before the day." },
+    { icon: "bed", title: "Set up at the new place", text: "Beds rebuilt, washing machine reconnected, furniture where you want it." }
+  ],
+
+  contactHeading: "Get your free quote",
+  contactSub: "Tell us where you are moving from and to, and we will call you back to book a free in-home quote.",
+  promises: [
+    "Free in-home quote",
+    "Beds taken apart and rebuilt",
+    "Washing machine disconnected and reconnected",
+    "Family owned and operated"
+  ],
+
+  areasHeading: "Where we move",
+  areas: ["Tuggeranong", "Woden", "Weston Creek", "Molonglo", "Belconnen", "Gungahlin", "Inner North", "Inner South", "Queanbeyan", "Regional NSW", "Sydney", "Central Coast", "Melbourne", "Brisbane"],
+
+  // Get a key at web3forms.com after the client signs up, or use your own and forward leads.
+  web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY_HERE",
+
+  // primary = brand colour. onPrimary = text on it (use #FAFAF8 on dark colours, #15191C on light ones).
+  // Dutch orange to match the name: darkest shade that keeps white text readable everywhere.
+  // Swap for their truck or logo colour if they have one.
+  colours: { primary: "#AE3E0D", onPrimary: "#FAFAF8" }
+};
+</script>
+<script>
+  // Sets title, description and brand colours before first paint.
+  document.title = content.pageTitle;
+  document.querySelector('meta[name="description"]').setAttribute("content", content.metaDescription);
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", content.colours.primary);
+  document.documentElement.style.setProperty("--color-primary", content.colours.primary);
+  document.documentElement.style.setProperty("--on-primary", content.colours.onPrimary);
+  if (content.heroImage) {
+    document.documentElement.style.setProperty("--hero-image", 'url("' + content.heroImage + '")');
+    document.documentElement.setAttribute("data-hero-image", "true");
+  }
+</script>
+
+<style>
+  /* Design read: local trade lead-gen site for homeowners on phones, trust-first,
+     static HTML + CSS variables + Phosphor icons. One radius, one accent, one theme
+     (light or dark follows the visitor's device). */
+  :root {
+    --color-primary: #1F5C3F;
+    --on-primary: #FAFAF8;
+
+    --bg: #F6F6F3;
+    --surface: #FCFCFA;
+    --ink: #15191C;
+    --muted: #4A5258;
+    --border: rgba(21, 25, 28, 0.12);
+    --field: #FCFCFA;
+    --band: color-mix(in srgb, var(--color-primary) 8%, var(--bg));
+    --primary-text: var(--color-primary);
+
+    --font: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --r: 12px;
+    --max: 1200px;
+    --header-h: 72px;
+    --hero-image: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101315;
+      --surface: #181C1F;
+      --ink: #ECEEEC;
+      --muted: #A9B1B7;
+      --border: rgba(236, 238, 236, 0.14);
+      --field: #101315;
+      --band: color-mix(in srgb, var(--color-primary) 16%, var(--bg));
+      --primary-text: color-mix(in srgb, var(--color-primary) 45%, #FFFFFF);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  body {
+    font-family: var(--font);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    padding-bottom: 76px;
+  }
+  @media (min-width: 768px) { body { padding-bottom: 0; } }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  i[class^="ph"] { line-height: 1; }
+
+  h1, h2, h3 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; overflow-wrap: break-word; }
+  h2 { font-size: clamp(2.1rem, 5.2vw, 3.6rem); }
+  h3 { font-size: 1.35rem; letter-spacing: -0.015em; line-height: 1.2; }
+
+  :focus-visible { outline: 3px solid var(--primary-text); outline-offset: 3px; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; }
+  .sec { padding: clamp(4rem, 9vw, 7.5rem) 1.25rem; }
+  .sec-head { margin-bottom: clamp(2rem, 4vw, 3.25rem); }
+  .sec-head p { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+    min-height: 56px; padding: 0.9rem 1.75rem;
+    font-family: var(--font); font-size: 1.1rem; font-weight: 700; white-space: nowrap;
+    border-radius: var(--r); border: 0; cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+  }
+  .btn:active { transform: translateY(1px) scale(0.98); }
+  .btn-primary { background: var(--color-primary); color: var(--on-primary); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
+  .btn-primary:hover { filter: brightness(1.12); }
+  .btn-light { background: #F6F6F3; color: #15191C; }
+  .btn-light:hover { filter: brightness(0.94); }
+  .btn-outline { background: rgba(255, 255, 255, 0.08); color: #F6F6F3; box-shadow: inset 0 0 0 2px rgba(246, 246, 243, 0.75); }
+  .btn-outline:hover { background: rgba(255, 255, 255, 0.18); }
+
+  /* ---------- Header ---------- */
+  .site-header {
+    position: sticky; top: 0; z-index: 50; height: var(--header-h);
+    display: flex; align-items: center; background: var(--bg); border-bottom: 1px solid var(--border);
+  }
+  .site-header .wrap { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1.25rem; }
+  .brand { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Dutchies only: on 360px phones the name would be cut to "Dutchies Rem...". Stack it instead. */
+  @media (max-width: 400px) { .brand { white-space: normal; line-height: 1.05; } }
+  .nav { display: none; gap: 2rem; font-weight: 500; }
+  .nav a { color: var(--muted); }
+  .nav a:hover { color: var(--ink); }
+  @media (min-width: 900px) { .nav { display: flex; } }
+  .header-cta { min-height: 48px; padding: 0.5rem 1.15rem; font-size: 1rem; flex-shrink: 0; }
+
+  /* ---------- Hero ---------- */
+  #hero {
+    position: relative; isolation: isolate; color: #F6F6F3;
+    min-height: min(88dvh, 840px); display: flex; align-items: center;
+    padding: 5rem 1.25rem 4rem;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 78%, #0B0F0D), #0E1210);
+    background-size: cover; background-position: center;
+  }
+  html[data-hero-image] #hero { background-image: var(--hero-image), linear-gradient(135deg, #1b2a22, #0E1210); }
+  #hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(90deg, rgba(10, 14, 12, 0.84) 0%, rgba(10, 14, 12, 0.58) 55%, rgba(10, 14, 12, 0.3) 100%);
+  }
+  #hero .wrap { width: 100%; }
+  #hero h1 { font-size: clamp(2.7rem, 7vw, 5rem); max-width: 18ch; letter-spacing: -0.04em; }
+  .hero-sub { margin-top: 1.5rem; font-size: clamp(1.15rem, 2.2vw, 1.5rem); max-width: 34ch; color: rgba(246, 246, 243, 0.92); line-height: 1.4; }
+  .hero-actions { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: 0.85rem; }
+  @media (max-width: 480px) { .hero-actions .btn { width: 100%; } }
+
+  /* ---------- Trust bar ---------- */
+  .trust { background: var(--color-primary); color: var(--on-primary); padding: 2.25rem 1.25rem; }
+  .trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem 1.25rem; }
+  @media (min-width: 900px) { .trust-grid { grid-template-columns: repeat(4, 1fr); } }
+  .trust-item { display: flex; gap: 0.9rem; align-items: flex-start; }
+  .trust-item > i { font-size: 2rem; flex-shrink: 0; margin-top: 0.15rem; }
+  .trust-value { font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.15; }
+  .trust-label { font-size: 0.95rem; opacity: 0.9; line-height: 1.35; margin-top: 0.2rem; }
+  .stars { display: inline-flex; gap: 2px; font-size: 1rem; margin-top: 0.3rem; }
+
+  /* ---------- Services ---------- */
+  .svc-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  @media (min-width: 768px) {
+    .svc-grid { grid-template-columns: repeat(3, 1fr); grid-auto-flow: dense; }
+    .svc.wide { grid-column: span 2; }
+  }
+  .svc {
+    position: relative; isolation: isolate; overflow: hidden; color: #F6F6F3;
+    min-height: 340px; display: flex; align-items: flex-end;
+    border-radius: var(--r);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 80%, #0B0F0D), #0E1210);
+  }
+  .svc img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .svc::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 14, 12, 0) 30%, rgba(10, 14, 12, 0.88) 100%); }
+  .svc-body { padding: 1.5rem; width: 100%; }
+  .svc-body p { margin-top: 0.4rem; max-width: 36ch; color: rgba(246, 246, 243, 0.92); font-size: 1rem; line-height: 1.4; }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .svc img { transition: transform 0.5s ease; }
+    .svc:hover img { transform: scale(1.04); }
+  }
+
+  /* ---------- Work ---------- */
+  #work { background: var(--band); }
+  .ba-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+  .ba-stage { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--r); --pos: 50%; background: var(--surface); }
+  .ba-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ba-before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .ba-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; background: #F6F6F3; transform: translateX(-50%); pointer-events: none; }
+  .ba-knob {
+    position: absolute; top: 50%; left: var(--pos); transform: translate(-50%, -50%);
+    width: 48px; height: 48px; border-radius: var(--r); background: #F6F6F3; color: #15191C;
+    display: grid; place-items: center; font-size: 1.4rem; pointer-events: none;
+  }
+  .ba-stage input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+  .ba-stage:has(input:focus-visible) { outline: 3px solid var(--primary-text); outline-offset: 3px; }
+  .ba-caption { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.75rem; font-weight: 600; }
+  .ba-caption span:nth-child(2) { color: var(--muted); font-weight: 500; text-align: center; }
+  .gallery { margin-top: 3rem; columns: 2; column-gap: 1rem; }
+  @media (min-width: 768px) { .gallery { columns: 3; } }
+  .gallery img { width: 100%; margin-bottom: 1rem; border-radius: var(--r); break-inside: avoid; }
+
+  /* ---------- Reviews ---------- */
+  .rev { display: grid; gap: 1.25rem; }
+  @media (min-width: 900px) { .rev { grid-template-columns: 5fr 7fr; } }
+  .rev-feature {
+    background: var(--color-primary); color: var(--on-primary); border-radius: var(--r);
+    padding: clamp(1.75rem, 4vw, 2.75rem); display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
+  }
+  .rev-feature blockquote { font-size: clamp(1.35rem, 2.6vw, 1.9rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+  .rev-list { display: grid; gap: 1rem; align-content: start; }
+  .rev-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; }
+  .rev-card blockquote { font-size: 1.1rem; margin: 0.6rem 0 1rem; }
+  .rev-card .stars { color: var(--primary-text); margin: 0; }
+  .rev-author { font-weight: 700; }
+  .rev-meta { font-size: 0.95rem; color: var(--muted); }
+  .rev-feature .rev-meta { color: var(--on-primary); opacity: 0.85; }
+
+  /* ---------- Process ---------- */
+  #process { background: var(--band); }
+  .proc { display: grid; gap: 2.5rem; }
+  @media (min-width: 900px) { .proc { grid-template-columns: 5fr 7fr; align-items: start; } }
+  .step { display: grid; grid-template-columns: 60px 1fr; gap: 1.1rem; padding: 1.4rem 0; border-top: 1px solid var(--border); }
+  .step:first-child { border-top: 0; padding-top: 0; }
+  .step-icon { width: 60px; height: 60px; border-radius: var(--r); background: var(--color-primary); color: var(--on-primary); display: grid; place-items: center; font-size: 1.6rem; }
+  .step p { color: var(--muted); margin-top: 0.3rem; }
+
+  /* ---------- Contact ---------- */
+  #contact { background: var(--color-primary); color: var(--on-primary); }
+  .contact-grid { display: grid; gap: 2.5rem; }
+  @media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1fr; align-items: start; gap: 4rem; } }
+  .contact-sub { margin-top: 1rem; font-size: 1.15rem; opacity: 0.92; max-width: 40ch; }
+  .promises { margin-top: 1.75rem; display: grid; gap: 0.8rem; }
+  .promises li { display: flex; gap: 0.75rem; align-items: center; font-size: 1.15rem; font-weight: 500; }
+  .promises i { font-size: 1.5rem; flex-shrink: 0; }
+  .big-phone { display: inline-flex; align-items: center; gap: 0.75rem; margin-top: 2rem; font-size: clamp(1.9rem, 4.5vw, 2.9rem); font-weight: 800; letter-spacing: -0.03em; }
+  .form-card { background: var(--surface); color: var(--ink); border-radius: var(--r); padding: clamp(1.5rem, 3vw, 2.25rem); }
+  #contact-form { display: grid; gap: 1.1rem; }
+  #contact-form label { display: grid; gap: 0.45rem; font-weight: 600; font-size: 0.98rem; }
+  #contact-form input, #contact-form textarea {
+    font-family: var(--font); font-size: 1rem; color: var(--ink); background: var(--field);
+    min-height: 52px; padding: 0.8rem 0.9rem; border: 1.5px solid color-mix(in srgb, var(--ink) 40%, transparent); border-radius: var(--r);
+  }
+  #contact-form textarea { min-height: 120px; resize: vertical; }
+  #contact-form button { width: 100%; }
+  .form-note { font-size: 0.92rem; color: var(--muted); }
+  .form-success { font-size: 1.3rem; font-weight: 700; line-height: 1.3; }
+  .form-error { color: #B3261E; font-weight: 600; }
+  @media (prefers-color-scheme: dark) { .form-error { color: #F2B8B5; } }
+  .hp { position: absolute; left: -9999px; }
+
+  /* ---------- Areas ---------- */
+  .areas { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .areas li { padding: 0.6rem 1.1rem; border: 1.5px solid var(--border); border-radius: var(--r); font-weight: 600; background: var(--surface); }
+
+  /* ---------- Footer ---------- */
+  footer { background: #0F1311; color: #E8EBE8; padding: 3rem 1.25rem; }
+  .foot { display: grid; gap: 2rem; }
+  @media (min-width: 768px) { .foot { grid-template-columns: 1.4fr 1fr 1fr; } }
+  .foot h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
+  .foot p, .foot a { color: #B9C0BB; display: block; }
+  .foot a:hover { color: #F6F6F3; }
+
+  /* ---------- Hover pop (mouse only, never on touch or reduced motion) ---------- */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .btn, .svc, .rev-card, .gallery img, .areas li, .step-icon {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease,
+                  background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, filter 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-3px) scale(1.04); }
+    .btn:active { transform: translateY(0) scale(0.98); }
+    .btn-primary:hover { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 14px 26px -8px color-mix(in srgb, var(--color-primary) 75%, transparent); }
+    .btn-light:hover { box-shadow: 0 14px 28px -8px rgba(5, 12, 8, 0.6); }
+    .btn-outline:hover { box-shadow: inset 0 0 0 2px #F6F6F3, 0 14px 28px -8px rgba(5, 12, 8, 0.6); }
+    .svc:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -14px color-mix(in srgb, var(--color-primary) 65%, transparent); }
+    .rev-card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--color-primary) 45%, transparent); }
+    .gallery img:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--color-primary) 45%, transparent); }
+    .areas li:hover {
+      transform: translateY(-3px) scale(1.07);
+      background: var(--color-primary); color: var(--on-primary); border-color: var(--color-primary);
+      box-shadow: 0 12px 22px -8px color-mix(in srgb, var(--color-primary) 70%, transparent);
+    }
+    .step:hover .step-icon { transform: scale(1.1); box-shadow: 0 12px 22px -8px color-mix(in srgb, var(--color-primary) 70%, transparent); }
+  }
+
+  /* ---------- Motion ----------
+     Hero: one load sequence. Everything else: a single fade-up as it scrolls into view.
+     Only runs when the visitor has not asked for reduced motion. Content is never
+     hidden unless the script has confirmed it can reveal it again (html.js-reveal). */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    #hero h1, .hero-sub, .hero-actions { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero-sub { animation-delay: 0.12s; }
+    .hero-actions { animation-delay: 0.24s; }
+
+    html.js-reveal .reveal {
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: calc(var(--i, 0) * 80ms);
+    }
+    html.js-reveal .reveal.in { opacity: 1; transform: none; }
+  }
+
+  /* ---------- Mobile bar and sample ribbon ---------- */
+  .mobile-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;
+    padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
+    background: var(--bg); border-top: 1px solid var(--border);
+  }
+  .mobile-bar .btn { min-height: 52px; padding: 0.6rem 0.75rem; font-size: 1rem; }
+  .mobile-bar .btn-quote { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+  @media (min-width: 768px) { .mobile-bar { display: none; } }
+  .sample-ribbon {
+    position: fixed; left: 0.6rem; bottom: 88px; z-index: 60; background: #B3261E; color: #fff;
+    padding: 0.4rem 0.75rem; border-radius: var(--r); font-weight: 700; font-size: 0.85rem;
+  }
+  @media (min-width: 768px) { .sample-ribbon { bottom: 0.75rem; } }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="padding:2rem">Please enable JavaScript to view this page.</p></noscript>
+
+<script>
+// Renders content into the page. Nothing here is client-specific.
+const c = content;
+const app = document.getElementById("app");
+
+function h(tag, props, ...kids) {
+  const el = document.createElement(tag);
+  Object.entries(props || {}).forEach(([k, v]) => {
+    if (v === false || v == null) return;
+    if (k === "class") el.className = v;
+    else el.setAttribute(k, v);
+  });
+  kids.flat().forEach(k => { if (k != null && k !== false) el.append(k.nodeType ? k : document.createTextNode(k)); });
+  return el;
+}
+const icon = (name, weight) => h("i", { class: (weight || "ph-bold") + " ph-" + name, "aria-hidden": "true" });
+const stars = (n, label) => {
+  const s = h("span", { class: "stars", role: "img", "aria-label": label || (n + " out of 5 stars") });
+  for (let i = 0; i < n; i++) s.append(icon("star", "ph-fill"));
+  return s;
+};
+const section = (id, cls, inner) => h("section", { id, class: cls }, h("div", { class: "wrap" }, inner));
+const head = (title, sub) => h("div", { class: "sec-head" }, h("h2", {}, title), sub ? h("p", {}, sub) : null);
+
+const hasWork = (c.beforeAfter && c.beforeAfter.length) || (c.gallery && c.gallery.length);
+const hasReviews = c.reviews && c.reviews.length;
+
+// ----- Header -----
+const navLinks = [
+  ["Services", "#services", c.services && c.services.length],
+  ["Work", "#work", hasWork],
+  ["Reviews", "#reviews", hasReviews]
+].filter(l => l[2]);
+app.append(
+  h("header", { class: "site-header" },
+    h("div", { class: "wrap" },
+      h("a", { class: "brand", href: "#" }, c.businessName),
+      h("nav", { class: "nav", "aria-label": "Main" }, navLinks.map(l => h("a", { href: l[1] }, l[0]))),
+      h("a", { class: "btn btn-primary header-cta", href: c.phoneHref }, icon("phone-call"), c.phone)
+    )
+  )
+);
+
+// ----- Hero -----
+app.append(
+  h("section", { id: "hero" },
+    h("div", { class: "wrap" },
+      h("h1", {}, c.heroHeading),
+      h("p", { class: "hero-sub" }, c.heroSub),
+      h("div", { class: "hero-actions" },
+        h("a", { class: "btn btn-light", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+        h("a", { class: "btn btn-outline", href: "#contact" }, c.quoteText)
+      )
+    )
+  )
+);
+
+// ----- Trust bar -----
+const trustCells = [];
+if (c.rating) {
+  trustCells.push(h("div", { class: "trust-item" },
+    icon("star", "ph-fill"),
+    h("div", {},
+      h("div", { class: "trust-value" }, c.rating.score + " on " + c.rating.source),
+      stars(5, "Rated " + c.rating.score + " out of 5"),
+      h("div", { class: "trust-label" }, c.rating.count + " reviews")
+    )
+  ));
+}
+(c.trust || []).forEach(t => trustCells.push(
+  h("div", { class: "trust-item" }, icon(t.icon),
+    h("div", {}, h("div", { class: "trust-value" }, t.value), h("div", { class: "trust-label" }, t.label)))
+));
+app.append(h("section", { class: "trust", "aria-label": "Why choose us" }, h("div", { class: "wrap trust-grid" }, trustCells)));
+
+// ----- Services -----
+if (c.services && c.services.length) {
+  const n = c.services.length;
+  const extra = (3 - (n % 3)) % 3; // cards that span 2 columns so the grid has no empty cell
+  const wideCount = extra === 0 && n >= 6 ? 3 : extra; // 6 or 9 services: still asymmetric
+  const wideAt = new Set([0, n - 1, Math.floor(n / 2)].slice(0, wideCount));
+  const cards = c.services.map((s, i) => {
+    const wide = wideAt.has(i);
+    return h("a", { class: "svc" + (wide ? " wide" : ""), href: "#contact" },
+      s.image ? h("img", { src: s.image, alt: s.name, loading: "lazy" }) : null,
+      h("div", { class: "svc-body" }, h("h3", {}, s.name), h("p", {}, s.desc))
+    );
+  });
+  app.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub), h("div", { class: "svc-grid" }, cards)]));
+}
+
+// ----- Work -----
+if (hasWork) {
+  const parts = [head(c.workHeading, c.workSub)];
+  if (c.beforeAfter && c.beforeAfter.length) {
+    parts.push(h("div", { class: "ba-grid" }, c.beforeAfter.map(p => {
+      const range = h("input", { type: "range", min: "0", max: "100", value: "50", "aria-label": "Drag to compare before and after" });
+      const stage = h("div", { class: "ba-stage" },
+        h("img", { src: p.after, alt: "After: " + p.caption, loading: "lazy" }),
+        h("img", { class: "ba-before", src: p.before, alt: "Before: " + p.caption, loading: "lazy" }),
+        h("span", { class: "ba-line" }),
+        h("span", { class: "ba-knob" }, icon("arrows-left-right")),
+        range
+      );
+      range.addEventListener("input", () => stage.style.setProperty("--pos", range.value + "%"));
+      return h("figure", {}, stage, h("figcaption", { class: "ba-caption" }, h("span", {}, "Before"), h("span", {}, p.caption), h("span", {}, "After")));
+    })));
+  }
+  if (c.gallery && c.gallery.length) {
+    parts.push(h("div", { class: "gallery" }, c.gallery.map(g => h("img", { src: g.image, alt: g.alt, loading: "lazy" }))));
+  }
+  app.append(section("work", "sec", parts));
+}
+
+// ----- Reviews -----
+if (hasReviews) {
+  const [first, ...rest] = c.reviews;
+  const feature = h("figure", { class: "rev-feature" },
+    stars(5),
+    h("blockquote", {}, "\u201C" + first.quote + "\u201D"),
+    h("figcaption", {}, h("div", { class: "rev-author" }, first.author), h("div", { class: "rev-meta" }, first.meta))
+  );
+  const list = h("div", { class: "rev-list" }, rest.map(r =>
+    h("figure", { class: "rev-card" },
+      stars(5),
+      h("blockquote", {}, "\u201C" + r.quote + "\u201D"),
+      h("figcaption", {}, h("span", { class: "rev-author" }, r.author), h("div", { class: "rev-meta" }, r.meta))
+    )
+  ));
+  app.append(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: "rev" }, feature, list)]));
+}
+
+// ----- Process -----
+if (c.steps && c.steps.length) {
+  app.append(section("process", "sec",
+    h("div", { class: "proc" },
+      head(c.processHeading, c.processSub),
+      h("div", { class: "steps" }, c.steps.map(s =>
+        h("div", { class: "step" },
+          h("div", { class: "step-icon" }, icon(s.icon)),
+          h("div", {}, h("h3", {}, s.title), h("p", {}, s.text))
+        )
+      ))
+    )
+  ));
+}
+
+// ----- Contact -----
+const form = h("form", { id: "contact-form" },
+  h("label", {}, "Name", h("input", { type: "text", name: "name", autocomplete: "name", required: "" })),
+  h("label", {}, "Phone", h("input", { type: "tel", name: "phone", autocomplete: "tel", required: "" })),
+  h("label", {}, "Moving from, to and when?", h("textarea", { name: "message", required: "", placeholder: "e.g. 3 bedroom house, Monash to Goulburn, early December" })),
+  h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
+  h("button", { type: "submit", class: "btn btn-primary" }, c.quoteText),
+  h("p", { class: "form-note" }, "No obligation. We call you back to book your free in-home quote.")
+);
+app.append(
+  h("section", { id: "contact", class: "sec" },
+    h("div", { class: "wrap contact-grid" },
+      h("div", {},
+        h("h2", {}, c.contactHeading),
+        h("p", { class: "contact-sub" }, c.contactSub),
+        h("ul", { class: "promises" }, (c.promises || []).map(p => h("li", {}, icon("check-circle", "ph-fill"), p))),
+        h("a", { class: "big-phone", href: c.phoneHref }, icon("phone-call"), c.phone)
+      ),
+      h("div", { class: "form-card" }, form)
+    )
+  )
+);
+
+// ----- Areas -----
+if (c.areas && c.areas.length) {
+  app.append(section("areas", "sec", [head(c.areasHeading), h("ul", { class: "areas" }, c.areas.map(a => h("li", {}, a)))]));
+}
+
+// ----- Footer -----
+app.append(
+  h("footer", {},
+    h("div", { class: "wrap foot" },
+      h("div", {}, h("h3", {}, c.businessName), h("p", {}, c.heroSub)),
+      h("div", {}, h("h3", {}, "Contact"), h("a", { href: c.phoneHref }, c.phone), c.email ? h("a", { href: "mailto:" + c.email }, c.email) : null, h("p", {}, c.address)),
+      h("div", {}, h("h3", {}, "Hours"), h("p", {}, c.hours))
+    )
+  )
+);
+
+// ----- Mobile bar, sample ribbon -----
+app.append(
+  h("div", { class: "mobile-bar" },
+    h("a", { class: "btn btn-primary", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+    h("a", { class: "btn btn-quote", href: "#contact" }, c.quoteText)
+  )
+);
+if (c.sample) {
+  app.append(h("div", { class: "sample-ribbon" }, "SAMPLE CONTENT: replace before sending"));
+  console.warn("content.sample is true: replace placeholder reviews, photos and numbers before sending.");
+}
+
+// ----- Scroll reveal -----
+// Skipped entirely for reduced motion or browsers without IntersectionObserver,
+// so nothing is ever left invisible.
+(function () {
+  const calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (calm || !("IntersectionObserver" in window)) return;
+
+  const groups = [
+    ".trust-grid > .trust-item",
+    ".sec-head",
+    ".svc-grid > .svc",
+    ".ba-grid > figure",
+    ".rev-feature",
+    ".rev-list > .rev-card",
+    ".steps > .step",
+    ".contact-grid > div",
+    ".areas"
+  ];
+  const targets = [];
+  groups.forEach(sel => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      el.classList.add("reveal");
+      el.style.setProperty("--i", Math.min(i, 5)); // stagger within a group, capped
+      targets.push(el);
+    });
+  });
+
+  document.documentElement.classList.add("js-reveal");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      el.classList.add("in");
+      io.unobserve(el);
+      // Once revealed, drop the reveal state so hover effects work without delay or conflict.
+      const done = () => { el.classList.remove("reveal", "in"); el.style.removeProperty("--i"); };
+      el.addEventListener("transitionend", function f(ev) {
+        if (ev.target === el && ev.propertyName === "opacity") { el.removeEventListener("transitionend", f); done(); }
+      });
+      setTimeout(done, 2000);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  targets.forEach(el => io.observe(el));
+})();
+
+// ----- Web3Forms submit -----
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const btn = form.querySelector('button[type="submit"]');
+  const original = btn.textContent;
+  btn.textContent = "Sending";
+  btn.disabled = true;
+  const data = new FormData(form);
+  data.append("access_key", c.web3formsKey);
+  data.append("subject", "New quote request: " + c.businessName);
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
+    const out = await res.json();
+    if (!out.success) throw new Error(out.message || "Submission failed");
+    form.replaceChildren(h("p", { class: "form-success" }, "Thanks, we have your details and will call you back shortly."));
+  } catch (err) {
+    btn.textContent = original;
+    btn.disabled = false;
+    let msg = form.querySelector(".form-error");
+    if (!msg) { msg = h("p", { class: "form-error", role: "alert" }); form.append(msg); }
+    msg.textContent = "That did not send. Please call " + c.phone + " instead.";
+  }
+});
+</script>
+</body>
+</html>
