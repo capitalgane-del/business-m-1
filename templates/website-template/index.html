@@ -3,15 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading</title>
-<meta name="description" content="">
-<meta name="theme-color" content="#1F5C3F">
+<!-- Static copies of pageTitle / metaDescription: Facebook and WhatsApp link previews do not run JavaScript. -->
+<title>Dutchies Removals | Family Removalists in Canberra</title>
+<meta name="description" content="A family owned business servicing local, country and interstate relocations. Based in Monash, Canberra. Free in-home quotes. Call 0411 331 779.">
+<meta name="theme-color" content="#D32930">
 
 <!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pinyon+Script&family=Rye&display=swap" rel="stylesheet">
+<!-- Icon CSS linked directly: the @phosphor-icons/web JS loader declares a global `head`
+     that clashes with the renderer below and stops every icon loading. Only bold and fill are used. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css">
 
 <script>
 /* ============================================================
@@ -27,96 +31,137 @@
    - No em dashes anywhere in the copy. Use a comma, a colon or a full stop.
    ============================================================ */
 const content = {
+  // Keep true until the review quotes are checked against the live listings
+  // and the Web3Forms key is in. See README.md in this folder.
   sample: true,
 
-  pageTitle: "Sample Landscapes | Backyard Landscaping in Kambah",
-  metaDescription: "Decks, retaining walls, turf and paving in Kambah and the Tuggeranong Valley. Free on-site quote, fixed written price.",
+  // COPY SOURCES: "Muval" = their own description on Muval. "Listings" = their own description on
+  // Oneflare / Localsearch / Service.com.au. "Mine" = written by us; no new facts, check the tone.
+  pageTitle: "Dutchies Removals | Family Removalists in Canberra",
+  // Muval line + listings (Monash, free in-home quote).
+  metaDescription: "A family owned business servicing local, country and interstate relocations. Based in Monash, Canberra. Free in-home quotes. Call 0411 331 779.",
 
-  businessName: "Sample Landscapes",
-  phone: "0400 000 000",
-  phoneHref: "tel:+61400000000",
-  email: "hello@example.com.au",
-  address: "Kambah ACT 2902",
-  hours: "Mon to Fri 7am to 5pm, Sat by appointment",
+  businessName: "Dutchies Removals",
+  phone: "0411 331 779",
+  phoneHref: "tel:+61411331779",
+  email: "dutchiesremovals1@gmail.com",
+  // Suburb only: the listed street address looks like a home address. Confirm with the client.
+  address: "Monash ACT 2904",
+  // Most recently posted hours: their Facebook page and Localsearch (the listing with their newest address).
+  // Older listings: Oneflare Mon to Sat 7am to 5pm; Yellow Pages/Yelp (old Toukley NSW base) 7 days 7am to 7pm.
+  hours: "Mon to Fri 9am to 4pm (Thu to 5pm), Sat 9am to 12:30pm, Sun closed",
 
   ctaText: "Call Now",
   quoteText: "Get a Free Quote",
 
   // HERO: one headline (2 lines max), one short sentence (under 20 words).
-  heroHeading: "Backyard landscaping in Kambah",
-  heroSub: "Decks, retaining walls, turf and paving. One local crew from quote to clean-up.",
+  // tagline: their own slogan, from the logo. Set in script under the emblem, as on the logo.
+  tagline: "Excellence in removals",
+  // heroBadge: the navy lettering and lion lifted out of the logo graphic they supplied
+  // (original kept at the repo root), so it sits on the red glow like their sign does.
+  // Beside the headline on desktop, above it on phones.
+  heroBadge: "images/dutchies-emblem.png",
+  heroBadgeAlt: "Dutchies Removals: the Dutch lion between the words Dutchies and Removals",
+  // Mine, from sourced facts (family owned, Canberra based).
+  heroHeading: "Family removalists in Canberra",
+  // Muval, word for word (capitals lowered).
+  heroSub: "A family owned business servicing local, country and interstate relocations.",
   // Best single upgrade on any mockup: one real photo from their Facebook or Google listing.
-  heroImage: "https://picsum.photos/seed/sample-hero-yard/1800/1100",
+  // Empty = brand-colour hero until we have a photo of their truck or crew.
+  heroImage: "",
 
   // TRUST BAR sits directly under the hero. First cell is the rating.
-  rating: { score: "4.9", count: "27", source: "Google" },
+  // Muval: 4.90 from 97 reviews (as last indexed; may have grown).
+  rating: { score: "4.9", count: "97", source: "Muval", href: "https://www.muval.com.au/moving-companies/dutchies-removals" },
   trust: [
-    { icon: "shield-check", value: "Fully insured", label: "Public liability cover on every job" },
-    { icon: "seal-check", value: "Fixed quotes", label: "Written price before work starts" },
-    { icon: "map-pin", value: "Local crew", label: "Kambah and the Tuggeranong Valley" }
+    // Muval "family owned"; Localsearch "locally owned and operated".
+    { icon: "users-three", value: "Family owned", label: "Locally owned and operated" },
+    // Service.com.au awards.
+    { icon: "trophy", value: "Top 10 in Canberra", label: "Service.com.au awards, 2019 and 2020", href: "https://www.service.com.au/listing/removalist-canberra-2600-dutchies-removals" },
+    // Listings: "The owner has over 17 years experience in Removals". Muval says over 15.
+    { icon: "calendar-check", value: "17+ years", label: "Owner's experience in removals" }
   ],
 
-  servicesHeading: "What we build",
-  servicesSub: "Pick one job or hand us the whole yard.",
+  servicesHeading: "What we move",
+  // Muval, word for word except "attach and reattach ... place" made to match "assembling".
+  servicesSub: "We always go the extra mile, assembling and disassembling beds, attaching and reattaching washing machines and placing your belongings exactly where you need them.",
   // 3 to 8 services. The layout adjusts so the grid never has a gap.
+  // image: "" = brand-colour tile. Drop in their own photos when we have them.
+  // Names: Muval (local, interstate, regional/country, single item) + listings (backloads, prepack).
+  // Descriptions marked "def" just explain the service in plain words (mine, no claims).
   services: [
-    { name: "Decks and pergolas", desc: "Timber and composite, built for Canberra summers and frosts.", image: "https://picsum.photos/seed/sample-deck/1000/800" },
-    { name: "Retaining walls", desc: "Stone and sleeper walls with proper drainage behind them.", image: "https://picsum.photos/seed/sample-wall/1000/800" },
-    { name: "Lawns and turf", desc: "Prepared base, quality turf, a lawn that actually takes.", image: "https://picsum.photos/seed/sample-lawn/1000/800" },
-    { name: "Paving and concreting", desc: "Paths, patios and driveways laid level and square.", image: "https://picsum.photos/seed/sample-paving/1000/800" },
-    { name: "Garden beds", desc: "Planting, mulch and irrigation that is easy to keep.", image: "https://picsum.photos/seed/sample-beds/1000/800" }
+    { name: "Local removals", desc: "Moves around Canberra and the ACT.", image: "" },
+    { name: "Interstate removals", desc: "Servicing the ACT, NSW, Victoria and Queensland.", image: "" },  // Facebook listing
+    { name: "Country removals", desc: "Regional and country relocations.", image: "" },
+    { name: "Backloads", desc: "Share truck space on a long-distance move.", image: "" },            // def
+    { name: "Pre-pack service", desc: "Your home packed up before moving day.", image: "" },           // def
+    { name: "Single item removals", desc: "One item, no full move needed.", image: "" }                // def
   ],
 
-  // WORK. Delete both arrays to hide the section.
-  workHeading: "Before and after",
-  workSub: "Real yards, same crew. Drag the handle.",
-  beforeAfter: [
-    { before: "https://picsum.photos/seed/sample-before-a/1000/750", after: "https://picsum.photos/seed/sample-after-a/1000/750", caption: "Rear yard, Kambah" },
-    { before: "https://picsum.photos/seed/sample-before-b/1000/750", after: "https://picsum.photos/seed/sample-after-b/1000/750", caption: "Courtyard, Wanniassa" }
-  ],
-  gallery: [
-    { image: "https://picsum.photos/seed/sample-g1/800/600", alt: "Finished timber deck" },
-    { image: "https://picsum.photos/seed/sample-g2/800/1000", alt: "Stone retaining wall" },
-    { image: "https://picsum.photos/seed/sample-g3/800/700", alt: "New lawn and garden beds" },
-    { image: "https://picsum.photos/seed/sample-g4/800/900", alt: "Paved entertaining area" },
-    { image: "https://picsum.photos/seed/sample-g5/800/600", alt: "Pergola over a deck" },
-    { image: "https://picsum.photos/seed/sample-g6/800/800", alt: "Curved garden bed" }
-  ],
+  // WORK: hidden until we have real job photos from the client.
+  // To show it, add workHeading, workSub, beforeAfter[] and/or gallery[] (see the template).
 
   // REVIEWS. First one is shown large: pick a real excerpt under 90 characters. Others under 3 lines. REAL ONLY.
-  reviewsHeading: "What locals say",
+  // All four are real, from their public listings. The pages were read through search snippets,
+  // so check each quote word for word against the live listing before sample is set to false.
+  // The Muval reviewer's name was not visible in what we could read.
+  reviewsHeading: "What customers say",
   reviews: [
-    { quote: "Turned a bare block into somewhere we actually sit outside. Spotless every single day.", author: "Craig H.", meta: "Gowrie, Google review" },
-    { quote: "Quote matched the final bill to the dollar.", author: "Priya N.", meta: "Calwell, Google review" },
-    { quote: "The retaining wall has been through two winters and has not moved.", author: "Tom B.", meta: "Monash, Google review" },
-    { quote: "Same bloke from first visit to final walk-through. Rare these days.", author: "Leanne O.", meta: "Theodore, Google review" }
+    { quote: "Very professional team. Punctual, friendly and excellent problem-solving skills.", author: "Joy", meta: "Oneflare review", href: "https://www.oneflare.com.au/b/dutchies-removals" },
+    { quote: "I cant recommend Allen and his team enough. Highly, highly recommended. Best removal experience to date (and Ive moved a lot!)", author: "Muval customer", meta: "Muval review", href: "https://www.muval.com.au/moving-companies/dutchies-removals" },
+    { quote: "Allen arrived on time, packed everything efficiently and delivered to two locations for us.", author: "Joanna", meta: "Find a Mover review", href: "https://www.findamover.com.au/mover/dutchies-removals-2481" },
+    { quote: "Very polite, careful and helpful.", author: "Ann", meta: "Interstate move, Find a Mover review", href: "https://www.findamover.com.au/mover/dutchies-removals-2481" }
   ],
+  reviewsMore: { text: "Read all 97 reviews on Muval", href: "https://www.muval.com.au/moving-companies/dutchies-removals" },
 
+  // Step wording is mine; the facts in it are sourced (free in-home quote, pre-pack, Muval set-up line).
   processHeading: "How it works",
-  processSub: "Four steps, no surprises.",
+  processSub: "From first call to set up in your new place.",
   steps: [
-    { icon: "phone-call", title: "Call or send the form", text: "A few photos of your space and what you have in mind." },
-    { icon: "clipboard-text", title: "Get a fixed quote", text: "Free on-site visit, then a clear written price." },
-    { icon: "hammer", title: "We build it", text: "On time, tidy every day, and you stay in the loop." },
-    { icon: "thumbs-up", title: "Walk the finished job", text: "We check it with you before we pack up." }
+    { icon: "phone-call", title: "Call or send the form", text: "Tell us where you are moving from and to, and roughly when." },
+    { icon: "house-line", title: "Free in-home quote", text: "We see what is moving before we give you a price." },
+    { icon: "truck", title: "Moving day", text: "Loaded, moved and unloaded. Pre-pack service available beforehand." },
+    { icon: "bed", title: "Set up at the new place", text: "Beds assembled, washing machines reattached and belongings placed exactly where you need them." }
   ],
 
   contactHeading: "Get your free quote",
-  contactSub: "Send a few details and we call you back the same business day.",
+  // "Free in home quote available": listings. First sentence is a plain instruction (mine).
+  contactSub: "Tell us where you are moving from and to. Free in-home quotes available.",
   promises: [
-    "Free on-site quote",
-    "Fixed written price",
-    "Same person from quote to clean-up"
+    "Free in-home quote",                // listings
+    "Family owned and operated",         // Muval + Localsearch
+    "Local, country and interstate",     // Muval
+    "Backloads and pre-pack service"     // listings
   ],
 
-  areasHeading: "Where we work",
-  areas: ["Kambah", "Wanniassa", "Gowrie", "Chisholm", "Monash", "Gordon", "Calwell", "Theodore", "Greenway", "Conder", "Banks", "Woden"],
+  areasHeading: "Where we move",
+  // ACT, NSW, VIC, QLD: their Facebook listing. Queanbeyan: a review describes a move there.
+  areas: ["Canberra and the ACT", "Queanbeyan", "New South Wales", "Victoria", "Queensland"],
 
   // Get a key at web3forms.com after the client signs up, or use your own and forward leads.
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY_HERE",
 
+  // LINKS: their other profiles, listed in the footer and opened in a new tab so the site stays open.
+  // URLs from search results (the pages themselves were blocked during research): click-check each.
+  // Facebook: their page ID from a Facebook mirror listing; Facebook redirects it to the page.
+  // Left out: the old Toukley NSW listings (Yellow Pages, Yelp) with out-of-date hours and address.
+  links: [
+    { label: "Facebook", href: "https://www.facebook.com/1479089482380269", icon: "facebook-logo" },
+    { label: "Muval reviews", href: "https://www.muval.com.au/moving-companies/dutchies-removals" },
+    { label: "Oneflare", href: "https://www.oneflare.com.au/b/dutchies-removals" },
+    { label: "ServiceSeeking", href: "https://www.serviceseeking.com.au/profile/101851-dutchies-removals" },
+    { label: "Find a Mover", href: "https://www.findamover.com.au/mover/dutchies-removals-2481" },
+    { label: "Localsearch", href: "https://www.localsearch.com.au/profile/dutchies-removals/isabella-plains-act/ip3B" },
+    { label: "Service.com.au", href: "https://www.service.com.au/listing/removalist-canberra-2600-dutchies-removals" },
+    { label: "Sirelo", href: "https://sirelo.com.au/removalist/monash/dutchies-removals/" },
+    { label: "MovingSelect", href: "https://www.movingselect.com.au/removalist/dutchies-removals" }
+  ],
+
   // primary = brand colour. onPrimary = text on it (use #FAFAF8 on dark colours, #15191C on light ones).
-  colours: { primary: "#1F5C3F", onPrimary: "#FAFAF8" }
+  // Sampled from their logo: red is the background's most common colour, navy is the lion,
+  // accent is the cream-peach "Excellence in removals" script.
+  // dark = hero, service tiles and footer. accent = small highlights on dark.
+  colours: { primary: "#D32930", onPrimary: "#FFFFFF", dark: "#0D082B", accent: "#F7BD8D" }
 };
 </script>
 <script>
@@ -126,6 +171,8 @@ const content = {
   document.querySelector('meta[name="theme-color"]').setAttribute("content", content.colours.primary);
   document.documentElement.style.setProperty("--color-primary", content.colours.primary);
   document.documentElement.style.setProperty("--on-primary", content.colours.onPrimary);
+  if (content.colours.dark) document.documentElement.style.setProperty("--dark", content.colours.dark);
+  if (content.colours.accent) document.documentElement.style.setProperty("--accent", content.colours.accent);
   if (content.heroImage) {
     document.documentElement.style.setProperty("--hero-image", 'url("' + content.heroImage + '")');
     document.documentElement.setAttribute("data-hero-image", "true");
@@ -137,19 +184,24 @@ const content = {
      static HTML + CSS variables + Phosphor icons. One radius, one accent, one theme
      (light or dark follows the visitor's device). */
   :root {
-    --color-primary: #1F5C3F;
-    --on-primary: #FAFAF8;
+    --color-primary: #D32930;
+    --on-primary: #FFFFFF;
+    /* Dutchies: neutrals tinted toward their navy and cream instead of the template's green-greys. */
+    --dark: #0D082B;
+    --accent: #F7BD8D;
 
-    --bg: #F6F6F3;
-    --surface: #FCFCFA;
-    --ink: #15191C;
-    --muted: #4A5258;
-    --border: rgba(21, 25, 28, 0.12);
-    --field: #FCFCFA;
+    --bg: #FAF7F3;
+    --surface: #FFFDFA;
+    --ink: #14112A;
+    --muted: #4D4A63;
+    --border: rgba(20, 17, 42, 0.12);
+    --field: #FFFDFA;
     --band: color-mix(in srgb, var(--color-primary) 8%, var(--bg));
     --primary-text: var(--color-primary);
 
     --font: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-display: "Rye", Georgia, "Times New Roman", serif;
+    --font-script: "Pinyon Script", "Brush Script MT", cursive;
     --r: 12px;
     --max: 1200px;
     --header-h: 72px;
@@ -157,12 +209,12 @@ const content = {
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #101315;
-      --surface: #181C1F;
-      --ink: #ECEEEC;
-      --muted: #A9B1B7;
-      --border: rgba(236, 238, 236, 0.14);
-      --field: #101315;
+      --bg: #0B0918;
+      --surface: #15122A;
+      --ink: #EEEBF5;
+      --muted: #B3AFC8;
+      --border: rgba(238, 235, 245, 0.14);
+      --field: #0B0918;
       --band: color-mix(in srgb, var(--color-primary) 16%, var(--bg));
       --primary-text: color-mix(in srgb, var(--color-primary) 45%, #FFFFFF);
     }
@@ -207,7 +259,7 @@ const content = {
   .btn:active { transform: translateY(1px) scale(0.98); }
   .btn-primary { background: var(--color-primary); color: var(--on-primary); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
   .btn-primary:hover { filter: brightness(1.12); }
-  .btn-light { background: #F6F6F3; color: #15191C; }
+  .btn-light { background: #FFFDFA; color: var(--dark); }
   .btn-light:hover { filter: brightness(0.94); }
   .btn-outline { background: rgba(255, 255, 255, 0.08); color: #F6F6F3; box-shadow: inset 0 0 0 2px rgba(246, 246, 243, 0.75); }
   .btn-outline:hover { background: rgba(255, 255, 255, 0.18); }
@@ -219,6 +271,8 @@ const content = {
   }
   .site-header .wrap { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1.25rem; }
   .brand { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Dutchies only: on phones the name would be cut to "Dutchies Rem...". Stack it instead. */
+  @media (max-width: 600px) { .brand { white-space: normal; line-height: 1.05; } }
   .nav { display: none; gap: 2rem; font-weight: 500; }
   .nav a { color: var(--muted); }
   .nav a:hover { color: var(--ink); }
@@ -230,16 +284,28 @@ const content = {
     position: relative; isolation: isolate; color: #F6F6F3;
     min-height: min(88dvh, 840px); display: flex; align-items: center;
     padding: 5rem 1.25rem 4rem;
-    background:
-      linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 78%, #0B0F0D), #0E1210);
+    /* Dutchies: the glowing red-orange panel from their logo (see "logo presentation" below). */
+    background: var(--glow);
     background-size: cover; background-position: center;
   }
-  html[data-hero-image] #hero { background-image: var(--hero-image), linear-gradient(135deg, #1b2a22, #0E1210); }
-  #hero::before {
+  @media (min-width: 900px) { #hero { background: var(--glow-wide); } }
+  html[data-hero-image] #hero { background-image: var(--hero-image), linear-gradient(135deg, var(--dark), #000); }
+  /* Darkening overlay only matters over a photo. */
+  html[data-hero-image] #hero::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(90deg, rgba(10, 14, 12, 0.84) 0%, rgba(10, 14, 12, 0.58) 55%, rgba(10, 14, 12, 0.3) 100%);
+    background: linear-gradient(90deg, rgba(13, 8, 43, 0.86) 0%, rgba(13, 8, 43, 0.6) 55%, rgba(13, 8, 43, 0.3) 100%);
   }
   #hero .wrap { width: 100%; }
+  /* Dutchies: emblem with the slogan underneath, stacked like their logo. Beside the headline
+     on desktop, above it on phones. */
+  #hero .wrap.has-badge { display: grid; gap: 1.5rem; align-items: center; }
+  .hero-mark { display: grid; justify-items: center; width: min(100%, 220px); }
+  .hero-badge { width: 100%; height: auto; }
+  @media (min-width: 900px) {
+    #hero .wrap.has-badge { grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: 3.5rem; }
+    .hero-mark { order: 2; width: 100%; }
+  }
+  @media (min-width: 1200px) { #hero .wrap.has-badge { grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 4.5rem; } }
   #hero h1 { font-size: clamp(2.7rem, 7vw, 5rem); max-width: 18ch; letter-spacing: -0.04em; }
   .hero-sub { margin-top: 1.5rem; font-size: clamp(1.15rem, 2.2vw, 1.5rem); max-width: 34ch; color: rgba(246, 246, 243, 0.92); line-height: 1.4; }
   .hero-actions { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: 0.85rem; }
@@ -252,7 +318,8 @@ const content = {
   .trust-item { display: flex; gap: 0.9rem; align-items: flex-start; }
   .trust-item > i { font-size: 2rem; flex-shrink: 0; margin-top: 0.15rem; }
   .trust-value { font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.15; }
-  .trust-label { font-size: 0.95rem; opacity: 0.9; line-height: 1.35; margin-top: 0.2rem; }
+  /* Dutchies: full opacity here, on the feature review and in contact. Faded white on this red fails contrast. */
+  .trust-label { font-size: 0.95rem; line-height: 1.35; margin-top: 0.2rem; }
   .stars { display: inline-flex; gap: 2px; font-size: 1rem; margin-top: 0.3rem; }
 
   /* ---------- Services ---------- */
@@ -265,10 +332,10 @@ const content = {
     position: relative; isolation: isolate; overflow: hidden; color: #F6F6F3;
     min-height: 340px; display: flex; align-items: flex-end;
     border-radius: var(--r);
-    background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 80%, #0B0F0D), #0E1210);
+    background: radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--color-primary) 55%, var(--dark)) 0%, var(--dark) 62%);
   }
   .svc img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
-  .svc::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 14, 12, 0) 30%, rgba(10, 14, 12, 0.88) 100%); }
+  .svc::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(13, 8, 43, 0) 30%, rgba(13, 8, 43, 0.88) 100%); }
   .svc-body { padding: 1.5rem; width: 100%; }
   .svc-body p { margin-top: 0.4rem; max-width: 36ch; color: rgba(246, 246, 243, 0.92); font-size: 1rem; line-height: 1.4; }
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -310,7 +377,7 @@ const content = {
   .rev-card .stars { color: var(--primary-text); margin: 0; }
   .rev-author { font-weight: 700; }
   .rev-meta { font-size: 0.95rem; color: var(--muted); }
-  .rev-feature .rev-meta { color: var(--on-primary); opacity: 0.85; }
+  .rev-feature .rev-meta { color: var(--on-primary); }
 
   /* ---------- Process ---------- */
   #process { background: var(--band); }
@@ -325,7 +392,7 @@ const content = {
   #contact { background: var(--color-primary); color: var(--on-primary); }
   .contact-grid { display: grid; gap: 2.5rem; }
   @media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1fr; align-items: start; gap: 4rem; } }
-  .contact-sub { margin-top: 1rem; font-size: 1.15rem; opacity: 0.92; max-width: 40ch; }
+  .contact-sub { margin-top: 1rem; font-size: 1.15rem; max-width: 40ch; }
   .promises { margin-top: 1.75rem; display: grid; gap: 0.8rem; }
   .promises li { display: flex; gap: 0.75rem; align-items: center; font-size: 1.15rem; font-weight: 500; }
   .promises i { font-size: 1.5rem; flex-shrink: 0; }
@@ -350,12 +417,12 @@ const content = {
   .areas li { padding: 0.6rem 1.1rem; border: 1.5px solid var(--border); border-radius: var(--r); font-weight: 600; background: var(--surface); }
 
   /* ---------- Footer ---------- */
-  footer { background: #0F1311; color: #E8EBE8; padding: 3rem 1.25rem; }
+  footer { background: var(--dark); color: #F3F0FA; padding: 3rem 1.25rem; }
   .foot { display: grid; gap: 2rem; }
   @media (min-width: 768px) { .foot { grid-template-columns: 1.4fr 1fr 1fr; } }
   .foot h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
-  .foot p, .foot a { color: #B9C0BB; display: block; }
-  .foot a:hover { color: #F6F6F3; }
+  .foot p, .foot a { color: #B8B4CC; display: block; }
+  .foot a:hover { color: #FFFFFF; }
 
   /* ---------- Hover pop (mouse only, never on touch or reduced motion) ---------- */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
@@ -366,8 +433,8 @@ const content = {
     .btn:hover { transform: translateY(-3px) scale(1.04); }
     .btn:active { transform: translateY(0) scale(0.98); }
     .btn-primary:hover { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 14px 26px -8px color-mix(in srgb, var(--color-primary) 75%, transparent); }
-    .btn-light:hover { box-shadow: 0 14px 28px -8px rgba(5, 12, 8, 0.6); }
-    .btn-outline:hover { box-shadow: inset 0 0 0 2px #F6F6F3, 0 14px 28px -8px rgba(5, 12, 8, 0.6); }
+    .btn-light:hover { box-shadow: 0 14px 28px -8px rgba(0, 0, 0, 0.6); }
+    .btn-outline:hover { box-shadow: inset 0 0 0 2px #F6F6F3, 0 14px 28px -8px rgba(0, 0, 0, 0.6); }
     .svc:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -14px color-mix(in srgb, var(--color-primary) 65%, transparent); }
     .rev-card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--color-primary) 45%, transparent); }
     .gallery img:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--color-primary) 45%, transparent); }
@@ -385,7 +452,8 @@ const content = {
      hidden unless the script has confirmed it can reveal it again (html.js-reveal). */
   @media (prefers-reduced-motion: no-preference) {
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-    #hero h1, .hero-sub, .hero-actions { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    #hero h1, .hero-sub, .hero-actions, .hero-mark { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero-mark { animation-delay: 0.18s; }
     .hero-sub { animation-delay: 0.12s; }
     .hero-actions { animation-delay: 0.24s; }
 
@@ -412,6 +480,58 @@ const content = {
     padding: 0.4rem 0.75rem; border-radius: var(--r); font-weight: 700; font-size: 0.85rem;
   }
   @media (min-width: 768px) { .sample-ribbon { bottom: 0.75rem; } }
+
+  /* ---------- Dutchies: logo presentation ----------
+     Their logo is navy Western lettering and a lion on a glowing red-orange panel, with a cream
+     script underneath. The hero, featured review and quote section reuse that panel with navy
+     type; the trust bar and footer flip it to cream on navy. Glow colours are sampled from the
+     logo: bright orange behind the text (so navy keeps 4.5:1 contrast), falling to their deep
+     red around the emblem and slogan, where the logo's own script sits on red.
+     Rye is the closest Google font to the lettering (one weight, so no fake bold); Pinyon Script
+     is close to the script. Body text stays Outfit. */
+  :root {
+    --on-glow: #0D082B;
+    --cream: #FBE9D2;
+    /* Phones: emblem on top in the red, text lower in the bright centre. */
+    --glow: radial-gradient(150% 62% at 50% 72%, #EE9466 0%, #E66F42 38%, #E25B3C 62%, #D93E31 84%, #C8202D 100%);
+    /* Desktop: bright behind the left text column, red around the emblem on the right. */
+    --glow-wide: radial-gradient(70% 115% at 28% 48%, #EE9466 0%, #E66F42 34%, #E25B3C 56%, #D93E31 76%, #C8202D 100%);
+    /* Text all over (stacked quote section on phones): never darker than #DD4D36. */
+    --glow-safe: radial-gradient(130% 85% at 50% 30%, #EE9466 0%, #E66F42 40%, #E25B3C 72%, #DD4D36 100%);
+  }
+  h1, h2, h3, .brand, .trust-value { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em; }
+  #hero h1 { font-size: clamp(1.9rem, 4.4vw, 3.3rem); line-height: 1.1; letter-spacing: 0.01em; max-width: 16ch; }
+  h2 { font-size: clamp(1.6rem, 3.6vw, 2.6rem); line-height: 1.15; }
+  h3 { font-size: 1.1rem; line-height: 1.3; letter-spacing: 0.03em; }
+  .trust-value { font-size: 1.05rem; line-height: 1.3; }
+  .brand { font-size: 1.05rem; letter-spacing: 0.03em; }
+
+  #hero { color: var(--on-glow); }
+  #hero .hero-sub { color: var(--on-glow); }
+  #hero .btn-light { background: var(--on-glow); color: var(--cream); }
+  #hero .btn-outline { background: transparent; color: var(--on-glow); box-shadow: inset 0 0 0 2px var(--on-glow); }
+  #hero .btn-outline:hover { background: rgba(13, 8, 43, 0.08); box-shadow: inset 0 0 0 2px var(--on-glow), 0 14px 28px -8px rgba(0, 0, 0, 0.35); }
+  .hero-tagline { font-family: var(--font-script); color: #FFF4E6; font-size: clamp(1.7rem, 2.6vw, 2.3rem); line-height: 1.1; margin-top: -0.15rem; text-shadow: 0 1px 1px rgba(13, 8, 43, 0.45), 0 0 16px rgba(110, 15, 30, 0.45); }
+
+  .trust { background: var(--dark); color: var(--cream); }
+  .trust-item > i, .trust .stars { color: var(--accent); }
+  a.trust-value { display: block; width: fit-content; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+
+  .rev-feature { background: radial-gradient(140% 100% at 25% 15%, #EE9466 0%, #E66F42 45%, #E25B3C 100%); color: var(--on-glow); }
+  .rev-feature .rev-meta { color: var(--on-glow); }
+  .rev-meta a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .rev-more { margin-top: 1.5rem; font-weight: 600; }
+  .rev-more a { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--primary-text); text-decoration: underline; text-underline-offset: 4px; }
+
+  #contact { background: var(--glow-safe); color: var(--on-glow); }
+  @media (min-width: 900px) { #contact { background: var(--glow-wide); } }
+  #hero :focus-visible, #contact :focus-visible, .rev-feature :focus-visible { outline-color: var(--on-glow); }
+
+  .foot .foot-tagline { font-family: var(--font-script); color: var(--accent); font-size: 1.7rem; line-height: 1.1; margin: -0.1rem 0 0.5rem; }
+  @media (min-width: 768px) { .foot { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .foot { grid-template-columns: 1.3fr 1fr 1fr 1fr; } }
+  .foot-links { display: grid; gap: 0.3rem; }
+  .foot-links a { display: inline-flex; align-items: center; gap: 0.5rem; }
 </style>
 </head>
 <body>
@@ -441,6 +561,8 @@ const stars = (n, label) => {
 };
 const section = (id, cls, inner) => h("section", { id, class: cls }, h("div", { class: "wrap" }, inner));
 const head = (title, sub) => h("div", { class: "sec-head" }, h("h2", {}, title), sub ? h("p", {}, sub) : null);
+// Dutchies: links to their other profiles open in a new tab so the site stays open.
+const ext = (href, cls, ...kids) => h("a", { href, class: cls, target: "_blank", rel: "noopener" }, kids);
 
 const hasWork = (c.beforeAfter && c.beforeAfter.length) || (c.gallery && c.gallery.length);
 const hasReviews = c.reviews && c.reviews.length;
@@ -462,14 +584,22 @@ app.append(
 );
 
 // ----- Hero -----
+// Dutchies: emblem with the slogan in script underneath, laid out like their logo
+// (content.heroBadge, content.tagline).
 app.append(
   h("section", { id: "hero" },
-    h("div", { class: "wrap" },
-      h("h1", {}, c.heroHeading),
-      h("p", { class: "hero-sub" }, c.heroSub),
-      h("div", { class: "hero-actions" },
-        h("a", { class: "btn btn-light", href: c.phoneHref }, icon("phone-call"), c.ctaText),
-        h("a", { class: "btn btn-outline", href: "#contact" }, c.quoteText)
+    h("div", { class: "wrap" + (c.heroBadge ? " has-badge" : "") },
+      c.heroBadge ? h("div", { class: "hero-mark" },
+        h("img", { class: "hero-badge", src: c.heroBadge, alt: c.heroBadgeAlt || c.businessName, width: "551", height: "441" }),
+        c.tagline ? h("p", { class: "hero-tagline" }, c.tagline) : null
+      ) : null,
+      h("div", {},
+        h("h1", {}, c.heroHeading),
+        h("p", { class: "hero-sub" }, c.heroSub),
+        h("div", { class: "hero-actions" },
+          h("a", { class: "btn btn-light", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+          h("a", { class: "btn btn-outline", href: "#contact" }, c.quoteText)
+        )
       )
     )
   )
@@ -481,7 +611,8 @@ if (c.rating) {
   trustCells.push(h("div", { class: "trust-item" },
     icon("star", "ph-fill"),
     h("div", {},
-      h("div", { class: "trust-value" }, c.rating.score + " on " + c.rating.source),
+      c.rating.href ? ext(c.rating.href, "trust-value", c.rating.score + " on " + c.rating.source)
+                    : h("div", { class: "trust-value" }, c.rating.score + " on " + c.rating.source),
       stars(5, "Rated " + c.rating.score + " out of 5"),
       h("div", { class: "trust-label" }, c.rating.count + " reviews")
     )
@@ -489,7 +620,8 @@ if (c.rating) {
 }
 (c.trust || []).forEach(t => trustCells.push(
   h("div", { class: "trust-item" }, icon(t.icon),
-    h("div", {}, h("div", { class: "trust-value" }, t.value), h("div", { class: "trust-label" }, t.label)))
+    h("div", {}, t.href ? ext(t.href, "trust-value", t.value) : h("div", { class: "trust-value" }, t.value),
+      h("div", { class: "trust-label" }, t.label)))
 ));
 app.append(h("section", { class: "trust", "aria-label": "Why choose us" }, h("div", { class: "wrap trust-grid" }, trustCells)));
 
@@ -535,19 +667,22 @@ if (hasWork) {
 // ----- Reviews -----
 if (hasReviews) {
   const [first, ...rest] = c.reviews;
+  // Dutchies: the source on each review links to the listing it came from.
+  const meta = r => h("div", { class: "rev-meta" }, r.href ? ext(r.href, null, r.meta) : r.meta);
   const feature = h("figure", { class: "rev-feature" },
     stars(5),
     h("blockquote", {}, "\u201C" + first.quote + "\u201D"),
-    h("figcaption", {}, h("div", { class: "rev-author" }, first.author), h("div", { class: "rev-meta" }, first.meta))
+    h("figcaption", {}, h("div", { class: "rev-author" }, first.author), meta(first))
   );
   const list = h("div", { class: "rev-list" }, rest.map(r =>
     h("figure", { class: "rev-card" },
       stars(5),
       h("blockquote", {}, "\u201C" + r.quote + "\u201D"),
-      h("figcaption", {}, h("span", { class: "rev-author" }, r.author), h("div", { class: "rev-meta" }, r.meta))
+      h("figcaption", {}, h("span", { class: "rev-author" }, r.author), meta(r))
     )
   ));
-  app.append(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: "rev" }, feature, list)]));
+  const more = c.reviewsMore ? h("p", { class: "rev-more" }, ext(c.reviewsMore.href, null, c.reviewsMore.text, icon("arrow-up-right"))) : null;
+  app.append(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: "rev" }, feature, list), more]));
 }
 
 // ----- Process -----
@@ -569,10 +704,10 @@ if (c.steps && c.steps.length) {
 const form = h("form", { id: "contact-form" },
   h("label", {}, "Name", h("input", { type: "text", name: "name", autocomplete: "name", required: "" })),
   h("label", {}, "Phone", h("input", { type: "tel", name: "phone", autocomplete: "tel", required: "" })),
-  h("label", {}, "What do you need done?", h("textarea", { name: "message", required: "" })),
+  h("label", {}, "Moving from, to and when?", h("textarea", { name: "message", required: "", placeholder: "e.g. 3 bedroom house, Monash to Goulburn, early December" })),
   h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
   h("button", { type: "submit", class: "btn btn-primary" }, c.quoteText),
-  h("p", { class: "form-note" }, "No obligation. We reply the same business day.")
+  h("p", { class: "form-note" }, "Prefer to talk? Call " + c.phone + ".")
 );
 app.append(
   h("section", { id: "contact", class: "sec" },
@@ -597,9 +732,12 @@ if (c.areas && c.areas.length) {
 app.append(
   h("footer", {},
     h("div", { class: "wrap foot" },
-      h("div", {}, h("h3", {}, c.businessName), h("p", {}, c.heroSub)),
+      h("div", {}, h("h3", {}, c.businessName), c.tagline ? h("p", { class: "foot-tagline" }, c.tagline) : null, h("p", {}, c.heroSub)),
       h("div", {}, h("h3", {}, "Contact"), h("a", { href: c.phoneHref }, c.phone), c.email ? h("a", { href: "mailto:" + c.email }, c.email) : null, h("p", {}, c.address)),
-      h("div", {}, h("h3", {}, "Hours"), h("p", {}, c.hours))
+      h("div", {}, h("h3", {}, "Hours"), h("p", {}, c.hours)),
+      // Dutchies: their other profiles (Facebook, review sites).
+      c.links && c.links.length ? h("div", {}, h("h3", {}, "Find us online"),
+        h("ul", { class: "foot-links" }, c.links.map(l => h("li", {}, ext(l.href, null, icon(l.icon || "arrow-up-right"), l.label))))) : null
     )
   )
 );
@@ -675,7 +813,7 @@ form.addEventListener("submit", async function (e) {
     const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
     const out = await res.json();
     if (!out.success) throw new Error(out.message || "Submission failed");
-    form.replaceChildren(h("p", { class: "form-success" }, "Thanks, we have your details and will call you back shortly."));
+    form.replaceChildren(h("p", { class: "form-success" }, "Thanks, your details have been sent. For anything urgent, call " + c.phone + "."));
   } catch (err) {
     btn.textContent = original;
     btn.disabled = false;
