@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@phosphor-icons/web" defer></script>
 
-<script>
+<script id="content">
 /* ============================================================
    CONTENT. Reskinning a client means editing this object only.
    Everything below it should not need touching.
@@ -119,8 +119,9 @@ const content = {
   colours: { primary: "#1F5C3F", onPrimary: "#FAFAF8" }
 };
 </script>
-<script>
-  // Sets title, description and brand colours before first paint.
+<script id="preview">
+  // Preview only: sets title, description and brand colours before first paint.
+  // build.js writes these straight into the static page instead.
   document.title = content.pageTitle;
   document.querySelector('meta[name="description"]').setAttribute("content", content.metaDescription);
   document.querySelector('meta[name="theme-color"]').setAttribute("content", content.colours.primary);
@@ -416,205 +417,224 @@ const content = {
 </head>
 <body>
 <div id="app"></div>
-<noscript><p style="padding:2rem">Please enable JavaScript to view this page.</p></noscript>
+<noscript><p style="padding:2rem">Preview needs JavaScript. Run build.js to get the static page.</p></noscript>
 
-<script>
-// Renders content into the page. Nothing here is client-specific.
-const c = content;
-const app = document.getElementById("app");
+<script id="render">
+// Builds the whole page as an HTML string from content. Nothing here is client-specific.
+// Runs in the browser for preview, and inside build.js to write the static page.
+function renderPage(c) {
+  const VOID = new Set(["img", "input"]);
+  const esc = s => String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+  function Html(s) { this.s = s; }
+  const kid = k => k == null || k === false ? "" : Array.isArray(k) ? k.map(kid).join("") : k instanceof Html ? k.s : esc(k);
+  function h(tag, props, ...kids) {
+    let attrs = "";
+    Object.entries(props || {}).forEach(([k, v]) => {
+      if (v === false || v == null) return;
+      attrs += " " + k + '="' + esc(v) + '"';
+    });
+    return new Html("<" + tag + attrs + ">" + (VOID.has(tag) ? "" : kid(kids) + "</" + tag + ">"));
+  }
+  const icon = (name, weight) => h("i", { class: (weight || "ph-bold") + " ph-" + name, "aria-hidden": "true" });
+  const stars = (n, label) => {
+    const s = [];
+    for (let i = 0; i < n; i++) s.push(icon("star", "ph-fill"));
+    return h("span", { class: "stars", role: "img", "aria-label": label || (n + " out of 5 stars") }, s);
+  };
+  const section = (id, cls, inner) => h("section", { id, class: cls }, h("div", { class: "wrap" }, inner));
+  const head = (title, sub) => h("div", { class: "sec-head" }, h("h2", {}, title), sub ? h("p", {}, sub) : null);
 
-function h(tag, props, ...kids) {
-  const el = document.createElement(tag);
-  Object.entries(props || {}).forEach(([k, v]) => {
-    if (v === false || v == null) return;
-    if (k === "class") el.className = v;
-    else el.setAttribute(k, v);
-  });
-  kids.flat().forEach(k => { if (k != null && k !== false) el.append(k.nodeType ? k : document.createTextNode(k)); });
-  return el;
-}
-const icon = (name, weight) => h("i", { class: (weight || "ph-bold") + " ph-" + name, "aria-hidden": "true" });
-const stars = (n, label) => {
-  const s = h("span", { class: "stars", role: "img", "aria-label": label || (n + " out of 5 stars") });
-  for (let i = 0; i < n; i++) s.append(icon("star", "ph-fill"));
-  return s;
-};
-const section = (id, cls, inner) => h("section", { id, class: cls }, h("div", { class: "wrap" }, inner));
-const head = (title, sub) => h("div", { class: "sec-head" }, h("h2", {}, title), sub ? h("p", {}, sub) : null);
+  const hasWork = (c.beforeAfter && c.beforeAfter.length) || (c.gallery && c.gallery.length);
+  const hasReviews = c.reviews && c.reviews.length;
+  const out = [];
 
-const hasWork = (c.beforeAfter && c.beforeAfter.length) || (c.gallery && c.gallery.length);
-const hasReviews = c.reviews && c.reviews.length;
-
-// ----- Header -----
-const navLinks = [
-  ["Services", "#services", c.services && c.services.length],
-  ["Work", "#work", hasWork],
-  ["Reviews", "#reviews", hasReviews]
-].filter(l => l[2]);
-app.append(
-  h("header", { class: "site-header" },
-    h("div", { class: "wrap" },
-      h("a", { class: "brand", href: "#" }, c.businessName),
-      h("nav", { class: "nav", "aria-label": "Main" }, navLinks.map(l => h("a", { href: l[1] }, l[0]))),
-      h("a", { class: "btn btn-primary header-cta", href: c.phoneHref }, icon("phone-call"), c.phone)
-    )
-  )
-);
-
-// ----- Hero -----
-app.append(
-  h("section", { id: "hero" },
-    h("div", { class: "wrap" },
-      h("h1", {}, c.heroHeading),
-      h("p", { class: "hero-sub" }, c.heroSub),
-      h("div", { class: "hero-actions" },
-        h("a", { class: "btn btn-light", href: c.phoneHref }, icon("phone-call"), c.ctaText),
-        h("a", { class: "btn btn-outline", href: "#contact" }, c.quoteText)
+  // ----- Header -----
+  const navLinks = [
+    ["Services", "#services", c.services && c.services.length],
+    ["Work", "#work", hasWork],
+    ["Reviews", "#reviews", hasReviews]
+  ].filter(l => l[2]);
+  out.push(
+    h("header", { class: "site-header" },
+      h("div", { class: "wrap" },
+        h("a", { class: "brand", href: "#" }, c.businessName),
+        h("nav", { class: "nav", "aria-label": "Main" }, navLinks.map(l => h("a", { href: l[1] }, l[0]))),
+        h("a", { class: "btn btn-primary header-cta", href: c.phoneHref }, icon("phone-call"), c.phone)
       )
     )
-  )
-);
-
-// ----- Trust bar -----
-const trustCells = [];
-if (c.rating) {
-  trustCells.push(h("div", { class: "trust-item" },
-    icon("star", "ph-fill"),
-    h("div", {},
-      h("div", { class: "trust-value" }, c.rating.score + " on " + c.rating.source),
-      stars(5, "Rated " + c.rating.score + " out of 5"),
-      h("div", { class: "trust-label" }, c.rating.count + " reviews")
-    )
-  ));
-}
-(c.trust || []).forEach(t => trustCells.push(
-  h("div", { class: "trust-item" }, icon(t.icon),
-    h("div", {}, h("div", { class: "trust-value" }, t.value), h("div", { class: "trust-label" }, t.label)))
-));
-app.append(h("section", { class: "trust", "aria-label": "Why choose us" }, h("div", { class: "wrap trust-grid" }, trustCells)));
-
-// ----- Services -----
-if (c.services && c.services.length) {
-  const n = c.services.length;
-  const extra = (3 - (n % 3)) % 3; // cards that span 2 columns so the grid has no empty cell
-  const wideCount = extra === 0 && n >= 6 ? 3 : extra; // 6 or 9 services: still asymmetric
-  const wideAt = new Set([0, n - 1, Math.floor(n / 2)].slice(0, wideCount));
-  const cards = c.services.map((s, i) => {
-    const wide = wideAt.has(i);
-    return h("a", { class: "svc" + (wide ? " wide" : ""), href: "#contact" },
-      s.image ? h("img", { src: s.image, alt: s.name, loading: "lazy" }) : null,
-      h("div", { class: "svc-body" }, h("h3", {}, s.name), h("p", {}, s.desc))
-    );
-  });
-  app.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub), h("div", { class: "svc-grid" }, cards)]));
-}
-
-// ----- Work -----
-if (hasWork) {
-  const parts = [head(c.workHeading, c.workSub)];
-  if (c.beforeAfter && c.beforeAfter.length) {
-    parts.push(h("div", { class: "ba-grid" }, c.beforeAfter.map(p => {
-      const range = h("input", { type: "range", min: "0", max: "100", value: "50", "aria-label": "Drag to compare before and after" });
-      const stage = h("div", { class: "ba-stage" },
-        h("img", { src: p.after, alt: "After: " + p.caption, loading: "lazy" }),
-        h("img", { class: "ba-before", src: p.before, alt: "Before: " + p.caption, loading: "lazy" }),
-        h("span", { class: "ba-line" }),
-        h("span", { class: "ba-knob" }, icon("arrows-left-right")),
-        range
-      );
-      range.addEventListener("input", () => stage.style.setProperty("--pos", range.value + "%"));
-      return h("figure", {}, stage, h("figcaption", { class: "ba-caption" }, h("span", {}, "Before"), h("span", {}, p.caption), h("span", {}, "After")));
-    })));
-  }
-  if (c.gallery && c.gallery.length) {
-    parts.push(h("div", { class: "gallery" }, c.gallery.map(g => h("img", { src: g.image, alt: g.alt, loading: "lazy" }))));
-  }
-  app.append(section("work", "sec", parts));
-}
-
-// ----- Reviews -----
-if (hasReviews) {
-  const [first, ...rest] = c.reviews;
-  const feature = h("figure", { class: "rev-feature" },
-    stars(5),
-    h("blockquote", {}, "\u201C" + first.quote + "\u201D"),
-    h("figcaption", {}, h("div", { class: "rev-author" }, first.author), h("div", { class: "rev-meta" }, first.meta))
   );
-  const list = h("div", { class: "rev-list" }, rest.map(r =>
-    h("figure", { class: "rev-card" },
-      stars(5),
-      h("blockquote", {}, "\u201C" + r.quote + "\u201D"),
-      h("figcaption", {}, h("span", { class: "rev-author" }, r.author), h("div", { class: "rev-meta" }, r.meta))
-    )
-  ));
-  app.append(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: "rev" }, feature, list)]));
-}
 
-// ----- Process -----
-if (c.steps && c.steps.length) {
-  app.append(section("process", "sec",
-    h("div", { class: "proc" },
-      head(c.processHeading, c.processSub),
-      h("div", { class: "steps" }, c.steps.map(s =>
-        h("div", { class: "step" },
-          h("div", { class: "step-icon" }, icon(s.icon)),
-          h("div", {}, h("h3", {}, s.title), h("p", {}, s.text))
+  // ----- Hero -----
+  out.push(
+    h("section", { id: "hero" },
+      h("div", { class: "wrap" },
+        h("h1", {}, c.heroHeading),
+        h("p", { class: "hero-sub" }, c.heroSub),
+        h("div", { class: "hero-actions" },
+          h("a", { class: "btn btn-light", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+          h("a", { class: "btn btn-outline", href: "#contact" }, c.quoteText)
         )
-      ))
+      )
     )
-  ));
-}
+  );
 
-// ----- Contact -----
-const form = h("form", { id: "contact-form" },
-  h("label", {}, "Name", h("input", { type: "text", name: "name", autocomplete: "name", required: "" })),
-  h("label", {}, "Phone", h("input", { type: "tel", name: "phone", autocomplete: "tel", required: "" })),
-  h("label", {}, "What do you need done?", h("textarea", { name: "message", required: "" })),
-  h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
-  h("button", { type: "submit", class: "btn btn-primary" }, c.quoteText),
-  h("p", { class: "form-note" }, "No obligation. We reply the same business day.")
-);
-app.append(
-  h("section", { id: "contact", class: "sec" },
-    h("div", { class: "wrap contact-grid" },
+  // ----- Trust bar -----
+  const trustCells = [];
+  if (c.rating) {
+    trustCells.push(h("div", { class: "trust-item" },
+      icon("star", "ph-fill"),
       h("div", {},
-        h("h2", {}, c.contactHeading),
-        h("p", { class: "contact-sub" }, c.contactSub),
-        h("ul", { class: "promises" }, (c.promises || []).map(p => h("li", {}, icon("check-circle", "ph-fill"), p))),
-        h("a", { class: "big-phone", href: c.phoneHref }, icon("phone-call"), c.phone)
-      ),
-      h("div", { class: "form-card" }, form)
-    )
-  )
-);
+        h("div", { class: "trust-value" }, c.rating.score + " on " + c.rating.source),
+        stars(5, "Rated " + c.rating.score + " out of 5"),
+        h("div", { class: "trust-label" }, c.rating.count + " reviews")
+      )
+    ));
+  }
+  (c.trust || []).forEach(t => trustCells.push(
+    h("div", { class: "trust-item" }, icon(t.icon),
+      h("div", {}, h("div", { class: "trust-value" }, t.value), h("div", { class: "trust-label" }, t.label)))
+  ));
+  out.push(h("section", { class: "trust", "aria-label": "Why choose us" }, h("div", { class: "wrap trust-grid" }, trustCells)));
 
-// ----- Areas -----
-if (c.areas && c.areas.length) {
-  app.append(section("areas", "sec", [head(c.areasHeading), h("ul", { class: "areas" }, c.areas.map(a => h("li", {}, a)))]));
+  // ----- Services -----
+  if (c.services && c.services.length) {
+    const n = c.services.length;
+    const extra = (3 - (n % 3)) % 3; // cards that span 2 columns so the grid has no empty cell
+    const wideCount = extra === 0 && n >= 6 ? 3 : extra; // 6 or 9 services: still asymmetric
+    const wideAt = new Set([0, n - 1, Math.floor(n / 2)].slice(0, wideCount));
+    const cards = c.services.map((s, i) =>
+      h("a", { class: "svc" + (wideAt.has(i) ? " wide" : ""), href: "#contact" },
+        s.image ? h("img", { src: s.image, alt: s.name, loading: "lazy" }) : null,
+        h("div", { class: "svc-body" }, h("h3", {}, s.name), h("p", {}, s.desc))
+      )
+    );
+    out.push(section("services", "sec", [head(c.servicesHeading, c.servicesSub), h("div", { class: "svc-grid" }, cards)]));
+  }
+
+  // ----- Work -----
+  if (hasWork) {
+    const parts = [head(c.workHeading, c.workSub)];
+    if (c.beforeAfter && c.beforeAfter.length) {
+      parts.push(h("div", { class: "ba-grid" }, c.beforeAfter.map(p =>
+        h("figure", {},
+          h("div", { class: "ba-stage" },
+            h("img", { src: p.after, alt: "After: " + p.caption, loading: "lazy" }),
+            h("img", { class: "ba-before", src: p.before, alt: "Before: " + p.caption, loading: "lazy" }),
+            h("span", { class: "ba-line" }),
+            h("span", { class: "ba-knob" }, icon("arrows-left-right")),
+            h("input", { type: "range", min: "0", max: "100", value: "50", "aria-label": "Drag to compare before and after" })
+          ),
+          h("figcaption", { class: "ba-caption" }, h("span", {}, "Before"), h("span", {}, p.caption), h("span", {}, "After"))
+        )
+      )));
+    }
+    if (c.gallery && c.gallery.length) {
+      parts.push(h("div", { class: "gallery" }, c.gallery.map(g => h("img", { src: g.image, alt: g.alt, loading: "lazy" }))));
+    }
+    out.push(section("work", "sec", parts));
+  }
+
+  // ----- Reviews -----
+  if (hasReviews) {
+    const [first, ...rest] = c.reviews;
+    const feature = h("figure", { class: "rev-feature" },
+      stars(5),
+      h("blockquote", {}, "“" + first.quote + "”"),
+      h("figcaption", {}, h("div", { class: "rev-author" }, first.author), h("div", { class: "rev-meta" }, first.meta))
+    );
+    const list = h("div", { class: "rev-list" }, rest.map(r =>
+      h("figure", { class: "rev-card" },
+        stars(5),
+        h("blockquote", {}, "“" + r.quote + "”"),
+        h("figcaption", {}, h("span", { class: "rev-author" }, r.author), h("div", { class: "rev-meta" }, r.meta))
+      )
+    ));
+    out.push(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: "rev" }, feature, list)]));
+  }
+
+  // ----- Process -----
+  if (c.steps && c.steps.length) {
+    out.push(section("process", "sec",
+      h("div", { class: "proc" },
+        head(c.processHeading, c.processSub),
+        h("div", { class: "steps" }, c.steps.map(s =>
+          h("div", { class: "step" },
+            h("div", { class: "step-icon" }, icon(s.icon)),
+            h("div", {}, h("h3", {}, s.title), h("p", {}, s.text))
+          )
+        ))
+      )
+    ));
+  }
+
+  // ----- Contact -----
+  // action/method let the form post to Web3Forms even with JavaScript off.
+  const form = h("form", { id: "contact-form", action: "https://api.web3forms.com/submit", method: "POST", "data-phone": c.phone },
+    h("input", { type: "hidden", name: "access_key", value: c.web3formsKey }),
+    h("input", { type: "hidden", name: "subject", value: "New quote request: " + c.businessName }),
+    h("label", {}, "Name", h("input", { type: "text", name: "name", autocomplete: "name", required: "" })),
+    h("label", {}, "Phone", h("input", { type: "tel", name: "phone", autocomplete: "tel", required: "" })),
+    h("label", {}, "What do you need done?", h("textarea", { name: "message", required: "" })),
+    h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
+    h("button", { type: "submit", class: "btn btn-primary" }, c.quoteText),
+    h("p", { class: "form-note" }, "No obligation. We reply the same business day.")
+  );
+  out.push(
+    h("section", { id: "contact", class: "sec" },
+      h("div", { class: "wrap contact-grid" },
+        h("div", {},
+          h("h2", {}, c.contactHeading),
+          h("p", { class: "contact-sub" }, c.contactSub),
+          h("ul", { class: "promises" }, (c.promises || []).map(p => h("li", {}, icon("check-circle", "ph-fill"), p))),
+          h("a", { class: "big-phone", href: c.phoneHref }, icon("phone-call"), c.phone)
+        ),
+        h("div", { class: "form-card" }, form)
+      )
+    )
+  );
+
+  // ----- Areas -----
+  if (c.areas && c.areas.length) {
+    out.push(section("areas", "sec", [head(c.areasHeading), h("ul", { class: "areas" }, c.areas.map(a => h("li", {}, a)))]));
+  }
+
+  // ----- Footer -----
+  out.push(
+    h("footer", {},
+      h("div", { class: "wrap foot" },
+        h("div", {}, h("h3", {}, c.businessName), h("p", {}, c.heroSub)),
+        h("div", {}, h("h3", {}, "Contact"), h("a", { href: c.phoneHref }, c.phone), c.email ? h("a", { href: "mailto:" + c.email }, c.email) : null, h("p", {}, c.address)),
+        h("div", {}, h("h3", {}, "Hours"), h("p", {}, c.hours))
+      )
+    )
+  );
+
+  // ----- Mobile bar, sample ribbon -----
+  out.push(
+    h("div", { class: "mobile-bar" },
+      h("a", { class: "btn btn-primary", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+      h("a", { class: "btn btn-quote", href: "#contact" }, c.quoteText)
+    )
+  );
+  if (c.sample) out.push(h("div", { class: "sample-ribbon" }, "SAMPLE CONTENT: replace before sending"));
+
+  return out.map(kid).join("\n");
 }
 
-// ----- Footer -----
-app.append(
-  h("footer", {},
-    h("div", { class: "wrap foot" },
-      h("div", {}, h("h3", {}, c.businessName), h("p", {}, c.heroSub)),
-      h("div", {}, h("h3", {}, "Contact"), h("a", { href: c.phoneHref }, c.phone), c.email ? h("a", { href: "mailto:" + c.email }, c.email) : null, h("p", {}, c.address)),
-      h("div", {}, h("h3", {}, "Hours"), h("p", {}, c.hours))
-    )
-  )
-);
-
-// ----- Mobile bar, sample ribbon -----
-app.append(
-  h("div", { class: "mobile-bar" },
-    h("a", { class: "btn btn-primary", href: c.phoneHref }, icon("phone-call"), c.ctaText),
-    h("a", { class: "btn btn-quote", href: "#contact" }, c.quoteText)
-  )
-);
-if (c.sample) {
-  app.append(h("div", { class: "sample-ribbon" }, "SAMPLE CONTENT: replace before sending"));
-  console.warn("content.sample is true: replace placeholder reviews, photos and numbers before sending.");
+if (typeof document !== "undefined") {
+  document.getElementById("app").innerHTML = renderPage(content);
+  if (content.sample) console.warn("content.sample is true: replace placeholder reviews, photos and numbers before sending.");
 }
+</script>
+
+<script id="behaviour">
+// Interactivity only: sliders, scroll reveal, form submit. Works on the rendered page,
+// so it ships unchanged in the static build.
+
+// ----- Before/after sliders -----
+document.querySelectorAll(".ba-stage input").forEach(range => {
+  range.addEventListener("input", () => range.parentElement.style.setProperty("--pos", range.value + "%"));
+});
 
 // ----- Scroll reveal -----
 // Skipped entirely for reduced motion or browsers without IntersectionObserver,
@@ -662,28 +682,38 @@ if (c.sample) {
 })();
 
 // ----- Web3Forms submit -----
-form.addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const btn = form.querySelector('button[type="submit"]');
-  const original = btn.textContent;
-  btn.textContent = "Sending";
-  btn.disabled = true;
-  const data = new FormData(form);
-  data.append("access_key", c.web3formsKey);
-  data.append("subject", "New quote request: " + c.businessName);
-  try {
-    const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
-    const out = await res.json();
-    if (!out.success) throw new Error(out.message || "Submission failed");
-    form.replaceChildren(h("p", { class: "form-success" }, "Thanks, we have your details and will call you back shortly."));
-  } catch (err) {
-    btn.textContent = original;
-    btn.disabled = false;
-    let msg = form.querySelector(".form-error");
-    if (!msg) { msg = h("p", { class: "form-error", role: "alert" }); form.append(msg); }
-    msg.textContent = "That did not send. Please call " + c.phone + " instead.";
-  }
-});
+// Sends in the background so the visitor stays on the page.
+(function () {
+  const form = document.getElementById("contact-form");
+  if (!form) return;
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const original = btn.textContent;
+    btn.textContent = "Sending";
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, { method: "POST", body: new FormData(form) });
+      const out = await res.json();
+      if (!out.success) throw new Error(out.message || "Submission failed");
+      const ok = document.createElement("p");
+      ok.className = "form-success";
+      ok.textContent = "Thanks, we have your details and will call you back shortly.";
+      form.replaceChildren(ok);
+    } catch (err) {
+      btn.textContent = original;
+      btn.disabled = false;
+      let msg = form.querySelector(".form-error");
+      if (!msg) {
+        msg = document.createElement("p");
+        msg.className = "form-error";
+        msg.setAttribute("role", "alert");
+        form.append(msg);
+      }
+      msg.textContent = "That did not send. Please call " + form.dataset.phone + " instead.";
+    }
+  });
+})();
 </script>
 </body>
 </html>
