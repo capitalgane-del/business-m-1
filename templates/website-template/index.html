@@ -6,7 +6,7 @@
 <!-- Static copies of pageTitle / metaDescription: Facebook and WhatsApp link previews do not run JavaScript. -->
 <title>Dutchies Removals | Family Removalists in Canberra</title>
 <meta name="description" content="Family owned Canberra removalists for local, country and interstate moves, backloading and packing. Free in-home quote. Call 0411 331 779.">
-<meta name="theme-color" content="#AE3E0D">
+<meta name="theme-color" content="#D32930">
 
 <!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,6 +52,12 @@ const content = {
   quoteText: "Get a Free Quote",
 
   // HERO: one headline (2 lines max), one short sentence (under 20 words).
+  // tagline: their own slogan, from the logo. Shown above the headline on desktop.
+  tagline: "Excellence in removals",
+  // heroBadge: their logo, cropped from the graphic they supplied (original kept at the repo root).
+  // Sits beside the headline on desktop and above it on phones.
+  heroBadge: "images/dutchies-logo.jpg",
+  heroBadgeAlt: "Dutchies Removals logo: a navy Dutch lion on red, with the words Excellence in removals",
   heroHeading: "Family removalists in Canberra",
   heroSub: "Local, country and interstate moves. Free in-home quote, beds rebuilt and furniture placed where you want it.",
   // Best single upgrade on any mockup: one real photo from their Facebook or Google listing.
@@ -119,9 +125,10 @@ const content = {
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY_HERE",
 
   // primary = brand colour. onPrimary = text on it (use #FAFAF8 on dark colours, #15191C on light ones).
-  // Dutch orange to match the name: darkest shade that keeps white text readable everywhere.
-  // Swap for their truck or logo colour if they have one.
-  colours: { primary: "#AE3E0D", onPrimary: "#FAFAF8" }
+  // Sampled from their logo: red is the background's most common colour, navy is the lion,
+  // accent is the cream-peach "Excellence in removals" script.
+  // dark = hero, service tiles and footer. accent = small highlights on dark.
+  colours: { primary: "#D32930", onPrimary: "#FFFFFF", dark: "#0D082B", accent: "#F7BD8D" }
 };
 </script>
 <script>
@@ -131,6 +138,8 @@ const content = {
   document.querySelector('meta[name="theme-color"]').setAttribute("content", content.colours.primary);
   document.documentElement.style.setProperty("--color-primary", content.colours.primary);
   document.documentElement.style.setProperty("--on-primary", content.colours.onPrimary);
+  if (content.colours.dark) document.documentElement.style.setProperty("--dark", content.colours.dark);
+  if (content.colours.accent) document.documentElement.style.setProperty("--accent", content.colours.accent);
   if (content.heroImage) {
     document.documentElement.style.setProperty("--hero-image", 'url("' + content.heroImage + '")');
     document.documentElement.setAttribute("data-hero-image", "true");
@@ -142,15 +151,18 @@ const content = {
      static HTML + CSS variables + Phosphor icons. One radius, one accent, one theme
      (light or dark follows the visitor's device). */
   :root {
-    --color-primary: #1F5C3F;
-    --on-primary: #FAFAF8;
+    --color-primary: #D32930;
+    --on-primary: #FFFFFF;
+    /* Dutchies: neutrals tinted toward their navy and cream instead of the template's green-greys. */
+    --dark: #0D082B;
+    --accent: #F7BD8D;
 
-    --bg: #F6F6F3;
-    --surface: #FCFCFA;
-    --ink: #15191C;
-    --muted: #4A5258;
-    --border: rgba(21, 25, 28, 0.12);
-    --field: #FCFCFA;
+    --bg: #FAF7F3;
+    --surface: #FFFDFA;
+    --ink: #14112A;
+    --muted: #4D4A63;
+    --border: rgba(20, 17, 42, 0.12);
+    --field: #FFFDFA;
     --band: color-mix(in srgb, var(--color-primary) 8%, var(--bg));
     --primary-text: var(--color-primary);
 
@@ -162,12 +174,12 @@ const content = {
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #101315;
-      --surface: #181C1F;
-      --ink: #ECEEEC;
-      --muted: #A9B1B7;
-      --border: rgba(236, 238, 236, 0.14);
-      --field: #101315;
+      --bg: #0B0918;
+      --surface: #15122A;
+      --ink: #EEEBF5;
+      --muted: #B3AFC8;
+      --border: rgba(238, 235, 245, 0.14);
+      --field: #0B0918;
       --band: color-mix(in srgb, var(--color-primary) 16%, var(--bg));
       --primary-text: color-mix(in srgb, var(--color-primary) 45%, #FFFFFF);
     }
@@ -212,7 +224,7 @@ const content = {
   .btn:active { transform: translateY(1px) scale(0.98); }
   .btn-primary { background: var(--color-primary); color: var(--on-primary); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
   .btn-primary:hover { filter: brightness(1.12); }
-  .btn-light { background: #F6F6F3; color: #15191C; }
+  .btn-light { background: #FFFDFA; color: var(--dark); }
   .btn-light:hover { filter: brightness(0.94); }
   .btn-outline { background: rgba(255, 255, 255, 0.08); color: #F6F6F3; box-shadow: inset 0 0 0 2px rgba(246, 246, 243, 0.75); }
   .btn-outline:hover { background: rgba(255, 255, 255, 0.18); }
@@ -237,16 +249,31 @@ const content = {
     position: relative; isolation: isolate; color: #F6F6F3;
     min-height: min(88dvh, 840px); display: flex; align-items: center;
     padding: 5rem 1.25rem 4rem;
-    background:
-      linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 78%, #0B0F0D), #0E1210);
+    /* Dutchies: their navy with a soft red glow behind the logo, like the glow in their artwork. */
+    background: radial-gradient(90% 50% at 50% 22%, color-mix(in srgb, var(--color-primary) 30%, var(--dark)) 0%, var(--dark) 72%);
     background-size: cover; background-position: center;
   }
-  html[data-hero-image] #hero { background-image: var(--hero-image), linear-gradient(135deg, #1b2a22, #0E1210); }
-  #hero::before {
+  @media (min-width: 900px) {
+    #hero { background: radial-gradient(55% 70% at 80% 48%, color-mix(in srgb, var(--color-primary) 30%, var(--dark)) 0%, var(--dark) 70%); }
+  }
+  html[data-hero-image] #hero { background-image: var(--hero-image), linear-gradient(135deg, var(--dark), #000); }
+  /* Darkening overlay only matters over a photo. */
+  html[data-hero-image] #hero::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(90deg, rgba(10, 14, 12, 0.84) 0%, rgba(10, 14, 12, 0.58) 55%, rgba(10, 14, 12, 0.3) 100%);
+    background: linear-gradient(90deg, rgba(13, 8, 43, 0.86) 0%, rgba(13, 8, 43, 0.6) 55%, rgba(13, 8, 43, 0.3) 100%);
   }
   #hero .wrap { width: 100%; }
+  /* Dutchies: logo beside the headline on desktop, above it on phones. The slogan eyebrow only
+     shows on desktop, where the logo (which already carries it) is off to the side. */
+  #hero .wrap.has-badge { display: grid; gap: 1.75rem; align-items: center; }
+  .hero-badge { width: min(100%, 220px); height: auto; border-radius: var(--r); box-shadow: 0 24px 50px -18px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08); }
+  .hero-eyebrow { display: none; color: var(--accent); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.1rem; }
+  @media (min-width: 900px) {
+    #hero .wrap.has-badge { grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 3.5rem; }
+    .hero-badge { order: 2; width: 100%; }
+    .hero-eyebrow { display: block; }
+  }
+  @media (min-width: 1200px) { #hero .wrap.has-badge { grid-template-columns: minmax(0, 1fr) minmax(0, 425px); gap: 4.5rem; } }
   #hero h1 { font-size: clamp(2.7rem, 7vw, 5rem); max-width: 18ch; letter-spacing: -0.04em; }
   .hero-sub { margin-top: 1.5rem; font-size: clamp(1.15rem, 2.2vw, 1.5rem); max-width: 34ch; color: rgba(246, 246, 243, 0.92); line-height: 1.4; }
   .hero-actions { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: 0.85rem; }
@@ -259,7 +286,8 @@ const content = {
   .trust-item { display: flex; gap: 0.9rem; align-items: flex-start; }
   .trust-item > i { font-size: 2rem; flex-shrink: 0; margin-top: 0.15rem; }
   .trust-value { font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.15; }
-  .trust-label { font-size: 0.95rem; opacity: 0.9; line-height: 1.35; margin-top: 0.2rem; }
+  /* Dutchies: full opacity here, on the feature review and in contact. Faded white on this red fails contrast. */
+  .trust-label { font-size: 0.95rem; line-height: 1.35; margin-top: 0.2rem; }
   .stars { display: inline-flex; gap: 2px; font-size: 1rem; margin-top: 0.3rem; }
 
   /* ---------- Services ---------- */
@@ -272,10 +300,10 @@ const content = {
     position: relative; isolation: isolate; overflow: hidden; color: #F6F6F3;
     min-height: 340px; display: flex; align-items: flex-end;
     border-radius: var(--r);
-    background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 80%, #0B0F0D), #0E1210);
+    background: radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--color-primary) 55%, var(--dark)) 0%, var(--dark) 62%);
   }
   .svc img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
-  .svc::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 14, 12, 0) 30%, rgba(10, 14, 12, 0.88) 100%); }
+  .svc::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(13, 8, 43, 0) 30%, rgba(13, 8, 43, 0.88) 100%); }
   .svc-body { padding: 1.5rem; width: 100%; }
   .svc-body p { margin-top: 0.4rem; max-width: 36ch; color: rgba(246, 246, 243, 0.92); font-size: 1rem; line-height: 1.4; }
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -317,7 +345,7 @@ const content = {
   .rev-card .stars { color: var(--primary-text); margin: 0; }
   .rev-author { font-weight: 700; }
   .rev-meta { font-size: 0.95rem; color: var(--muted); }
-  .rev-feature .rev-meta { color: var(--on-primary); opacity: 0.85; }
+  .rev-feature .rev-meta { color: var(--on-primary); }
 
   /* ---------- Process ---------- */
   #process { background: var(--band); }
@@ -332,7 +360,7 @@ const content = {
   #contact { background: var(--color-primary); color: var(--on-primary); }
   .contact-grid { display: grid; gap: 2.5rem; }
   @media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1fr; align-items: start; gap: 4rem; } }
-  .contact-sub { margin-top: 1rem; font-size: 1.15rem; opacity: 0.92; max-width: 40ch; }
+  .contact-sub { margin-top: 1rem; font-size: 1.15rem; max-width: 40ch; }
   .promises { margin-top: 1.75rem; display: grid; gap: 0.8rem; }
   .promises li { display: flex; gap: 0.75rem; align-items: center; font-size: 1.15rem; font-weight: 500; }
   .promises i { font-size: 1.5rem; flex-shrink: 0; }
@@ -357,12 +385,12 @@ const content = {
   .areas li { padding: 0.6rem 1.1rem; border: 1.5px solid var(--border); border-radius: var(--r); font-weight: 600; background: var(--surface); }
 
   /* ---------- Footer ---------- */
-  footer { background: #0F1311; color: #E8EBE8; padding: 3rem 1.25rem; }
+  footer { background: var(--dark); color: #F3F0FA; padding: 3rem 1.25rem; }
   .foot { display: grid; gap: 2rem; }
   @media (min-width: 768px) { .foot { grid-template-columns: 1.4fr 1fr 1fr; } }
   .foot h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
-  .foot p, .foot a { color: #B9C0BB; display: block; }
-  .foot a:hover { color: #F6F6F3; }
+  .foot p, .foot a { color: #B8B4CC; display: block; }
+  .foot a:hover { color: #FFFFFF; }
 
   /* ---------- Hover pop (mouse only, never on touch or reduced motion) ---------- */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
@@ -373,8 +401,8 @@ const content = {
     .btn:hover { transform: translateY(-3px) scale(1.04); }
     .btn:active { transform: translateY(0) scale(0.98); }
     .btn-primary:hover { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 14px 26px -8px color-mix(in srgb, var(--color-primary) 75%, transparent); }
-    .btn-light:hover { box-shadow: 0 14px 28px -8px rgba(5, 12, 8, 0.6); }
-    .btn-outline:hover { box-shadow: inset 0 0 0 2px #F6F6F3, 0 14px 28px -8px rgba(5, 12, 8, 0.6); }
+    .btn-light:hover { box-shadow: 0 14px 28px -8px rgba(0, 0, 0, 0.6); }
+    .btn-outline:hover { box-shadow: inset 0 0 0 2px #F6F6F3, 0 14px 28px -8px rgba(0, 0, 0, 0.6); }
     .svc:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -14px color-mix(in srgb, var(--color-primary) 65%, transparent); }
     .rev-card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--color-primary) 45%, transparent); }
     .gallery img:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--color-primary) 45%, transparent); }
@@ -392,7 +420,8 @@ const content = {
      hidden unless the script has confirmed it can reveal it again (html.js-reveal). */
   @media (prefers-reduced-motion: no-preference) {
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-    #hero h1, .hero-sub, .hero-actions { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    #hero h1, .hero-sub, .hero-actions, .hero-eyebrow, .hero-badge { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero-badge { animation-delay: 0.18s; }
     .hero-sub { animation-delay: 0.12s; }
     .hero-actions { animation-delay: 0.24s; }
 
@@ -469,14 +498,19 @@ app.append(
 );
 
 // ----- Hero -----
+// Dutchies: optional logo badge and slogan eyebrow (content.heroBadge, content.tagline).
 app.append(
   h("section", { id: "hero" },
-    h("div", { class: "wrap" },
-      h("h1", {}, c.heroHeading),
-      h("p", { class: "hero-sub" }, c.heroSub),
-      h("div", { class: "hero-actions" },
-        h("a", { class: "btn btn-light", href: c.phoneHref }, icon("phone-call"), c.ctaText),
-        h("a", { class: "btn btn-outline", href: "#contact" }, c.quoteText)
+    h("div", { class: "wrap" + (c.heroBadge ? " has-badge" : "") },
+      c.heroBadge ? h("img", { class: "hero-badge", src: c.heroBadge, alt: c.heroBadgeAlt || c.businessName, width: "425", height: "297" }) : null,
+      h("div", {},
+        c.tagline ? h("p", { class: "hero-eyebrow" }, c.tagline) : null,
+        h("h1", {}, c.heroHeading),
+        h("p", { class: "hero-sub" }, c.heroSub),
+        h("div", { class: "hero-actions" },
+          h("a", { class: "btn btn-light", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+          h("a", { class: "btn btn-outline", href: "#contact" }, c.quoteText)
+        )
       )
     )
   )
