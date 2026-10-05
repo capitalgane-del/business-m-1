@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Static copies of pageTitle / metaDescription: Facebook and WhatsApp link previews do not run JavaScript. -->
 <title>Dutchies Removals | Family Removalists in Canberra</title>
-<meta name="description" content="Family owned Canberra removalists for local, country and interstate moves, backloading and packing. Free in-home quote. Call 0411 331 779.">
+<meta name="description" content="A family owned business servicing local, country and interstate relocations. Based in Monash, Canberra. Free in-home quotes. Call 0411 331 779.">
 <meta name="theme-color" content="#D32930">
 
 <!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Outfit:wght@400;500;600;700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
 <!-- Icon CSS linked directly: the @phosphor-icons/web JS loader declares a global `head`
      that clashes with the renderer below and stops every icon loading. Only bold and fill are used. -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
@@ -35,8 +35,11 @@ const content = {
   // and the Web3Forms key is in. See README.md in this folder.
   sample: true,
 
+  // COPY SOURCES: "Muval" = their own description on Muval. "Listings" = their own description on
+  // Oneflare / Localsearch / Service.com.au. "Mine" = written by us; no new facts, check the tone.
   pageTitle: "Dutchies Removals | Family Removalists in Canberra",
-  metaDescription: "Family owned Canberra removalists for local, country and interstate moves, backloading and packing. Free in-home quote. Call 0411 331 779.",
+  // Muval line + listings (Monash, free in-home quote).
+  metaDescription: "A family owned business servicing local, country and interstate relocations. Based in Monash, Canberra. Free in-home quotes. Call 0411 331 779.",
 
   businessName: "Dutchies Removals",
   phone: "0411 331 779",
@@ -58,32 +61,40 @@ const content = {
   // Sits beside the headline on desktop and above it on phones.
   heroBadge: "images/dutchies-logo.jpg",
   heroBadgeAlt: "Dutchies Removals logo: a navy Dutch lion on red, with the words Excellence in removals",
+  // Mine, from sourced facts (family owned, Canberra based).
   heroHeading: "Family removalists in Canberra",
-  heroSub: "Local, country and interstate moves. Free in-home quote, beds rebuilt and furniture placed where you want it.",
+  // Muval, word for word (capitals lowered).
+  heroSub: "A family owned business servicing local, country and interstate relocations.",
   // Best single upgrade on any mockup: one real photo from their Facebook or Google listing.
   // Empty = brand-colour hero until we have a photo of their truck or crew.
   heroImage: "",
 
   // TRUST BAR sits directly under the hero. First cell is the rating.
-  // Muval shows 4.9 from 83 to 97 reviews depending on when it was indexed. Put in the live count.
-  rating: { score: "4.9", count: "80+", source: "Muval" },
+  // Muval: 4.90 from 97 reviews (as last indexed; may have grown).
+  rating: { score: "4.9", count: "97", source: "Muval" },
   trust: [
-    { icon: "users-three", value: "Family owned", label: "Locally owned and operated in Canberra" },
+    // Muval "family owned"; Localsearch "locally owned and operated".
+    { icon: "users-three", value: "Family owned", label: "Locally owned and operated" },
+    // Service.com.au awards.
     { icon: "trophy", value: "Top 10 in Canberra", label: "Service.com.au awards, 2019 and 2020" },
-    { icon: "calendar-check", value: "17+ years", label: "Local, country and interstate moves" }
+    // Listings: "The owner has over 17 years experience in Removals". Muval says over 15.
+    { icon: "calendar-check", value: "17+ years", label: "Owner's experience in removals" }
   ],
 
   servicesHeading: "What we move",
-  servicesSub: "One couch or a whole house, across town or interstate.",
+  // Muval, word for word except "attach and reattach ... place" made to match "assembling".
+  servicesSub: "We always go the extra mile, assembling and disassembling beds, attaching and reattaching washing machines and placing your belongings exactly where you need them.",
   // 3 to 8 services. The layout adjusts so the grid never has a gap.
   // image: "" = brand-colour tile. Drop in their own photos when we have them.
+  // Names: Muval (local, interstate, regional/country, single item) + listings (backloads, prepack).
+  // Descriptions marked "def" just explain the service in plain words (mine, no claims).
   services: [
-    { name: "Local moves", desc: "Houses and units across Canberra and Queanbeyan.", image: "" },
-    { name: "Interstate moves", desc: "Between the ACT, NSW, Victoria and Queensland.", image: "" },
-    { name: "Country moves", desc: "Regional towns to and from Canberra.", image: "" },
-    { name: "Backloading", desc: "Share space on an interstate run and pay less than a full truck.", image: "" },
-    { name: "Packing service", desc: "We pack your home before moving day so the move itself is quicker.", image: "" },
-    { name: "Single items", desc: "One couch, fridge or washing machine, without booking a full move.", image: "" }
+    { name: "Local removals", desc: "Moves around Canberra and the ACT.", image: "" },
+    { name: "Interstate removals", desc: "Servicing the ACT, NSW, Victoria and Queensland.", image: "" },  // Facebook listing
+    { name: "Country removals", desc: "Regional and country relocations.", image: "" },
+    { name: "Backloads", desc: "Share truck space on a long-distance move.", image: "" },            // def
+    { name: "Pre-pack service", desc: "Your home packed up before moving day.", image: "" },           // def
+    { name: "Single item removals", desc: "One item, no full move needed.", image: "" }                // def
   ],
 
   // WORK: hidden until we have real job photos from the client.
@@ -92,34 +103,38 @@ const content = {
   // REVIEWS. First one is shown large: pick a real excerpt under 90 characters. Others under 3 lines. REAL ONLY.
   // All four are real, from their public listings. The pages were read through search snippets,
   // so check each quote word for word against the live listing before sample is set to false.
+  // The Muval reviewer's name was not visible in what we could read.
   reviewsHeading: "What customers say",
   reviews: [
     { quote: "Very professional team. Punctual, friendly and excellent problem-solving skills.", author: "Joy", meta: "Oneflare review" },
+    { quote: "I cant recommend Allen and his team enough. Highly, highly recommended. Best removal experience to date (and Ive moved a lot!)", author: "Muval customer", meta: "Muval review" },
     { quote: "Allen arrived on time, packed everything efficiently and delivered to two locations for us.", author: "Joanna", meta: "Find a Mover review" },
-    { quote: "Allan and Eli went above and beyond what we expected of them. Polite, considerate and careful with our treasures.", author: "Sirelo customer", meta: "Sirelo review" },
     { quote: "Very polite, careful and helpful.", author: "Ann", meta: "Interstate move, Find a Mover review" }
   ],
 
+  // Step wording is mine; the facts in it are sourced (free in-home quote, pre-pack, Muval set-up line).
   processHeading: "How it works",
   processSub: "From first call to set up in your new place.",
   steps: [
     { icon: "phone-call", title: "Call or send the form", text: "Tell us where you are moving from and to, and roughly when." },
     { icon: "house-line", title: "Free in-home quote", text: "We see what is moving before we give you a price." },
-    { icon: "truck", title: "Moving day", text: "We load, drive and unload. Ask about packing before the day." },
-    { icon: "bed", title: "Set up at the new place", text: "Beds rebuilt, washing machine reconnected, furniture where you want it." }
+    { icon: "truck", title: "Moving day", text: "Loaded, moved and unloaded. Pre-pack service available beforehand." },
+    { icon: "bed", title: "Set up at the new place", text: "Beds assembled, washing machines reattached and belongings placed exactly where you need them." }
   ],
 
   contactHeading: "Get your free quote",
-  contactSub: "Tell us where you are moving from and to, and we will call you back to book a free in-home quote.",
+  // "Free in home quote available": listings. First sentence is a plain instruction (mine).
+  contactSub: "Tell us where you are moving from and to. Free in-home quotes available.",
   promises: [
-    "Free in-home quote",
-    "Beds taken apart and rebuilt",
-    "Washing machine disconnected and reconnected",
-    "Family owned and operated"
+    "Free in-home quote",                // listings
+    "Family owned and operated",         // Muval + Localsearch
+    "Local, country and interstate",     // Muval
+    "Backloads and pre-pack service"     // listings
   ],
 
   areasHeading: "Where we move",
-  areas: ["Tuggeranong", "Woden", "Weston Creek", "Molonglo", "Belconnen", "Gungahlin", "Inner North", "Inner South", "Queanbeyan", "Regional NSW", "Sydney", "Central Coast", "Melbourne", "Brisbane"],
+  // ACT, NSW, VIC, QLD: their Facebook listing. Queanbeyan: a review describes a move there.
+  areas: ["Canberra and the ACT", "Queanbeyan", "New South Wales", "Victoria", "Queensland"],
 
   // Get a key at web3forms.com after the client signs up, or use your own and forward leads.
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY_HERE",
@@ -167,6 +182,8 @@ const content = {
     --primary-text: var(--color-primary);
 
     --font: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-display: "Bevan", Georgia, "Times New Roman", serif;
+    --font-script: "Pinyon Script", "Brush Script MT", cursive;
     --r: 12px;
     --max: 1200px;
     --header-h: 72px;
@@ -236,8 +253,8 @@ const content = {
   }
   .site-header .wrap { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1.25rem; }
   .brand { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  /* Dutchies only: on 360px phones the name would be cut to "Dutchies Rem...". Stack it instead. */
-  @media (max-width: 400px) { .brand { white-space: normal; line-height: 1.05; } }
+  /* Dutchies only: on phones the name would be cut to "Dutchies Rem...". Stack it instead. */
+  @media (max-width: 600px) { .brand { white-space: normal; line-height: 1.05; } }
   .nav { display: none; gap: 2rem; font-weight: 500; }
   .nav a { color: var(--muted); }
   .nav a:hover { color: var(--ink); }
@@ -448,6 +465,18 @@ const content = {
     padding: 0.4rem 0.75rem; border-radius: var(--r); font-weight: 700; font-size: 0.85rem;
   }
   @media (min-width: 768px) { .sample-ribbon { bottom: 0.75rem; } }
+
+  /* ---------- Dutchies typography ----------
+     Headings and the name in Bevan, a calmer cousin of the Western serif in their logo. It has a
+     single weight, so these sit at 400 (no fake bold) with looser tracking than the template's.
+     The slogan uses Pinyon Script, close to the script in their logo. Body text stays Outfit. */
+  h1, h2, h3, .brand, .trust-value { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.005em; }
+  #hero h1 { font-size: clamp(2.3rem, 5.4vw, 4rem); letter-spacing: -0.01em; line-height: 1.08; }
+  h2 { font-size: clamp(1.9rem, 4.4vw, 3rem); line-height: 1.1; }
+  h3 { font-size: 1.25rem; line-height: 1.25; }
+  .trust-value { font-size: 1.2rem; line-height: 1.2; }
+  .brand { font-size: 1.2rem; }
+  .hero-eyebrow { font-family: var(--font-script); font-weight: 400; font-size: clamp(1.9rem, 2.8vw, 2.5rem); letter-spacing: 0; text-transform: none; line-height: 1.2; margin-bottom: 0.4rem; }
 </style>
 </head>
 <body>
@@ -613,7 +642,7 @@ const form = h("form", { id: "contact-form" },
   h("label", {}, "Moving from, to and when?", h("textarea", { name: "message", required: "", placeholder: "e.g. 3 bedroom house, Monash to Goulburn, early December" })),
   h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
   h("button", { type: "submit", class: "btn btn-primary" }, c.quoteText),
-  h("p", { class: "form-note" }, "No obligation. We call you back to book your free in-home quote.")
+  h("p", { class: "form-note" }, "Prefer to talk? Call " + c.phone + ".")
 );
 app.append(
   h("section", { id: "contact", class: "sec" },
@@ -716,7 +745,7 @@ form.addEventListener("submit", async function (e) {
     const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
     const out = await res.json();
     if (!out.success) throw new Error(out.message || "Submission failed");
-    form.replaceChildren(h("p", { class: "form-success" }, "Thanks, we have your details and will call you back shortly."));
+    form.replaceChildren(h("p", { class: "form-success" }, "Thanks, your details have been sent. For anything urgent, call " + c.phone + "."));
   } catch (err) {
     btn.textContent = original;
     btn.disabled = false;
