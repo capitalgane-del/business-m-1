@@ -1,17 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading</title>
-<meta name="description" content="">
-<meta name="theme-color" content="#1F5C3F">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- PREVIEW ONLY: unapproved spec site, keep it out of search results. Remove at launch. -->
+<meta name="robots" content="noindex">
 
-<!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery. -->
+<!-- Static copies of content.pageTitle, metaDescription and the share details. Link previews
+     (iMessage, Facebook, WhatsApp) do not run JavaScript, so these have to be right in the HTML.
+     The boot script warns in the console if they drift from the content object. -->
+<title>Move Mate Removals and Storage | Removalists in Fyshwick, Canberra</title>
+<meta name="description" content="Local, interstate and commercial removals, property staging and storage. Based in Fyshwick, ACT. Call 0422 394 487 or request a quote online.">
+<meta name="theme-color" content="#14365A">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+
+<!-- Open Graph. Absolute URLs: preview scrapers do not reliably resolve relative ones.
+     Currently the Netlify branch deploy; swap for the real domain at launch. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_AU">
+<meta property="og:site_name" content="Move Mate Removals and Storage">
+<meta property="og:url" content="https://move-mate--ganeworks-website.netlify.app/">
+<meta property="og:title" content="Move Mate Removals and Storage | Fyshwick, Canberra">
+<meta property="og:description" content="Local, interstate and commercial removals, property staging and storage. Call 0422 394 487 or request a quote online.">
+<meta property="og:image" content="https://move-mate--ganeworks-website.netlify.app/images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Move Mate Removals and Storage, Fyshwick, Canberra. Phone 0422 394 487.">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery.
+     Both load without blocking first paint, so the hero and form never wait on a CDN.
+     Icons are linked as CSS: the @phosphor-icons/web JS loader declares a global `head`
+     that clashes with the renderer below and stops every icon loading (bug still on main). -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web" defer></script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css" media="print" onload="this.media='all'">
 
 <script>
 /* ============================================================
@@ -19,152 +45,325 @@
    Everything below it should not need touching.
 
    RULES
-   - sample: true shows a red SAMPLE ribbon. Set it to false only when
-     every review, photo and number below is real and from the client.
-   - Reviews: real ones from their Google listing, or delete the array.
-   - Photos: from their Facebook/Google listing. No image URL = a clean
-     brand-colour tile instead. Delete a section's array to hide it.
+   - sample: true shows a slim "preview" strip at the top. Set it to false once
+     the client has approved the site and real photos are in.
+   - Reviews: real ones from their Google listing, or leave the array commented out.
+   - Photos: from their Facebook/Google listing. Delete a section's array to hide it.
    - No em dashes anywhere in the copy. Use a comma, a colon or a full stop.
+
+   SOURCES for Move Mate (see clients/move-mate/README.md for the full copy audit)
+   [Jett] = details Jett supplied: name, phone, email, Fyshwick base, Facebook.
+   [IG]   = their Instagram bio (@movematetransports), read through search results:
+            "Local Relocations, Interstate Relocations, Commercial Relocations,
+            Property Staging Solutions, Storage facility Solutions".
+   [ours] = our wording, no new facts in it. Check the tone with the client.
+   Nothing here claims insurance, prices, years, ratings, reviews or response times.
    ============================================================ */
 const content = {
   sample: true,
+  sampleText: "Website preview: images are placeholders",
 
-  pageTitle: "Sample Landscapes | Backyard Landscaping in Kambah",
-  metaDescription: "Decks, retaining walls, turf and paving in Kambah and the Tuggeranong Valley. Free on-site quote, fixed written price.",
+  // [ours] from [Jett] + [IG] facts. Keep in sync with the static copies in <head>.
+  pageTitle: "Move Mate Removals and Storage | Removalists in Fyshwick, Canberra",
+  metaDescription: "Local, interstate and commercial removals, property staging and storage. Based in Fyshwick, ACT. Call 0422 394 487 or request a quote online.",
+  // Preview URL (Netlify branch deploy). TODO at launch: the real domain.
+  siteUrl: "https://move-mate--ganeworks-website.netlify.app/",
 
-  businessName: "Sample Landscapes",
-  phone: "0400 000 000",
-  phoneHref: "tel:+61400000000",
-  email: "hello@example.com.au",
-  address: "Kambah ACT 2902",
-  hours: "Mon to Fri 7am to 5pm, Sat by appointment",
+  businessName: "Move Mate Removals and Storage",                    // [Jett]
+  // Text wordmark used until their logo file is in.
+  brandShort: "Move Mate",
+  brandSub: "Removals and Storage",
+  // TODO: their logo, e.g. "images/move-mate-logo.png" (wide, transparent background). Empty = text wordmark.
+  logo: "",
+  logoAlt: "Move Mate Removals and Storage",
 
-  ctaText: "Call Now",
-  quoteText: "Get a Free Quote",
+  phone: "0422 394 487",                                            // [Jett]
+  phoneHref: "tel:+61422394487",
+  // Mobile number, so the site offers "text us". TODO: confirm they are happy to take texts.
+  smsHref: "sms:+61422394487",
+  email: "info@movematetransport.com.au",                           // [Jett]
+  // Suburb only until they confirm a street address they want public. 2609 = Fyshwick's postcode.
+  address: "Fyshwick ACT 2609",                                     // [Jett]
+  // TODO: opening hours, unconfirmed. Empty hides the footer column.
+  hours: "",
+
+  ctaText: "Call now",
+  quoteText: "Get a quote",
 
   // HERO: one headline (2 lines max), one short sentence (under 20 words).
-  heroHeading: "Backyard landscaping in Kambah",
-  heroSub: "Decks, retaining walls, turf and paving. One local crew from quote to clean-up.",
-  // Best single upgrade on any mockup: one real photo from their Facebook or Google listing.
-  heroImage: "https://picsum.photos/seed/sample-hero-yard/1800/1100",
+  heroEyebrow: "Fyshwick, Canberra",                                // [Jett]
+  heroHeading: "Canberra removals and storage",                     // [ours] Fyshwick base + their name
+  heroSub: "Local, interstate and commercial moves, plus storage. Based in Fyshwick, ACT.",   // [IG] + [Jett]
+  heroCallText: "Call 0422 394 487",
+  textPrompt: "Prefer to text?",
+  // heroImage = full-bleed photo behind the headline. Best single upgrade: one real photo of their
+  // truck or crew from their Facebook. Set it and heroVisual is hidden.
+  heroImage: "",
+  // Neutral placeholder: unbranded truck and boxes (so it can't pass for their truck). Loads eagerly:
+  // it is above the fold, and lazy-loading it would only slow the hero.
+  heroVisual: "images/placeholder-truck.svg",
+  heroVisualAlt: "Illustration of a white removal truck with cardboard moving boxes stacked beside it",
 
-  // TRUST BAR sits directly under the hero. First cell is the rating.
-  rating: { score: "4.9", count: "27", source: "Google" },
-  trust: [
-    { icon: "shield-check", value: "Fully insured", label: "Public liability cover on every job" },
-    { icon: "seal-check", value: "Fixed quotes", label: "Written price before work starts" },
-    { icon: "map-pin", value: "Local crew", label: "Kambah and the Tuggeranong Valley" }
+  // QUICK FACTS bar under the hero. Facts only, no trust claims we can't back up.
+  // PLACEHOLDER: when they have a strong Google rating, uncomment and it shows first.
+  // rating: { score: "", count: "", source: "Google", href: "" },
+  facts: [
+    { icon: "map-pin", value: "Based in Fyshwick", label: "Canberra, ACT" },                       // [Jett]
+    { icon: "road-horizon", value: "Local and interstate", label: "Moves around Canberra and out of the ACT" }, // [IG]
+    { icon: "buildings", value: "Homes and businesses", label: "Residential and commercial relocations" },     // [IG]
+    { icon: "warehouse", value: "Storage", label: "Storage solutions on offer" }                     // [IG]
+    // PLACEHOLDER: insurance is the most-asked trust point for removalists. Only add once the
+    // client confirms cover and the insurer, e.g.
+    // { icon: "shield-check", value: "Fully insured", label: "Goods in transit and public liability, with [insurer]" },
   ],
 
-  servicesHeading: "What we build",
-  servicesSub: "Pick one job or hand us the whole yard.",
-  // 3 to 8 services. The layout adjusts so the grid never has a gap.
+  servicesHeading: "What we do",
+  servicesSub: "Moving house, moving the office, or need somewhere to keep things for a while.",  // [ours] restates [IG]
+  // Service names: [IG]. Descriptions: [ours], plain explanations, no promises.
+  // icon = Phosphor icon name. image (optional) = a real photo for the card, lazy-loaded.
   services: [
-    { name: "Decks and pergolas", desc: "Timber and composite, built for Canberra summers and frosts.", image: "https://picsum.photos/seed/sample-deck/1000/800" },
-    { name: "Retaining walls", desc: "Stone and sleeper walls with proper drainage behind them.", image: "https://picsum.photos/seed/sample-wall/1000/800" },
-    { name: "Lawns and turf", desc: "Prepared base, quality turf, a lawn that actually takes.", image: "https://picsum.photos/seed/sample-lawn/1000/800" },
-    { name: "Paving and concreting", desc: "Paths, patios and driveways laid level and square.", image: "https://picsum.photos/seed/sample-paving/1000/800" },
-    { name: "Garden beds", desc: "Planting, mulch and irrigation that is easy to keep.", image: "https://picsum.photos/seed/sample-beds/1000/800" }
+    { name: "Local relocations", desc: "House and unit moves around Canberra.", icon: "house-line" },
+    { name: "Interstate relocations", desc: "Moving out of the ACT, or into it.", icon: "road-horizon" },
+    { name: "Commercial relocations", desc: "Office and business moves.", icon: "buildings" },
+    // TODO: confirm what "property staging solutions" covers for them (moving staging furniture? supplying it?).
+    { name: "Property staging", desc: "Furniture moved in and out of homes being styled for sale or rent.", icon: "armchair" },
+    { name: "Storage", desc: "Somewhere to keep your things between moves.", icon: "warehouse" }
   ],
+  // Extra card that closes the grid with a call to action. Delete to hide.
+  servicesCta: { title: "Not sure what you need?", text: "Call or text and talk it through.", button: "Call 0422 394 487" },
 
-  // WORK. Delete both arrays to hide the section.
-  workHeading: "Before and after",
-  workSub: "Real yards, same crew. Drag the handle.",
-  beforeAfter: [
-    { before: "https://picsum.photos/seed/sample-before-a/1000/750", after: "https://picsum.photos/seed/sample-after-a/1000/750", caption: "Rear yard, Kambah" },
-    { before: "https://picsum.photos/seed/sample-before-b/1000/750", after: "https://picsum.photos/seed/sample-after-b/1000/750", caption: "Courtyard, Wanniassa" }
-  ],
-  gallery: [
-    { image: "https://picsum.photos/seed/sample-g1/800/600", alt: "Finished timber deck" },
-    { image: "https://picsum.photos/seed/sample-g2/800/1000", alt: "Stone retaining wall" },
-    { image: "https://picsum.photos/seed/sample-g3/800/700", alt: "New lawn and garden beds" },
-    { image: "https://picsum.photos/seed/sample-g4/800/900", alt: "Paved entertaining area" },
-    { image: "https://picsum.photos/seed/sample-g5/800/600", alt: "Pergola over a deck" },
-    { image: "https://picsum.photos/seed/sample-g6/800/800", alt: "Curved garden bed" }
-  ],
+  // STORAGE feature. [IG] "Storage facility solutions"; the rest is [ours].
+  // TODO: once confirmed, add details here (site, unit sizes, short or long term, access).
+  storage: {
+    heading: "Need storage between moves?",
+    text: [
+      "Settlement dates do not always line up. Tell us when you ask for a quote and we can talk through storage for your things."
+    ],
+    image: "images/placeholder-boxes.svg",
+    alt: "Illustration of taped cardboard moving boxes stacked for storage, beside a floor lamp and a pot plant",
+    button: "Ask about storage"
+  },
 
-  // REVIEWS. First one is shown large: pick a real excerpt under 90 characters. Others under 3 lines. REAL ONLY.
-  reviewsHeading: "What locals say",
-  reviews: [
-    { quote: "Turned a bare block into somewhere we actually sit outside. Spotless every single day.", author: "Craig H.", meta: "Gowrie, Google review" },
-    { quote: "Quote matched the final bill to the dollar.", author: "Priya N.", meta: "Calwell, Google review" },
-    { quote: "The retaining wall has been through two winters and has not moved.", author: "Tom B.", meta: "Monash, Google review" },
-    { quote: "Same bloke from first visit to final walk-through. Rare these days.", author: "Leanne O.", meta: "Theodore, Google review" }
-  ],
+  // WORK: hidden until we have real job photos. To show it, add workHeading, workSub,
+  // beforeAfter[] and/or gallery[] (see the scaffold on main). All images lazy-load.
 
+  // REVIEWS: PLACEHOLDER. None found online. Real reviews only, with the client's OK. Format:
+  // reviewsHeading: "What customers say",
+  // reviews: [
+  //   { quote: "", author: "", meta: "Google review", href: "" }
+  // ],
+
+  // [ours]: describes how any quote request works, no promises on times or prices.
   processHeading: "How it works",
-  processSub: "Four steps, no surprises.",
+  processSub: "Three steps from first message to moving day.",
   steps: [
-    { icon: "phone-call", title: "Call or send the form", text: "A few photos of your space and what you have in mind." },
-    { icon: "clipboard-text", title: "Get a fixed quote", text: "Free on-site visit, then a clear written price." },
-    { icon: "hammer", title: "We build it", text: "On time, tidy every day, and you stay in the loop." },
-    { icon: "thumbs-up", title: "Walk the finished job", text: "We check it with you before we pack up." }
+    { icon: "chat-circle-text", title: "Tell us about the move", text: "Call, text or send the form: where from, where to, and roughly when." },
+    { icon: "clipboard-text", title: "Get your quote", text: "We go over the details with you and quote the job." },
+    { icon: "truck", title: "Moving day", text: "We load up, move your things and unload at the other end." }
   ],
 
-  contactHeading: "Get your free quote",
-  contactSub: "Send a few details and we call you back the same business day.",
+  contactHeading: "Get a quote",
+  contactSub: "Tell us where you are moving from and to, and roughly when. The more detail you give, the easier it is to quote.",
+  // Facts from [IG] + [Jett], not promises.
   promises: [
-    "Free on-site quote",
-    "Fixed written price",
-    "Same person from quote to clean-up"
+    "Local, interstate and commercial moves",
+    "Property staging",
+    "Storage",
+    "Based in Fyshwick, ACT"
   ],
 
-  areasHeading: "Where we work",
-  areas: ["Kambah", "Wanniassa", "Gowrie", "Chisholm", "Monash", "Gordon", "Calwell", "Theodore", "Greenway", "Conder", "Banks", "Woden"],
+  // QUOTE FORM. Fields render in this order. type: text, tel, email, date, select, textarea,
+  // radios, checks, or row (two fields side by side on wider screens). Anything not
+  // required is marked "(optional)" automatically. Sent to Web3Forms under each field's name.
+  form: {
+    heading: "Quote request",
+    intro: "Name, mobile and both suburbs are all we need to start.",
+    submitText: "Send quote request",
+    fields: [
+      { type: "row", fields: [
+        { name: "name", label: "Your name", type: "text", autocomplete: "name", required: true },
+        { name: "phone", label: "Mobile", type: "tel", autocomplete: "tel", required: true }
+      ] },
+      { name: "email", label: "Email", type: "email", autocomplete: "email" },
+      { type: "row", fields: [
+        { name: "moving_from", label: "Moving from", type: "text", placeholder: "Suburb", required: true },
+        { name: "moving_to", label: "Moving to", type: "text", placeholder: "Suburb or city", required: true }
+      ] },
+      { type: "row", fields: [
+        { name: "move_size", label: "What are you moving?", type: "select", placeholder: "Choose one",
+          options: ["Studio or 1 bedroom", "2 bedrooms", "3 bedrooms", "4+ bedrooms", "A few items", "Office or business", "Property staging"] },
+        { name: "moving_date", label: "Moving date", type: "date" }
+      ] },
+      { name: "access", label: "Stairs or lifts at either end?", type: "select", placeholder: "Choose one",
+        options: ["No, ground level both ends", "Stairs", "Lift", "Not sure yet"] },
+      { name: "extras", label: "Also", type: "checks",
+        options: [{ name: "needs_storage", label: "I need storage" }, { name: "flexible_dates", label: "My dates are flexible" }] },
+      { name: "contact_by", label: "Best way to reach you", type: "radios", options: ["Call", "Text", "Email"] },
+      { name: "message", label: "Anything else we should know?", type: "textarea",
+        placeholder: "e.g. heavy or fragile items, narrow driveway, parking, items going into storage" }
+    ],
+    // No reply-time promise until the client gives one.
+    success: "Thanks, your quote request has been sent. For anything urgent, call or text 0422 394 487.",
+    error: "That did not send. Please call or text 0422 394 487 instead.",
+    // Shown instead of sending while web3formsKey is still the placeholder (so the owner can try it safely).
+    previewNotice: "This is a preview, so the form is not connected yet and nothing was sent. Please call or text 0422 394 487."
+  },
 
-  // Get a key at web3forms.com after the client signs up, or use your own and forward leads.
+  // [ours] questions; answers use only [IG] and [Jett] facts.
+  faqHeading: "Common questions",
+  faqs: [
+    { q: "How do I get a quote?", a: "Call or text 0422 394 487, or send the quote form with where you are moving from and to. The more detail you give, the easier it is to quote." },
+    { q: "Do you do interstate moves?", a: "Yes. Interstate relocations are one of our services. Send the form with both suburbs and your dates." },
+    { q: "Can you store our things?", a: "Yes, we offer storage. Tick \"I need storage\" on the quote form or mention it when you call." },
+    { q: "Do you move offices and businesses?", a: "Yes. Commercial relocations are one of our services." },
+    { q: "What is property staging?", a: "Furniture moved into a home so it shows well for a sale or rental, and out again afterwards. Call us to talk through what you need." },
+    { q: "Where are you based?", a: "Fyshwick, in Canberra." }
+    // PLACEHOLDERS: add once the client confirms the answers.
+    // { q: "Are you insured?", a: "" },
+    // { q: "How much does a move cost?", a: "" },   // hourly rate or fixed quote? Minimum hours? Call-out fee?
+    // { q: "How far ahead should I book?", a: "" },
+    // { q: "Do you supply boxes and packing materials?", a: "" },
+    // { q: "Do you pack and unpack?", a: "" }
+  ],
+
+  // AREAS: PLACEHOLDER, service area unconfirmed. Uncomment with suburbs/regions they confirm.
+  // areasHeading: "Where we move",
+  // areas: ["Canberra", "Queanbeyan", ...],
+
+  // Get a key at web3forms.com with the inbox that should get leads (or use yours and forward them).
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY_HERE",
 
-  // primary = brand colour. onPrimary = text on it (use #FAFAF8 on dark colours, #15191C on light ones).
-  colours: { primary: "#1F5C3F", onPrimary: "#FAFAF8" }
+  // FOOTER LINKS: open in a new tab so the site stays open.
+  links: [
+    { label: "Facebook", href: "https://www.facebook.com/100063579248762/", icon: "facebook-logo" },    // [Jett]
+    // Found through search, name and services match. TODO: confirm it is theirs.
+    { label: "Instagram", href: "https://www.instagram.com/movematetransports/", icon: "instagram-logo" }
+  ],
+
+  // JSON-LD (MovingCompany). Empty values are left out of the output; fill before launch.
+  schema: {
+    telephone: "+61422394487",
+    streetAddress: "",           // TODO: only if they want the street address public
+    locality: "Fyshwick",
+    region: "ACT",
+    postcode: "2609",
+    logo: "",                    // TODO: absolute URL to the logo file
+    image: "https://move-mate--ganeworks-website.netlify.app/images/og-image.jpg",  // TODO: a real photo at launch
+    areaServed: "",              // TODO: e.g. "Canberra" once the service area is confirmed
+    openingHours: "",            // TODO: e.g. "Mo-Fr 07:00-17:00"
+    priceRange: ""               // TODO: e.g. "$$", only if they are happy to
+  },
+
+  credit: "Preview prepared by Ganeworks",
+
+  // PLACEHOLDER COLOURS: their logo was not in the repo, so these are a neutral navy and
+  // high-vis amber. Swap for HEX codes sampled from the logo.
+  // primary = brand colour (hero, quote section). dark = deeper shade of it. accent = call buttons.
+  // onPrimary / onAccent = text on those (#FFFFFF on dark colours, #13171C on light ones).
+  colours: { primary: "#14365A", onPrimary: "#FFFFFF", dark: "#0B1E33", accent: "#F5A524", onAccent: "#13171C" }
 };
 </script>
 <script>
-  // Sets title, description and brand colours before first paint.
-  document.title = content.pageTitle;
-  document.querySelector('meta[name="description"]').setAttribute("content", content.metaDescription);
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", content.colours.primary);
-  document.documentElement.style.setProperty("--color-primary", content.colours.primary);
-  document.documentElement.style.setProperty("--on-primary", content.colours.onPrimary);
-  if (content.heroImage) {
-    document.documentElement.style.setProperty("--hero-image", 'url("' + content.heroImage + '")');
-    document.documentElement.setAttribute("data-hero-image", "true");
-  }
+  // Sets title, description, brand colours and structured data before first paint.
+  (function () {
+    const c = content, root = document.documentElement;
+    const staticTitle = document.title;
+    const staticDesc = document.querySelector('meta[name="description"]').getAttribute("content");
+    if (staticTitle !== c.pageTitle || staticDesc !== c.metaDescription) {
+      console.warn("The static <title>/description in <head> differ from content. Link previews read the static ones: update them.");
+    }
+    document.title = c.pageTitle;
+    document.querySelector('meta[name="description"]').setAttribute("content", c.metaDescription);
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", c.colours.primary);
+    const vars = { "--color-primary": "primary", "--on-primary": "onPrimary", "--dark": "dark", "--accent": "accent", "--on-accent": "onAccent" };
+    Object.entries(vars).forEach(([k, v]) => { if (c.colours[v]) root.style.setProperty(k, c.colours[v]); });
+    if (c.heroImage) {
+      root.style.setProperty("--hero-image", 'url("' + c.heroImage + '")');
+      root.setAttribute("data-hero-image", "true");
+    }
+
+    // MovingCompany JSON-LD, built from content so it never drifts. Empty fields are dropped.
+    const s = c.schema || {};
+    const prune = o => {
+      Object.keys(o).forEach(k => {
+        const v = o[k];
+        if (v && typeof v === "object" && !Array.isArray(v)) prune(v);
+        if (v == null || v === "" || (Array.isArray(v) && !v.length)) delete o[k];
+      });
+      return o;
+    };
+    const ld = prune({
+      "@context": "https://schema.org",
+      "@type": "MovingCompany",
+      name: c.businessName,
+      url: c.siteUrl,
+      description: c.metaDescription,
+      telephone: s.telephone,
+      email: c.email,
+      logo: s.logo,
+      image: s.image,
+      address: {
+        "@type": "PostalAddress", streetAddress: s.streetAddress, addressLocality: s.locality,
+        addressRegion: s.region, postalCode: s.postcode, addressCountry: "AU"
+      },
+      areaServed: s.areaServed,
+      openingHours: s.openingHours,
+      priceRange: s.priceRange,
+      sameAs: (c.links || []).map(l => l.href),
+      hasOfferCatalog: (c.services || []).length ? {
+        "@type": "OfferCatalog", name: "Services",
+        itemListElement: c.services.map(sv => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: sv.name } }))
+      } : null
+    });
+    const tag = document.createElement("script");
+    tag.type = "application/ld+json";
+    tag.textContent = JSON.stringify(ld);
+    document.head.append(tag);
+    const empty = Object.keys(s).filter(k => !s[k]);
+    if (empty.length) console.info("JSON-LD placeholders still empty: " + empty.join(", "));
+  })();
 </script>
 
 <style>
-  /* Design read: local trade lead-gen site for homeowners on phones, trust-first,
-     static HTML + CSS variables + Phosphor icons. One radius, one accent, one theme
-     (light or dark follows the visitor's device). */
+  /* Design read: removalist lead-gen site for people mid-move, on their phone, comparing quotes.
+     Trust-first, call and quote always one tap away. Static HTML + CSS variables + Phosphor icons.
+     One radius, one accent (the call colour), light or dark follows the visitor's device. */
   :root {
-    --color-primary: #1F5C3F;
-    --on-primary: #FAFAF8;
+    --color-primary: #14365A;
+    --on-primary: #FFFFFF;
+    --dark: #0B1E33;
+    --accent: #F5A524;
+    --on-accent: #13171C;
 
-    --bg: #F6F6F3;
-    --surface: #FCFCFA;
-    --ink: #15191C;
-    --muted: #4A5258;
-    --border: rgba(21, 25, 28, 0.12);
-    --field: #FCFCFA;
-    --band: color-mix(in srgb, var(--color-primary) 8%, var(--bg));
+    --bg: #F4F6F9;
+    --surface: #FFFFFF;
+    --ink: #111A26;
+    --muted: #4A5666;
+    --border: rgba(17, 26, 38, 0.12);
+    --field: #FFFFFF;
+    --field-border: rgba(17, 26, 38, 0.55);
+    --band: color-mix(in srgb, var(--color-primary) 6%, var(--bg));
     --primary-text: var(--color-primary);
+    --tile: color-mix(in srgb, var(--color-primary) 9%, var(--surface));
 
-    --font: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font: "Outfit", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --r: 12px;
     --max: 1200px;
-    --header-h: 72px;
+    --header-h: 64px;
     --hero-image: none;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #101315;
-      --surface: #181C1F;
-      --ink: #ECEEEC;
-      --muted: #A9B1B7;
-      --border: rgba(236, 238, 236, 0.14);
-      --field: #101315;
-      --band: color-mix(in srgb, var(--color-primary) 16%, var(--bg));
-      --primary-text: color-mix(in srgb, var(--color-primary) 45%, #FFFFFF);
+      --bg: #0B1520;
+      --surface: #122131;
+      --ink: #E8EEF5;
+      --muted: #A9B6C5;
+      --border: rgba(232, 238, 245, 0.14);
+      --field: #0B1520;
+      --field-border: rgba(232, 238, 245, 0.45);
+      --band: color-mix(in srgb, var(--color-primary) 22%, var(--bg));
+      --primary-text: color-mix(in srgb, var(--color-primary) 30%, #FFFFFF);
+      --tile: color-mix(in srgb, var(--color-primary) 45%, var(--surface));
     }
   }
 
@@ -177,106 +376,140 @@ const content = {
     line-height: 1.55;
     color: var(--ink);
     background: var(--bg);
-    padding-bottom: 76px;
   }
-  @media (min-width: 768px) { body { padding-bottom: 0; } }
   img { max-width: 100%; display: block; }
   a { color: inherit; text-decoration: none; }
-  ul { list-style: none; }
-  i[class^="ph"] { line-height: 1; }
+  ul, ol { list-style: none; }
+  /* Reserve icon space so nothing shifts when the icon font arrives. */
+  i[class^="ph"] { display: inline-block; width: 1em; height: 1em; line-height: 1; flex-shrink: 0; }
 
   h1, h2, h3 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; overflow-wrap: break-word; }
-  h2 { font-size: clamp(2.1rem, 5.2vw, 3.6rem); }
-  h3 { font-size: 1.35rem; letter-spacing: -0.015em; line-height: 1.2; }
+  h2 { font-size: clamp(2rem, 5vw, 3.3rem); }
+  h3 { font-size: 1.25rem; letter-spacing: -0.015em; line-height: 1.2; }
 
   :focus-visible { outline: 3px solid var(--primary-text); outline-offset: 3px; }
 
   .wrap { max-width: var(--max); margin: 0 auto; }
-  .sec { padding: clamp(4rem, 9vw, 7.5rem) 1.25rem; }
-  .sec-head { margin-bottom: clamp(2rem, 4vw, 3.25rem); }
-  .sec-head p { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
+  .sec { padding: clamp(3.5rem, 8vw, 6.5rem) 1.25rem; }
+  .sec-head { margin-bottom: clamp(1.75rem, 4vw, 3rem); }
+  .sec-head p { margin-top: 0.85rem; color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
+  section[id] { scroll-margin-top: var(--header-h); }
+
+  .skip-link { position: absolute; left: 0.75rem; top: -100px; z-index: 100; padding: 0.75rem 1rem; border-radius: var(--r); background: var(--accent); color: var(--on-accent); font-weight: 700; }
+  .skip-link:focus { top: 0.75rem; }
 
   /* ---------- Buttons ---------- */
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
-    min-height: 56px; padding: 0.9rem 1.75rem;
+    min-height: 56px; padding: 0.9rem 1.6rem;
     font-family: var(--font); font-size: 1.1rem; font-weight: 700; white-space: nowrap;
     border-radius: var(--r); border: 0; cursor: pointer;
-    transition: transform 0.15s ease, filter 0.15s ease;
+    transition: transform 0.15s ease, filter 0.15s ease, background-color 0.15s ease;
   }
   .btn:active { transform: translateY(1px) scale(0.98); }
+  .btn-accent { background: var(--accent); color: var(--on-accent); }
+  .btn-accent:hover { filter: brightness(1.06); }
   .btn-primary { background: var(--color-primary); color: var(--on-primary); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
-  .btn-primary:hover { filter: brightness(1.12); }
-  .btn-light { background: #F6F6F3; color: #15191C; }
-  .btn-light:hover { filter: brightness(0.94); }
-  .btn-outline { background: rgba(255, 255, 255, 0.08); color: #F6F6F3; box-shadow: inset 0 0 0 2px rgba(246, 246, 243, 0.75); }
-  .btn-outline:hover { background: rgba(255, 255, 255, 0.18); }
+  .btn-primary:hover { filter: brightness(1.15); }
+  @media (prefers-color-scheme: dark) { .btn-primary { box-shadow: inset 0 0 0 2px var(--primary-text); } }
+  .btn-ghost { background: rgba(255, 255, 255, 0.06); color: #FFFFFF; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7); }
+  .btn-ghost:hover { background: rgba(255, 255, 255, 0.14); }
+
+  /* ---------- Preview strip ---------- */
+  .preview-strip { background: #0A111A; color: #DCE3EC; font-size: 0.82rem; font-weight: 500; text-align: center; padding: 0.4rem 1rem; letter-spacing: 0.01em; }
 
   /* ---------- Header ---------- */
   .site-header {
     position: sticky; top: 0; z-index: 50; height: var(--header-h);
-    display: flex; align-items: center; background: var(--bg); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; background: var(--surface); border-bottom: 1px solid var(--border);
   }
   .site-header .wrap { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1.25rem; }
-  .brand { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .nav { display: none; gap: 2rem; font-weight: 500; }
+  .brand { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+  .brand-mark { width: 38px; height: 38px; flex-shrink: 0; display: grid; place-items: center; border-radius: 10px; background: var(--color-primary); color: var(--accent); font-size: 1.3rem; }
+  .brand-text { display: grid; min-width: 0; line-height: 1.05; }
+  .brand-name { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; white-space: nowrap; }
+  .brand-sub { font-size: 0.78rem; font-weight: 500; color: var(--muted); white-space: nowrap; }
+  .brand-logo { height: 44px; width: auto; }
+  .nav { display: none; gap: 1.75rem; font-weight: 500; }
   .nav a { color: var(--muted); }
   .nav a:hover { color: var(--ink); }
-  @media (min-width: 900px) { .nav { display: flex; } }
-  .header-cta { min-height: 48px; padding: 0.5rem 1.15rem; font-size: 1rem; flex-shrink: 0; }
+  @media (min-width: 960px) { .nav { display: flex; } }
+  .header-cta { min-height: 46px; padding: 0.5rem 1rem; font-size: 1rem; flex-shrink: 0; }
+  .cta-short { display: none; }
+  @media (max-width: 400px) { .cta-long { display: none; } .cta-short { display: inline; } }
 
   /* ---------- Hero ---------- */
-  #hero {
-    position: relative; isolation: isolate; color: #F6F6F3;
-    min-height: min(88dvh, 840px); display: flex; align-items: center;
-    padding: 5rem 1.25rem 4rem;
+  .hero {
+    position: relative; isolation: isolate; color: #FFFFFF; overflow: hidden;
+    padding: clamp(2rem, 6vw, 5rem) 1.25rem clamp(2rem, 5vw, 4rem);
     background:
-      linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 78%, #0B0F0D), #0E1210);
-    background-size: cover; background-position: center;
+      radial-gradient(90% 70% at 85% 15%, color-mix(in srgb, var(--color-primary) 70%, #FFFFFF 18%) 0%, transparent 65%),
+      linear-gradient(160deg, var(--color-primary) 0%, var(--dark) 100%);
   }
-  html[data-hero-image] #hero { background-image: var(--hero-image), linear-gradient(135deg, #1b2a22, #0E1210); }
-  #hero::before {
+  html[data-hero-image] .hero { min-height: min(80dvh, 760px); display: flex; align-items: center; background: var(--hero-image) center / cover, var(--dark); }
+  html[data-hero-image] .hero::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(90deg, rgba(10, 14, 12, 0.84) 0%, rgba(10, 14, 12, 0.58) 55%, rgba(10, 14, 12, 0.3) 100%);
+    background: linear-gradient(90deg, rgba(6, 14, 24, 0.86) 0%, rgba(6, 14, 24, 0.6) 55%, rgba(6, 14, 24, 0.3) 100%);
   }
-  #hero .wrap { width: 100%; }
-  #hero h1 { font-size: clamp(2.7rem, 7vw, 5rem); max-width: 18ch; letter-spacing: -0.04em; }
-  .hero-sub { margin-top: 1.5rem; font-size: clamp(1.15rem, 2.2vw, 1.5rem); max-width: 34ch; color: rgba(246, 246, 243, 0.92); line-height: 1.4; }
-  .hero-actions { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: 0.85rem; }
+  .hero .wrap { width: 100%; }
+  .hero-grid { display: grid; gap: 1.75rem; align-items: center; }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.15fr 1fr; gap: 3rem; } }
+  .eyebrow { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; font-size: 0.98rem; color: var(--accent); margin-bottom: 0.9rem; }
+  .hero h1 { font-size: clamp(2.5rem, 7.2vw, 4.6rem); max-width: 14ch; letter-spacing: -0.04em; }
+  @media (min-width: 900px) { .hero h1 { font-size: clamp(3rem, 5.1vw, 4.1rem); max-width: 16ch; } }
+  .hero-sub { margin-top: 1rem; font-size: clamp(1.12rem, 2.1vw, 1.4rem); max-width: 34ch; color: rgba(255, 255, 255, 0.9); line-height: 1.4; }
+  .hero-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
   @media (max-width: 480px) { .hero-actions .btn { width: 100%; } }
+  .hero-text { margin-top: 1rem; color: rgba(255, 255, 255, 0.85); font-size: 1rem; }
+  .hero-text a { color: #FFFFFF; font-weight: 700; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .hero-visual img { width: 100%; max-width: 640px; height: auto; margin: 0 auto; }
+  .hero :focus-visible { outline-color: #FFFFFF; }
 
-  /* ---------- Trust bar ---------- */
-  .trust { background: var(--color-primary); color: var(--on-primary); padding: 2.25rem 1.25rem; }
-  .trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem 1.25rem; }
-  @media (min-width: 900px) { .trust-grid { grid-template-columns: repeat(4, 1fr); } }
-  .trust-item { display: flex; gap: 0.9rem; align-items: flex-start; }
-  .trust-item > i { font-size: 2rem; flex-shrink: 0; margin-top: 0.15rem; }
-  .trust-value { font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.15; }
-  .trust-label { font-size: 0.95rem; opacity: 0.9; line-height: 1.35; margin-top: 0.2rem; }
-  .stars { display: inline-flex; gap: 2px; font-size: 1rem; margin-top: 0.3rem; }
+  /* ---------- Facts bar ---------- */
+  .facts { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.75rem 1.25rem; }
+  .facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem 1rem; }
+  @media (min-width: 900px) { .facts-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; } }
+  .fact { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .fact > i { font-size: 1.35rem; padding: 0.5rem; box-sizing: content-box; border-radius: 10px; background: var(--tile); color: var(--primary-text); }
+  .fact-value { font-weight: 700; font-size: 1.05rem; line-height: 1.2; letter-spacing: -0.01em; }
+  .fact-label { font-size: 0.92rem; color: var(--muted); line-height: 1.35; margin-top: 0.15rem; }
+  .fact a.fact-value { text-decoration: underline; text-underline-offset: 3px; }
+  .stars { display: inline-flex; gap: 2px; font-size: 0.95rem; margin-top: 0.25rem; color: var(--accent); }
 
   /* ---------- Services ---------- */
-  .svc-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  .svc-grid { display: grid; grid-template-columns: 1fr; gap: 0.85rem; }
   @media (min-width: 768px) {
-    .svc-grid { grid-template-columns: repeat(3, 1fr); grid-auto-flow: dense; }
-    .svc.wide { grid-column: span 2; }
+    .svc-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; grid-auto-flow: dense; }
+    .svc-card.wide { grid-column: span 2; }
   }
-  .svc {
-    position: relative; isolation: isolate; overflow: hidden; color: #F6F6F3;
-    min-height: 340px; display: flex; align-items: flex-end;
-    border-radius: var(--r);
-    background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 80%, #0B0F0D), #0E1210);
+  .svc-card {
+    display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 1rem; align-items: start;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.25rem;
   }
-  .svc img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
-  .svc::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 14, 12, 0) 30%, rgba(10, 14, 12, 0.88) 100%); }
-  .svc-body { padding: 1.5rem; width: 100%; }
-  .svc-body p { margin-top: 0.4rem; max-width: 36ch; color: rgba(246, 246, 243, 0.92); font-size: 1rem; line-height: 1.4; }
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .svc img { transition: transform 0.5s ease; }
-    .svc:hover img { transform: scale(1.04); }
+  .svc-icon { grid-row: span 2; width: 52px; height: 52px; display: grid; place-items: center; border-radius: var(--r); background: var(--tile); color: var(--primary-text); font-size: 1.55rem; }
+  .svc-card p { color: var(--muted); font-size: 1rem; line-height: 1.45; }
+  .svc-photo { grid-column: 1 / -1; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: calc(var(--r) - 4px); margin-bottom: 0.75rem; }
+  @media (min-width: 768px) {
+    .svc-card { grid-template-columns: 1fr; padding: 1.5rem; }
+    .svc-icon { grid-row: auto; margin-bottom: 1rem; }
   }
+  .svc-cta { background: var(--color-primary); color: var(--on-primary); border-color: transparent; display: flex; flex-direction: column; justify-content: center; gap: 0.35rem; }
+  .svc-cta p { color: var(--on-primary); opacity: 0.92; }
+  .svc-cta .btn { margin-top: 0.85rem; align-self: flex-start; min-height: 50px; padding: 0.6rem 1.2rem; font-size: 1rem; }
+  .svc-cta :focus-visible { outline-color: #FFFFFF; }
+  @media (max-width: 480px) { .svc-cta .btn { align-self: stretch; } }
 
-  /* ---------- Work ---------- */
+  /* ---------- Storage feature ---------- */
+  #storage { background: var(--band); }
+  .feature { display: grid; gap: 2rem; align-items: center; }
+  @media (min-width: 900px) { .feature { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  .feature-media { background: var(--surface); border-radius: var(--r); padding: clamp(1rem, 3vw, 2rem); }
+  .feature-media img { width: 100%; height: auto; }
+  .feature-body p { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 44ch; }
+  .feature-body .btn { margin-top: 1.75rem; }
+  @media (max-width: 480px) { .feature-body .btn { width: 100%; } }
+
+  /* ---------- Work (shown once real photos are in) ---------- */
   #work { background: var(--band); }
   .ba-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
   .ba-stage { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--r); --pos: 50%; background: var(--surface); }
@@ -296,7 +529,7 @@ const content = {
   @media (min-width: 768px) { .gallery { columns: 3; } }
   .gallery img { width: 100%; margin-bottom: 1rem; border-radius: var(--r); break-inside: avoid; }
 
-  /* ---------- Reviews ---------- */
+  /* ---------- Reviews (shown once real reviews are in) ---------- */
   .rev { display: grid; gap: 1.25rem; }
   @media (min-width: 900px) { .rev { grid-template-columns: 5fr 7fr; } }
   .rev-feature {
@@ -307,116 +540,154 @@ const content = {
   .rev-list { display: grid; gap: 1rem; align-content: start; }
   .rev-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; }
   .rev-card blockquote { font-size: 1.1rem; margin: 0.6rem 0 1rem; }
-  .rev-card .stars { color: var(--primary-text); margin: 0; }
   .rev-author { font-weight: 700; }
   .rev-meta { font-size: 0.95rem; color: var(--muted); }
-  .rev-feature .rev-meta { color: var(--on-primary); opacity: 0.85; }
+  .rev-meta a { text-decoration: underline; text-underline-offset: 3px; }
+  .rev-feature .rev-meta { color: var(--on-primary); }
 
   /* ---------- Process ---------- */
-  #process { background: var(--band); }
-  .proc { display: grid; gap: 2.5rem; }
+  .proc { display: grid; gap: 2rem; }
   @media (min-width: 900px) { .proc { grid-template-columns: 5fr 7fr; align-items: start; } }
-  .step { display: grid; grid-template-columns: 60px 1fr; gap: 1.1rem; padding: 1.4rem 0; border-top: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 56px 1fr; gap: 1rem; padding: 1.3rem 0; border-top: 1px solid var(--border); }
   .step:first-child { border-top: 0; padding-top: 0; }
-  .step-icon { width: 60px; height: 60px; border-radius: var(--r); background: var(--color-primary); color: var(--on-primary); display: grid; place-items: center; font-size: 1.6rem; }
+  .step-icon { position: relative; width: 56px; height: 56px; border-radius: var(--r); background: var(--color-primary); color: var(--on-primary); display: grid; place-items: center; font-size: 1.5rem; }
+  .step-num { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-size: 0.8rem; font-weight: 800; display: grid; place-items: center; }
   .step p { color: var(--muted); margin-top: 0.3rem; }
 
-  /* ---------- Contact ---------- */
-  #contact { background: var(--color-primary); color: var(--on-primary); }
-  .contact-grid { display: grid; gap: 2.5rem; }
-  @media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1fr; align-items: start; gap: 4rem; } }
-  .contact-sub { margin-top: 1rem; font-size: 1.15rem; opacity: 0.92; max-width: 40ch; }
-  .promises { margin-top: 1.75rem; display: grid; gap: 0.8rem; }
-  .promises li { display: flex; gap: 0.75rem; align-items: center; font-size: 1.15rem; font-weight: 500; }
-  .promises i { font-size: 1.5rem; flex-shrink: 0; }
-  .big-phone { display: inline-flex; align-items: center; gap: 0.75rem; margin-top: 2rem; font-size: clamp(1.9rem, 4.5vw, 2.9rem); font-weight: 800; letter-spacing: -0.03em; }
-  .form-card { background: var(--surface); color: var(--ink); border-radius: var(--r); padding: clamp(1.5rem, 3vw, 2.25rem); }
-  #contact-form { display: grid; gap: 1.1rem; }
-  #contact-form label { display: grid; gap: 0.45rem; font-weight: 600; font-size: 0.98rem; }
-  #contact-form input, #contact-form textarea {
-    font-family: var(--font); font-size: 1rem; color: var(--ink); background: var(--field);
-    min-height: 52px; padding: 0.8rem 0.9rem; border: 1.5px solid color-mix(in srgb, var(--ink) 40%, transparent); border-radius: var(--r);
+  /* ---------- Quote / contact ---------- */
+  #quote { background: linear-gradient(160deg, var(--color-primary) 0%, var(--dark) 100%); color: var(--on-primary); }
+  .contact-grid { display: grid; gap: 2rem; }
+  @media (min-width: 900px) {
+    .contact-grid { grid-template-columns: 5fr 6fr; align-items: start; gap: 4rem; }
+    .contact-grid > div:first-child { position: sticky; top: calc(var(--header-h) + 2rem); }
   }
-  #contact-form textarea { min-height: 120px; resize: vertical; }
-  #contact-form button { width: 100%; }
-  .form-note { font-size: 0.92rem; color: var(--muted); }
-  .form-success { font-size: 1.3rem; font-weight: 700; line-height: 1.3; }
-  .form-error { color: #B3261E; font-weight: 600; }
-  @media (prefers-color-scheme: dark) { .form-error { color: #F2B8B5; } }
-  .hp { position: absolute; left: -9999px; }
+  .contact-sub { margin-top: 1rem; font-size: 1.15rem; opacity: 0.92; max-width: 40ch; }
+  .promises { margin-top: 1.5rem; display: grid; gap: 0.7rem; }
+  .promises li { display: flex; gap: 0.7rem; align-items: center; font-size: 1.1rem; font-weight: 500; }
+  .promises i { font-size: 1.4rem; color: var(--accent); }
+  .big-phone { display: inline-flex; align-items: center; gap: 0.7rem; margin-top: 1.75rem; font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 800; letter-spacing: -0.03em; }
+  .big-phone i { color: var(--accent); }
+  .contact-alt { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-weight: 600; }
+  .contact-alt a { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 40px; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; overflow-wrap: anywhere; }
+  #quote :focus-visible { outline-color: #FFFFFF; }
+  #quote .form-card :focus-visible { outline-color: var(--primary-text); }
 
-  /* ---------- Areas ---------- */
+  .form-card { scroll-margin-top: calc(var(--header-h) + 0.75rem); background: var(--surface); color: var(--ink); border-radius: var(--r); padding: clamp(1.25rem, 3vw, 2.25rem); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55); }
+  .form-title { font-size: 1.35rem; margin-bottom: 0.25rem; }
+  .form-req { font-size: 0.95rem; color: var(--muted); margin-bottom: 1.1rem; }
+  #quote-form { display: grid; gap: 1rem; }
+  .form-row { display: grid; gap: 1rem; }
+  @media (min-width: 520px) { .form-row { grid-template-columns: 1fr 1fr; } }
+  .field { display: grid; gap: 0.4rem; font-weight: 600; font-size: 0.98rem; min-width: 0; }
+  .opt { font-weight: 400; color: var(--muted); }
+  #quote-form input:not([type="radio"]):not([type="checkbox"]), #quote-form select, #quote-form textarea {
+    width: 100%; min-width: 0; font-family: var(--font); font-size: 1rem; color: var(--ink); background-color: var(--field);
+    min-height: 52px; padding: 0.75rem 0.9rem; border: 1.5px solid var(--field-border); border-radius: var(--r);
+    -webkit-appearance: none; appearance: none;
+  }
+  #quote-form input::placeholder, #quote-form textarea::placeholder { color: var(--muted); opacity: 0.85; }
+  #quote-form input::-webkit-date-and-time-value { text-align: left; }
+  #quote-form select {
+    padding-right: 2.5rem; cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 20px) 52%, calc(100% - 14px) 52%;
+    background-size: 6px 6px; background-repeat: no-repeat;
+  }
+  #quote-form textarea { min-height: 104px; resize: vertical; }
+  #quote-form :is(input, select, textarea):focus-visible { outline: 3px solid var(--primary-text); outline-offset: 1px; border-color: var(--primary-text); }
+  .choice { border: 0; min-width: 0; }
+  .choice legend { font-weight: 600; font-size: 0.98rem; margin-bottom: 0.45rem; padding: 0; }
+  .choice-opts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .choice-opt { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 46px; padding: 0.5rem 0.9rem; border: 1.5px solid var(--field-border); border-radius: var(--r); font-weight: 500; cursor: pointer; }
+  .choice-opt input { width: 1.15rem; height: 1.15rem; accent-color: var(--primary-text); margin: 0; }
+  .choice-opt:has(input:checked) { border-color: var(--primary-text); background: var(--tile); }
+  .choice-opt:has(input:focus-visible) { outline: 3px solid var(--primary-text); outline-offset: 2px; }
+  #quote-form button[type="submit"] { width: 100%; margin-top: 0.25rem; }
+  .form-note { font-size: 0.95rem; color: var(--muted); }
+  .form-note a { color: var(--primary-text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .form-success { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
+  .form-msg { font-weight: 600; padding: 0.85rem 1rem; border-radius: var(--r); background: var(--tile); }
+  .form-error { color: #B3261E; background: color-mix(in srgb, #B3261E 8%, var(--surface)); }
+  @media (prefers-color-scheme: dark) { .form-error { color: #F2B8B5; } }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+  /* ---------- FAQ ---------- */
+  .faq { max-width: 820px; }
+  .faq details { border-top: 1px solid var(--border); }
+  .faq details:last-child { border-bottom: 1px solid var(--border); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-weight: 700; font-size: 1.1rem; min-height: 48px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; flex-shrink: 0; font-size: 1.6rem; font-weight: 400; line-height: 1; color: var(--primary-text); transition: transform 0.2s ease; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details p { padding-bottom: 1.25rem; color: var(--muted); max-width: 62ch; }
+
+  /* ---------- Areas (shown once confirmed) ---------- */
   .areas { display: flex; flex-wrap: wrap; gap: 0.6rem; }
   .areas li { padding: 0.6rem 1.1rem; border: 1.5px solid var(--border); border-radius: var(--r); font-weight: 600; background: var(--surface); }
 
   /* ---------- Footer ---------- */
-  footer { background: #0F1311; color: #E8EBE8; padding: 3rem 1.25rem; }
+  /* Extra bottom padding on phones so the fixed call bar never covers the last line. */
+  footer { background: #07111D; color: #E6ECF3; padding: 3rem 1.25rem calc(2rem + 76px + env(safe-area-inset-bottom)); }
+  @media (min-width: 768px) { footer { padding-bottom: 2rem; } }
   .foot { display: grid; gap: 2rem; }
   @media (min-width: 768px) { .foot { grid-template-columns: 1.4fr 1fr 1fr; } }
-  .foot h3 { font-size: 1.25rem; margin-bottom: 0.6rem; }
-  .foot p, .foot a { color: #B9C0BB; display: block; }
-  .foot a:hover { color: #F6F6F3; }
+  .foot h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
+  .foot p, .foot a { color: #B4C0CE; }
+  .foot a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 36px; }
+  .foot a:hover { color: #FFFFFF; }
+  .foot-list { display: grid; gap: 0.15rem; justify-items: start; }
+  .foot-list a { overflow-wrap: anywhere; }
+  footer :focus-visible { outline-color: #FFFFFF; }
+  .foot-base { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(230, 236, 243, 0.14); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; font-size: 0.88rem; color: #93A1B2; }
 
   /* ---------- Hover pop (mouse only, never on touch or reduced motion) ---------- */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    .btn, .svc, .rev-card, .gallery img, .areas li, .step-icon {
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease,
-                  background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, filter 0.15s ease;
+    .btn, .svc-card, .step-icon {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease,
+                  background-color 0.15s ease, filter 0.15s ease;
     }
-    .btn:hover { transform: translateY(-3px) scale(1.04); }
+    .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0) scale(0.98); }
-    .btn-primary:hover { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 14px 26px -8px color-mix(in srgb, var(--color-primary) 75%, transparent); }
-    .btn-light:hover { box-shadow: 0 14px 28px -8px rgba(5, 12, 8, 0.6); }
-    .btn-outline:hover { box-shadow: inset 0 0 0 2px #F6F6F3, 0 14px 28px -8px rgba(5, 12, 8, 0.6); }
-    .svc:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -14px color-mix(in srgb, var(--color-primary) 65%, transparent); }
-    .rev-card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--color-primary) 45%, transparent); }
-    .gallery img:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--color-primary) 45%, transparent); }
-    .areas li:hover {
-      transform: translateY(-3px) scale(1.07);
-      background: var(--color-primary); color: var(--on-primary); border-color: var(--color-primary);
-      box-shadow: 0 12px 22px -8px color-mix(in srgb, var(--color-primary) 70%, transparent);
-    }
-    .step:hover .step-icon { transform: scale(1.1); box-shadow: 0 12px 22px -8px color-mix(in srgb, var(--color-primary) 70%, transparent); }
+    .svc-card:hover { transform: translateY(-4px); box-shadow: 0 18px 32px -16px color-mix(in srgb, var(--color-primary) 55%, transparent); }
+    .step:hover .step-icon { transform: scale(1.06); }
   }
 
   /* ---------- Motion ----------
-     Hero: one load sequence. Everything else: a single fade-up as it scrolls into view.
-     Only runs when the visitor has not asked for reduced motion. Content is never
-     hidden unless the script has confirmed it can reveal it again (html.js-reveal). */
+     Hero and form are never hidden or delayed: the hero text paints immediately and the truck
+     only slides a few pixels. Everything else gets one short fade-up as it scrolls into view.
+     Skipped for reduced motion. Content is only hidden once the script confirms it can reveal it. */
   @media (prefers-reduced-motion: no-preference) {
-    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-    #hero h1, .hero-sub, .hero-actions { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .hero-sub { animation-delay: 0.12s; }
-    .hero-actions { animation-delay: 0.24s; }
+    @keyframes drive-in { from { transform: translateX(-18px); } to { transform: none; } }
+    .hero-visual img { animation: drive-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
     html.js-reveal .reveal {
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-      transition-delay: calc(var(--i, 0) * 80ms);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.45s ease-out, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: calc(var(--i, 0) * 60ms);
     }
     html.js-reveal .reveal.in { opacity: 1; transform: none; }
   }
 
-  /* ---------- Mobile bar and sample ribbon ---------- */
+  /* ---------- Mobile call bar ---------- */
   .mobile-bar {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;
+    display: grid; grid-template-columns: 1.15fr 1fr; gap: 0.6rem;
     padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
-    background: var(--bg); border-top: 1px solid var(--border);
+    background: var(--surface); border-top: 1px solid var(--border);
+    box-shadow: 0 -8px 24px -12px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
   }
-  .mobile-bar .btn { min-height: 52px; padding: 0.6rem 0.75rem; font-size: 1rem; }
+  .mobile-bar .btn { min-height: 52px; padding: 0.6rem 0.75rem; font-size: 1.05rem; }
   .mobile-bar .btn-quote { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+  /* Out of the way while someone is typing in the form (phone keyboards push fixed bars over fields). */
+  .mobile-bar.typing { transform: translateY(110%); }
   @media (min-width: 768px) { .mobile-bar { display: none; } }
-  .sample-ribbon {
-    position: fixed; left: 0.6rem; bottom: 88px; z-index: 60; background: #B3261E; color: #fff;
-    padding: 0.4rem 0.75rem; border-radius: var(--r); font-weight: 700; font-size: 0.85rem;
-  }
-  @media (min-width: 768px) { .sample-ribbon { bottom: 0.75rem; } }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#quote-card">Skip to the quote form</a>
 <div id="app"></div>
-<noscript><p style="padding:2rem">Please enable JavaScript to view this page.</p></noscript>
+<noscript><p style="padding:2rem">Please enable JavaScript to view this page, or call Move Mate on 0422 394 487.</p></noscript>
 
 <script>
 // Renders content into the page. Nothing here is client-specific.
@@ -428,9 +699,9 @@ function h(tag, props, ...kids) {
   Object.entries(props || {}).forEach(([k, v]) => {
     if (v === false || v == null) return;
     if (k === "class") el.className = v;
-    else el.setAttribute(k, v);
+    else el.setAttribute(k, v === true ? "" : v);
   });
-  kids.flat().forEach(k => { if (k != null && k !== false) el.append(k.nodeType ? k : document.createTextNode(k)); });
+  kids.flat(Infinity).forEach(k => { if (k != null && k !== false) el.append(k.nodeType ? k : document.createTextNode(k)); });
   return el;
 }
 const icon = (name, weight) => h("i", { class: (weight || "ph-bold") + " ph-" + name, "aria-hidden": "true" });
@@ -441,72 +712,119 @@ const stars = (n, label) => {
 };
 const section = (id, cls, inner) => h("section", { id, class: cls }, h("div", { class: "wrap" }, inner));
 const head = (title, sub) => h("div", { class: "sec-head" }, h("h2", {}, title), sub ? h("p", {}, sub) : null);
+// External profiles open in a new tab so the site stays open.
+const ext = (href, cls, ...kids) => h("a", { href, class: cls, target: "_blank", rel: "noopener" }, kids);
 
 const hasWork = (c.beforeAfter && c.beforeAfter.length) || (c.gallery && c.gallery.length);
 const hasReviews = c.reviews && c.reviews.length;
 
+// ----- Preview strip -----
+if (c.sample) {
+  app.append(h("div", { class: "preview-strip", role: "note" }, c.sampleText));
+  console.warn("content.sample is true: preview strip showing. Set it to false once the client approves the site.");
+}
+
 // ----- Header -----
 const navLinks = [
   ["Services", "#services", c.services && c.services.length],
+  ["Storage", "#storage", c.storage],
   ["Work", "#work", hasWork],
-  ["Reviews", "#reviews", hasReviews]
+  ["Reviews", "#reviews", hasReviews],
+  ["How it works", "#process", c.steps && c.steps.length],
+  ["FAQ", "#faq", c.faqs && c.faqs.length],
+  [c.quoteText, "#quote-card", true]
 ].filter(l => l[2]);
 app.append(
   h("header", { class: "site-header" },
     h("div", { class: "wrap" },
-      h("a", { class: "brand", href: "#" }, c.businessName),
+      h("a", { class: "brand", href: "#top", "aria-label": c.businessName + ", back to top" },
+        c.logo ? h("img", { class: "brand-logo", src: c.logo, alt: c.logoAlt })
+               : [h("span", { class: "brand-mark" }, icon("package", "ph-fill")),
+                  h("span", { class: "brand-text" }, h("span", { class: "brand-name" }, c.brandShort), h("span", { class: "brand-sub" }, c.brandSub))]
+      ),
       h("nav", { class: "nav", "aria-label": "Main" }, navLinks.map(l => h("a", { href: l[1] }, l[0]))),
-      h("a", { class: "btn btn-primary header-cta", href: c.phoneHref }, icon("phone-call"), c.phone)
+      h("a", { class: "btn btn-accent header-cta", href: c.phoneHref, "aria-label": "Call " + c.phone },
+        icon("phone-call"), h("span", { class: "cta-long" }, c.phone), h("span", { class: "cta-short" }, "Call"))
     )
   )
 );
+
+const main = h("main", { id: "main" });
+app.append(main);
 
 // ----- Hero -----
-app.append(
-  h("section", { id: "hero" },
-    h("div", { class: "wrap" },
-      h("h1", {}, c.heroHeading),
-      h("p", { class: "hero-sub" }, c.heroSub),
-      h("div", { class: "hero-actions" },
-        h("a", { class: "btn btn-light", href: c.phoneHref }, icon("phone-call"), c.ctaText),
-        h("a", { class: "btn btn-outline", href: "#contact" }, c.quoteText)
-      )
+main.append(
+  h("section", { id: "top", class: "hero" },
+    h("div", { class: "wrap hero-grid" },
+      h("div", {},
+        c.heroEyebrow ? h("p", { class: "eyebrow" }, icon("map-pin", "ph-fill"), c.heroEyebrow) : null,
+        h("h1", {}, c.heroHeading),
+        h("p", { class: "hero-sub" }, c.heroSub),
+        h("div", { class: "hero-actions" },
+          h("a", { class: "btn btn-accent", href: c.phoneHref }, icon("phone-call"), c.heroCallText || c.ctaText),
+          h("a", { class: "btn btn-ghost", href: "#quote-card" }, c.quoteText, icon("arrow-right"))
+        ),
+        c.smsHref ? h("p", { class: "hero-text" }, c.textPrompt + " ", h("a", { href: c.smsHref }, "Text " + c.phone)) : null
+      ),
+      c.heroVisual && !c.heroImage ? h("div", { class: "hero-visual" },
+        h("img", { src: c.heroVisual, alt: c.heroVisualAlt, width: "800", height: "400", fetchpriority: "high", decoding: "async" })
+      ) : null
     )
   )
 );
 
-// ----- Trust bar -----
-const trustCells = [];
-if (c.rating) {
-  trustCells.push(h("div", { class: "trust-item" },
-    icon("star", "ph-fill"),
+// ----- Facts bar -----
+const factCells = [];
+if (c.rating && c.rating.score) {
+  const label = c.rating.score + " on " + c.rating.source;
+  factCells.push(h("div", { class: "fact" }, icon("star", "ph-fill"),
     h("div", {},
-      h("div", { class: "trust-value" }, c.rating.score + " on " + c.rating.source),
+      c.rating.href ? ext(c.rating.href, "fact-value", label) : h("div", { class: "fact-value" }, label),
       stars(5, "Rated " + c.rating.score + " out of 5"),
-      h("div", { class: "trust-label" }, c.rating.count + " reviews")
-    )
-  ));
+      h("div", { class: "fact-label" }, c.rating.count + " reviews"))));
 }
-(c.trust || []).forEach(t => trustCells.push(
-  h("div", { class: "trust-item" }, icon(t.icon),
-    h("div", {}, h("div", { class: "trust-value" }, t.value), h("div", { class: "trust-label" }, t.label)))
+(c.facts || []).forEach(f => factCells.push(
+  h("div", { class: "fact" }, icon(f.icon),
+    h("div", {}, f.href ? ext(f.href, "fact-value", f.value) : h("div", { class: "fact-value" }, f.value),
+      h("div", { class: "fact-label" }, f.label)))
 ));
-app.append(h("section", { class: "trust", "aria-label": "Why choose us" }, h("div", { class: "wrap trust-grid" }, trustCells)));
+if (factCells.length) main.append(h("section", { class: "facts", "aria-label": "At a glance" }, h("div", { class: "wrap facts-grid" }, factCells)));
 
 // ----- Services -----
 if (c.services && c.services.length) {
-  const n = c.services.length;
-  const extra = (3 - (n % 3)) % 3; // cards that span 2 columns so the grid has no empty cell
-  const wideCount = extra === 0 && n >= 6 ? 3 : extra; // 6 or 9 services: still asymmetric
-  const wideAt = new Set([0, n - 1, Math.floor(n / 2)].slice(0, wideCount));
-  const cards = c.services.map((s, i) => {
-    const wide = wideAt.has(i);
-    return h("a", { class: "svc" + (wide ? " wide" : ""), href: "#contact" },
-      s.image ? h("img", { src: s.image, alt: s.name, loading: "lazy" }) : null,
-      h("div", { class: "svc-body" }, h("h3", {}, s.name), h("p", {}, s.desc))
-    );
-  });
-  app.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub), h("div", { class: "svc-grid" }, cards)]));
+  const cards = c.services.map(s => h("article", { class: "svc-card" },
+    s.image ? h("img", { class: "svc-photo", src: s.image, alt: s.alt || s.name, loading: "lazy", decoding: "async", width: "800", height: "500" }) : null,
+    h("span", { class: "svc-icon" }, icon(s.icon || "truck")),
+    h("h3", {}, s.name),
+    h("p", {}, s.desc)
+  ));
+  if (c.servicesCta) {
+    cards.push(h("div", { class: "svc-card svc-cta" },
+      h("h3", {}, c.servicesCta.title),
+      h("p", {}, c.servicesCta.text),
+      h("a", { class: "btn btn-accent", href: c.phoneHref }, icon("phone-call"), c.servicesCta.button)
+    ));
+  }
+  // Cards that span 2 columns on the 3-column layout so the grid never has an empty cell.
+  const n = cards.length;
+  const extra = (3 - (n % 3)) % 3;
+  [0, n - 1].slice(0, extra).forEach(i => cards[i].classList.add("wide"));
+  main.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub), h("div", { class: "svc-grid" }, cards)]));
+}
+
+// ----- Storage feature -----
+if (c.storage) {
+  main.append(section("storage", "sec",
+    h("div", { class: "feature" },
+      c.storage.image ? h("div", { class: "feature-media" },
+        h("img", { src: c.storage.image, alt: c.storage.alt, loading: "lazy", decoding: "async", width: "640", height: "440" })) : null,
+      h("div", { class: "feature-body" },
+        h("h2", {}, c.storage.heading),
+        c.storage.text.map(t => h("p", {}, t)),
+        h("a", { class: "btn btn-primary", href: "#quote-card" }, c.storage.button, icon("arrow-right"))
+      )
+    )
+  ));
 }
 
 // ----- Work -----
@@ -529,35 +847,36 @@ if (hasWork) {
   if (c.gallery && c.gallery.length) {
     parts.push(h("div", { class: "gallery" }, c.gallery.map(g => h("img", { src: g.image, alt: g.alt, loading: "lazy" }))));
   }
-  app.append(section("work", "sec", parts));
+  main.append(section("work", "sec", parts));
 }
 
 // ----- Reviews -----
 if (hasReviews) {
   const [first, ...rest] = c.reviews;
+  const meta = r => h("div", { class: "rev-meta" }, r.href ? ext(r.href, null, r.meta) : r.meta);
   const feature = h("figure", { class: "rev-feature" },
     stars(5),
     h("blockquote", {}, "\u201C" + first.quote + "\u201D"),
-    h("figcaption", {}, h("div", { class: "rev-author" }, first.author), h("div", { class: "rev-meta" }, first.meta))
+    h("figcaption", {}, h("div", { class: "rev-author" }, first.author), meta(first))
   );
   const list = h("div", { class: "rev-list" }, rest.map(r =>
     h("figure", { class: "rev-card" },
       stars(5),
       h("blockquote", {}, "\u201C" + r.quote + "\u201D"),
-      h("figcaption", {}, h("span", { class: "rev-author" }, r.author), h("div", { class: "rev-meta" }, r.meta))
+      h("figcaption", {}, h("span", { class: "rev-author" }, r.author), meta(r))
     )
   ));
-  app.append(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: "rev" }, feature, list)]));
+  main.append(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: "rev" }, feature, list)]));
 }
 
 // ----- Process -----
 if (c.steps && c.steps.length) {
-  app.append(section("process", "sec",
+  main.append(section("process", "sec",
     h("div", { class: "proc" },
       head(c.processHeading, c.processSub),
-      h("div", { class: "steps" }, c.steps.map(s =>
-        h("div", { class: "step" },
-          h("div", { class: "step-icon" }, icon(s.icon)),
+      h("ol", { class: "steps" }, c.steps.map((s, i) =>
+        h("li", { class: "step" },
+          h("div", { class: "step-icon" }, icon(s.icon), h("span", { class: "step-num", "aria-hidden": "true" }, String(i + 1))),
           h("div", {}, h("h3", {}, s.title), h("p", {}, s.text))
         )
       ))
@@ -565,32 +884,77 @@ if (c.steps && c.steps.length) {
   ));
 }
 
-// ----- Contact -----
-const form = h("form", { id: "contact-form" },
-  h("label", {}, "Name", h("input", { type: "text", name: "name", autocomplete: "name", required: "" })),
-  h("label", {}, "Phone", h("input", { type: "tel", name: "phone", autocomplete: "tel", required: "" })),
-  h("label", {}, "What do you need done?", h("textarea", { name: "message", required: "" })),
+// ----- Quote form -----
+// Built from content.form.fields. Every control has a visible label; groups use fieldset + legend.
+const optional = f => f.required ? null : h("span", { class: "opt" }, " (optional)");
+function field(f) {
+  if (f.type === "row") return h("div", { class: "form-row" }, f.fields.map(field));
+  if (f.type === "radios" || f.type === "checks") {
+    const radio = f.type === "radios";
+    return h("fieldset", { class: "choice" },
+      h("legend", {}, f.label, radio ? null : optional(f)),
+      h("div", { class: "choice-opts" }, f.options.map((o, i) => h("label", { class: "choice-opt" },
+        radio ? h("input", { type: "radio", name: f.name, value: o, checked: i === 0 })
+              : h("input", { type: "checkbox", name: o.name, value: "Yes" }),
+        h("span", {}, radio ? o : o.label)
+      )))
+    );
+  }
+  let control;
+  const base = { name: f.name, id: "f-" + f.name, required: !!f.required, autocomplete: f.autocomplete };
+  if (f.type === "select") {
+    control = h("select", base, h("option", { value: "" }, f.placeholder || "Choose one"), f.options.map(o => h("option", {}, o)));
+  } else if (f.type === "textarea") {
+    control = h("textarea", Object.assign(base, { placeholder: f.placeholder, rows: "3" }));
+  } else {
+    control = h("input", Object.assign(base, { type: f.type, placeholder: f.placeholder }));
+    if (f.type === "date") {
+      const d = new Date();
+      control.min = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    }
+  }
+  return h("label", { class: "field", for: base.id }, h("span", {}, f.label, optional(f)), control);
+}
+const form = h("form", { id: "quote-form" },
+  (c.form.fields || []).map(field),
   h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
-  h("button", { type: "submit", class: "btn btn-primary" }, c.quoteText),
-  h("p", { class: "form-note" }, "No obligation. We reply the same business day.")
+  h("button", { type: "submit", class: "btn btn-primary" }, c.form.submitText),
+  h("p", { class: "form-note" }, "Prefer to talk? ", h("a", { href: c.phoneHref }, "Call"),
+    c.smsHref ? [" or ", h("a", { href: c.smsHref }, "text")] : null, " " + c.phone + "."),
+  h("div", { class: "form-status", role: "status", "aria-live": "polite" })
 );
-app.append(
-  h("section", { id: "contact", class: "sec" },
+main.append(
+  h("section", { id: "quote", class: "sec", "aria-labelledby": "quote-heading" },
     h("div", { class: "wrap contact-grid" },
       h("div", {},
-        h("h2", {}, c.contactHeading),
+        h("h2", { id: "quote-heading" }, c.contactHeading),
         h("p", { class: "contact-sub" }, c.contactSub),
         h("ul", { class: "promises" }, (c.promises || []).map(p => h("li", {}, icon("check-circle", "ph-fill"), p))),
-        h("a", { class: "big-phone", href: c.phoneHref }, icon("phone-call"), c.phone)
+        h("a", { class: "big-phone", href: c.phoneHref }, icon("phone-call"), c.phone),
+        h("p", { class: "contact-alt" },
+          c.smsHref ? h("a", { href: c.smsHref }, icon("chat-text"), "Text us") : null,
+          c.email ? h("a", { href: "mailto:" + c.email }, icon("envelope-simple"), c.email) : null)
       ),
-      h("div", { class: "form-card" }, form)
+      h("div", { class: "form-card", id: "quote-card" },
+        h("h3", { class: "form-title" }, c.form.heading),
+        c.form.intro ? h("p", { class: "form-req" }, c.form.intro) : null,
+        form)
     )
   )
 );
 
+// ----- FAQ -----
+// Native <details> so it works with a keyboard and screen reader, no script needed.
+if (c.faqs && c.faqs.length) {
+  main.append(section("faq", "sec", [
+    head(c.faqHeading),
+    h("div", { class: "faq" }, c.faqs.map(f => h("details", {}, h("summary", {}, f.q), h("p", {}, f.a))))
+  ]));
+}
+
 // ----- Areas -----
 if (c.areas && c.areas.length) {
-  app.append(section("areas", "sec", [head(c.areasHeading), h("ul", { class: "areas" }, c.areas.map(a => h("li", {}, a)))]));
+  main.append(section("areas", "sec", [head(c.areasHeading), h("ul", { class: "areas" }, c.areas.map(a => h("li", {}, a)))]));
 }
 
 // ----- Footer -----
@@ -598,47 +962,56 @@ app.append(
   h("footer", {},
     h("div", { class: "wrap foot" },
       h("div", {}, h("h3", {}, c.businessName), h("p", {}, c.heroSub)),
-      h("div", {}, h("h3", {}, "Contact"), h("a", { href: c.phoneHref }, c.phone), c.email ? h("a", { href: "mailto:" + c.email }, c.email) : null, h("p", {}, c.address)),
-      h("div", {}, h("h3", {}, "Hours"), h("p", {}, c.hours))
+      h("div", {}, h("h3", {}, "Contact"),
+        h("div", { class: "foot-list" },
+          h("a", { href: c.phoneHref }, icon("phone-call"), c.phone),
+          c.smsHref ? h("a", { href: c.smsHref }, icon("chat-text"), "Text " + c.phone) : null,
+          c.email ? h("a", { href: "mailto:" + c.email }, icon("envelope-simple"), c.email) : null,
+          h("p", {}, c.address))),
+      c.hours ? h("div", {}, h("h3", {}, "Hours"), h("p", {}, c.hours)) : null,
+      c.links && c.links.length ? h("div", {}, h("h3", {}, "Find us online"),
+        h("ul", { class: "foot-list" }, c.links.map(l => h("li", {}, ext(l.href, null, icon(l.icon || "arrow-up-right"), l.label))))) : null
+    ),
+    h("div", { class: "wrap foot-base" },
+      h("p", {}, "\u00A9 " + new Date().getFullYear() + " " + c.businessName),
+      c.credit ? h("p", {}, c.credit) : null
     )
   )
 );
 
-// ----- Mobile bar, sample ribbon -----
-app.append(
-  h("div", { class: "mobile-bar" },
-    h("a", { class: "btn btn-primary", href: c.phoneHref }, icon("phone-call"), c.ctaText),
-    h("a", { class: "btn btn-quote", href: "#contact" }, c.quoteText)
-  )
+// ----- Mobile call bar -----
+const bar = h("nav", { class: "mobile-bar", "aria-label": "Call or get a quote" },
+  h("a", { class: "btn btn-accent", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+  h("a", { class: "btn btn-quote", href: "#quote-card" }, c.quoteText)
 );
-if (c.sample) {
-  app.append(h("div", { class: "sample-ribbon" }, "SAMPLE CONTENT: replace before sending"));
-  console.warn("content.sample is true: replace placeholder reviews, photos and numbers before sending.");
-}
+app.append(bar);
+form.addEventListener("focusin", () => bar.classList.add("typing"));
+form.addEventListener("focusout", () => bar.classList.remove("typing"));
 
 // ----- Scroll reveal -----
-// Skipped entirely for reduced motion or browsers without IntersectionObserver,
-// so nothing is ever left invisible.
+// Skipped for reduced motion or browsers without IntersectionObserver, so nothing is ever left
+// invisible. The hero and the quote form are deliberately not in this list.
 (function () {
   const calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (calm || !("IntersectionObserver" in window)) return;
 
   const groups = [
-    ".trust-grid > .trust-item",
-    ".sec-head",
-    ".svc-grid > .svc",
+    ".facts-grid > .fact",
+    "#services .sec-head, #process .sec-head, #faq .sec-head, #reviews .sec-head, #work .sec-head, #areas .sec-head",
+    ".svc-grid > .svc-card",
+    ".feature > div",
     ".ba-grid > figure",
     ".rev-feature",
     ".rev-list > .rev-card",
     ".steps > .step",
-    ".contact-grid > div",
+    ".faq",
     ".areas"
   ];
   const targets = [];
   groups.forEach(sel => {
     document.querySelectorAll(sel).forEach((el, i) => {
       el.classList.add("reveal");
-      el.style.setProperty("--i", Math.min(i, 5)); // stagger within a group, capped
+      el.style.setProperty("--i", Math.min(i, 4)); // stagger within a group, capped
       targets.push(el);
     });
   });
@@ -655,15 +1028,20 @@ if (c.sample) {
       el.addEventListener("transitionend", function f(ev) {
         if (ev.target === el && ev.propertyName === "opacity") { el.removeEventListener("transitionend", f); done(); }
       });
-      setTimeout(done, 2000);
+      setTimeout(done, 1200);
     });
-  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  }, { threshold: 0.1, rootMargin: "0px 0px -5% 0px" });
   targets.forEach(el => io.observe(el));
 })();
 
 // ----- Web3Forms submit -----
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
+  const status = form.querySelector(".form-status");
+  const say = (text, cls) => { status.replaceChildren(h("p", { class: "form-msg " + (cls || "") }, text)); };
+  // Preview: no key yet, so say so plainly instead of pretending to send.
+  if (!c.web3formsKey || /YOUR_|_HERE/.test(c.web3formsKey)) { say(c.form.previewNotice); return; }
+
   const btn = form.querySelector('button[type="submit"]');
   const original = btn.textContent;
   btn.textContent = "Sending";
@@ -671,17 +1049,17 @@ form.addEventListener("submit", async function (e) {
   const data = new FormData(form);
   data.append("access_key", c.web3formsKey);
   data.append("subject", "New quote request: " + c.businessName);
+  data.append("from_name", c.businessName + " website");
   try {
     const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
     const out = await res.json();
     if (!out.success) throw new Error(out.message || "Submission failed");
-    form.replaceChildren(h("p", { class: "form-success" }, "Thanks, we have your details and will call you back shortly."));
+    form.replaceChildren(h("p", { class: "form-success", role: "status" }, c.form.success));
   } catch (err) {
+    console.error("Web3Forms:", err);
     btn.textContent = original;
     btn.disabled = false;
-    let msg = form.querySelector(".form-error");
-    if (!msg) { msg = h("p", { class: "form-error", role: "alert" }); form.append(msg); }
-    msg.textContent = "That did not send. Please call " + c.phone + " instead.";
+    say(c.form.error, "form-error");
   }
 });
 </script>

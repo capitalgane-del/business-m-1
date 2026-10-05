@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-labelledby="t">
+  <title id="t">Illustration: cardboard moving boxes stacked and taped, ready for storage, beside a floor lamp and a pot plant</title>
+  <ellipse cx="330" cy="404" rx="300" ry="13" fill="#000" opacity="0.12"/>
+  <g transform="translate(16 0)">
+  <path d="M34 250 C10 200 22 150 40 130 C52 175 56 215 50 252 Z" fill="#6E9A7B"/>
+  <path d="M52 252 C58 190 82 150 104 140 C100 190 84 228 62 256 Z" fill="#82AE8E"/>
+  <path d="M44 254 C30 214 0 196 -2 180 C30 186 50 220 56 256 Z" fill="#5C8869"/>
+  <path d="M22 250 H86 L78 330 Q77 340 67 340 H41 Q31 340 30 330 Z" fill="#D9D3CA"/>
+  <rect x="18" y="246" width="72" height="12" rx="4" fill="#E8E3DB"/>
+  </g>
+  <rect x="590" y="150" width="6" height="250" rx="3" fill="#59616C"/>
+  <ellipse cx="593" cy="400" rx="26" ry="6" fill="#59616C"/>
+  <path d="M556 158 H630 L614 96 H572 Z" fill="#EDE6DA"/>
+  <path d="M556 158 H630 L627 146 H559 Z" fill="#000" opacity="0.06"/>
+  <polygon points="120,282 280,282 315.2,260.0 155.2,260.0" fill="#DDB17E"/>
+  <polygon points="280,282 315.2,260.0 315.2,378.0 280,400" fill="#A97843"/>
+  <rect x="120" y="282" width="160" height="118" fill="#C8955C"/>
+  <polygon points="192.0,282 208.0,282 243.2,260.0 227.2,260.0" fill="#EED9B6"/>
+  <rect x="192.0" y="282" width="16.0" height="30.7" fill="#E5C99D"/>
+  <rect x="120" y="282" width="160" height="3" fill="#000" opacity="0.08"/>
+  <rect x="136.0" y="350.4" width="54.4" height="26.0" rx="3" fill="#F8F4EC"/>
+  <rect x="143.6" y="358.2" width="39.2" height="3" rx="1.5" fill="#C9BCA8"/>
+  <rect x="143.6" y="366.0" width="25.6" height="3" rx="1.5" fill="#C9BCA8"/>
+  <polygon points="290,300 430,300 462.0,280.0 322.0,280.0" fill="#DDB17E"/>
+  <polygon points="430,300 462.0,280.0 462.0,380.0 430,400" fill="#A97843"/>
+  <rect x="290" y="300" width="140" height="100" fill="#C8955C"/>
+  <polygon points="353.0,300 367.0,300 399.0,280.0 385.0,280.0" fill="#EED9B6"/>
+  <rect x="353.0" y="300" width="14.0" height="26.0" fill="#E5C99D"/>
+  <rect x="290" y="300" width="140" height="3" fill="#000" opacity="0.08"/>
+  <polygon points="440,288 560,288 592.0,268.0 472.0,268.0" fill="#DDB17E"/>
+  <polygon points="560,288 592.0,268.0 592.0,380.0 560,400" fill="#A97843"/>
+  <rect x="440" y="288" width="120" height="112" fill="#C8955C"/>
+  <polygon points="494.0,288 506.0,288 538.0,268.0 526.0,268.0" fill="#EED9B6"/>
+  <rect x="494.0" y="288" width="12" height="29.1" fill="#E5C99D"/>
+  <rect x="440" y="288" width="120" height="3" fill="#000" opacity="0.08"/>
+  <path d="M519.2 376.24 V350.24 M512.2 357.24 L519.2 349.24 L526.2 357.24" fill="none" stroke="#9A6B3A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M537.2 376.24 V350.24 M530.2 357.24 L537.2 349.24 L544.2 357.24" fill="none" stroke="#9A6B3A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="509.20000000000005" y="382.24" width="38" height="3.5" rx="1.75" fill="#9A6B3A"/>
+  <polygon points="134,190 270,190 302.0,170.0 166.0,170.0" fill="#DDB17E"/>
+  <polygon points="270,190 302.0,170.0 302.0,262.0 270,282" fill="#A97843"/>
+  <rect x="134" y="190" width="136" height="92" fill="#C8955C"/>
+  <polygon points="195.2,190 208.8,190 240.8,170.0 227.2,170.0" fill="#EED9B6"/>
+  <rect x="195.2" y="190" width="13.600000000000001" height="23.9" fill="#E5C99D"/>
+  <rect x="134" y="190" width="136" height="3" fill="#000" opacity="0.08"/>
+  <path d="M223.76 267.84000000000003 V241.84 M216.76 248.84 L223.76 240.84 L230.76 248.84" fill="none" stroke="#9A6B3A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M241.76 267.84000000000003 V241.84 M234.76 248.84 L241.76 240.84 L248.76 248.84" fill="none" stroke="#9A6B3A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="213.76" y="273.84000000000003" width="38" height="3.5" rx="1.75" fill="#9A6B3A"/>
+  <polygon points="300,214 418,214 446.8,196.0 328.8,196.0" fill="#DDB17E"/>
+  <polygon points="418,214 446.8,196.0 446.8,282.0 418,300" fill="#A97843"/>
+  <rect x="300" y="214" width="118" height="86" fill="#C8955C"/>
+  <polygon points="353.0,214 365.0,214 393.8,196.0 381.8,196.0" fill="#EED9B6"/>
+  <rect x="353.0" y="214" width="12" height="22.4" fill="#E5C99D"/>
+  <rect x="300" y="214" width="118" height="3" fill="#000" opacity="0.08"/>
+  <rect x="311.8" y="263.9" width="40.1" height="18.9" rx="3" fill="#F8F4EC"/>
+  <rect x="317.4" y="269.6" width="28.9" height="3" rx="1.5" fill="#C9BCA8"/>
+  <rect x="317.4" y="275.2" width="18.9" height="3" rx="1.5" fill="#C9BCA8"/>
+  <polygon points="150,118 254,118 281.2,101.0 177.2,101.0" fill="#DDB17E"/>
+  <polygon points="254,118 281.2,101.0 281.2,173.0 254,190" fill="#A97843"/>
+  <rect x="150" y="118" width="104" height="72" fill="#C8955C"/>
+  <polygon points="196.0,118 208.0,118 235.2,101.0 223.2,101.0" fill="#EED9B6"/>
+  <rect x="196.0" y="118" width="12" height="18.7" fill="#E5C99D"/>
+  <rect x="150" y="118" width="104" height="3" fill="#000" opacity="0.08"/>
+</svg>
