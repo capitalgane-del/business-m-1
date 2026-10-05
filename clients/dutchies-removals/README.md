@@ -42,11 +42,31 @@ Every line of copy on the page falls into one of these groups. Listing pages wer
 
 ## Design sources
 
+The page copies how their logo is presented: navy Western lettering and a lion on a glowing red-orange panel, with a cream script underneath.
+
 | Item | Value | Source |
 | --- | --- | --- |
-| Colours | Red `#D32930`, navy `#0D082B`, peach `#F7BD8D` | Sampled from their logo graphic: red is the background's most common colour, navy is the lion, peach is the script |
-| Logo | `images/dutchies-logo.jpg` | Cropped from the graphic they supplied (original kept at the repo root, `474478559_…_n.jpg`) |
-| Fonts | Bevan (headings, name), Pinyon Script (slogan), Outfit (body) | Bevan is a calmer cousin of the Western serif in their logo; Pinyon Script is close to its script |
+| Colours | Red `#D32930`, navy `#0D082B`, peach `#F7BD8D`; glow `#EE9466` to `#C8202D` | Sampled from their logo graphic |
+| Emblem | `images/dutchies-emblem.png` | The navy lettering and lion lifted out of the graphic they supplied (original at the repo root, `474478559_…_n.jpg`), on a transparent background so it sits on the glow like their sign |
+| Fonts | Rye (headings, name), Pinyon Script (slogan), Outfit (body) | Rye is the closest Google font to the logo lettering; Pinyon Script to its script |
+| Unused | `images/dutchies-logo.jpg` | Earlier crop of the full logo panel; handy later as a social share image |
+
+Text contrast on the glow was measured from the rendered page (desktop, 390px and 360px phones): all body text 4.5:1 or better, large text 3:1 or better.
+
+## Links to their other profiles
+
+On the site: footer "Find us online" column, the Muval rating and Top 10 award in the trust bar, each review's source, and "Read all 97 reviews on Muval". All open in a new tab.
+
+- Facebook `https://www.facebook.com/1479089482380269` (their page ID from a Facebook mirror listing; Facebook redirects it to the page)
+- Muval, Oneflare, ServiceSeeking, Find a Mover, Localsearch, Service.com.au, Sirelo, MovingSelect (profile URLs from search results)
+- Left out: Yellow Pages and Yelp (old Toukley NSW listings with out-of-date hours and address), LetsMoveMe (NSW listing)
+- Not found: Instagram (Oneflare says they have one, handle not visible), Google Maps listing
+- Every URL came from search results and the pages were blocked during research: click each one once on the preview.
+- Trade-off: Muval, Oneflare and the other review sites also show competing removalists. That's why the links sit in the footer and on the review sources, not near the call buttons.
+
+Their domain: `dutchiesremovals.com.au` is registered and points at Synergy Wholesale's domain-forwarding service (`redirection.synergywholesale.com`), so it currently forwards or parks somewhere. Check where it lands. It's the natural domain for this site at launch.
+
+Repo visibility: this repo is public, so these notes can be read by anyone (including the client). Make it private in GitHub settings if that matters; Netlify works with private repos.
 
 Other ratings if you want to swap: ServiceSeeking 5.0 (30 reviews), Find a Mover 4.99 (36), Sirelo 9.4/10 (14), MovingSelect 4.67 (9). The "4.7 from 640+ Google reviews" that shows up when you search is Muval's own badge, not Dutchies' rating.
 
@@ -66,9 +86,10 @@ Other ratings if you want to swap: ServiceSeeking 5.0 (30 reviews), Find a Mover
 - On phones the business name in the header stacks onto two lines instead of being cut off.
 - Icons load as CSS links instead of the Phosphor JS loader. The loader's global `head` clashed with the renderer and stopped every icon loading. The scaffold on `main` still has this bug.
 - Re-themed to their logo: `colours.dark` and `colours.accent` added alongside primary. Navy hero, service tiles and footer; neutrals tinted navy and cream instead of the template's green-greys.
-- Hero shows the logo (`heroBadge`) beside the headline on desktop and above it on phones, and the slogan (`tagline`) above the headline on desktop.
-- Faded white text on red (trust labels, feature review name, contact intro) set to full opacity, because faded white fails contrast on this red.
-- Headings, the name and trust values in Bevan at weight 400 (it has one weight, so no fake bold); slogan in Pinyon Script, which phones never download because the slogan line is hidden there.
+- Hero shows the emblem (`heroBadge`) with the slogan (`tagline`) in script underneath, stacked like the logo: beside the headline on desktop, above it on phones.
+- Logo presentation: hero, featured review and quote section use the logo's glow with navy type; trust bar and footer are cream on navy. Headings, the name and trust values in Rye, uppercase, at weight 400 (one weight, so no fake bold).
+- Links: optional `href` on `rating`, `trust[]` and `reviews[]`, plus `reviewsMore` and a `links[]` footer column. External links open in a new tab.
+- Faded white text on red set to full opacity, because faded white fails contrast on this red.
 
 ## Before it goes live
 
