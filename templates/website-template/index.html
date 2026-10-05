@@ -11,7 +11,7 @@
 <!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pinyon+Script&family=Rye&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pinyon+Script&family=Sancreek&display=swap" rel="stylesheet">
 <!-- Icon CSS linked directly: the @phosphor-icons/web JS loader declares a global `head`
      that clashes with the renderer below and stops every icon loading. Only bold and fill are used. -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
@@ -85,17 +85,16 @@ const content = {
   servicesHeading: "What we move",
   // Muval, word for word except "attach and reattach ... place" made to match "assembling".
   servicesSub: "We always go the extra mile, assembling and disassembling beds, attaching and reattaching washing machines and placing your belongings exactly where you need them.",
-  // 3 to 8 services. The layout adjusts so the grid never has a gap.
-  // image: "" = brand-colour tile. Drop in their own photos when we have them.
+  // Shown as a carousel (no service photos): each card gets a Phosphor icon.
   // Names: Muval (local, interstate, regional/country, single item) + listings (backloads, prepack).
   // Descriptions marked "def" just explain the service in plain words (mine, no claims).
   services: [
-    { name: "Local removals", desc: "Moves around Canberra and the ACT.", image: "" },
-    { name: "Interstate removals", desc: "Servicing the ACT, NSW, Victoria and Queensland.", image: "" },  // Facebook listing
-    { name: "Country removals", desc: "Regional and country relocations.", image: "" },
-    { name: "Backloads", desc: "Share truck space on a long-distance move.", image: "" },            // def
-    { name: "Pre-pack service", desc: "Your home packed up before moving day.", image: "" },           // def
-    { name: "Single item removals", desc: "One item, no full move needed.", image: "" }                // def
+    { name: "Local removals", desc: "Moves around Canberra and the ACT.", icon: "house-line" },
+    { name: "Interstate removals", desc: "Servicing the ACT, NSW, Victoria and Queensland.", icon: "road-horizon" },  // Facebook listing
+    { name: "Country removals", desc: "Regional and country relocations.", icon: "mountains" },
+    { name: "Backloads", desc: "Share truck space on a long-distance move.", icon: "swap" },            // def
+    { name: "Pre-pack service", desc: "Your home packed up before moving day.", icon: "package" },           // def
+    { name: "Single item removals", desc: "One item, no full move needed.", icon: "armchair" }                // def
   ],
 
   // WORK: hidden until we have real job photos from the client.
@@ -224,7 +223,7 @@ const content = {
     --primary-text: var(--color-primary);
 
     --font: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --font-display: "Rye", Georgia, "Times New Roman", serif;
+    --font-display: "Sancreek", Georgia, "Times New Roman", serif;
     --font-script: "Pinyon Script", "Brush Script MT", cursive;
     --r: 12px;
     --max: 1200px;
@@ -511,8 +510,9 @@ const content = {
      type; the trust bar and footer flip it to cream on navy. Glow colours are sampled from the
      logo: bright orange behind the text (so navy keeps 4.5:1 contrast), falling to their deep
      red around the emblem and slogan, where the logo's own script sits on red.
-     Rye is the closest Google font to the lettering (one weight, so no fake bold); Pinyon Script
-     is close to the script. Body text stays Outfit. */
+     Sancreek is the closest Google font to the lettering (solid Tuscan with the same mid-stem
+     spurs, scored against the logo); a hairline outline brings it up to the logo's weight. One
+     weight, so no fake bold. Pinyon Script is close to the script. Body text stays Outfit. */
   :root {
     --on-glow: #0D082B;
     --cream: #FBE9D2;
@@ -523,12 +523,12 @@ const content = {
     /* Text all over (stacked quote section on phones): never darker than #DD4D36. */
     --glow-safe: radial-gradient(130% 85% at 50% 30%, #EE9466 0%, #E66F42 40%, #E25B3C 72%, #DD4D36 100%);
   }
-  h1, h2, h3, .brand, .trust-value { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em; }
-  #hero h1 { font-size: clamp(1.9rem, 4.4vw, 3.3rem); line-height: 1.1; letter-spacing: 0.01em; max-width: 16ch; }
-  h2 { font-size: clamp(1.6rem, 3.6vw, 2.6rem); line-height: 1.15; }
-  h3 { font-size: 1.1rem; line-height: 1.3; letter-spacing: 0.03em; }
-  .trust-value { font-size: 1.05rem; line-height: 1.3; }
-  .brand { font-size: 1.05rem; letter-spacing: 0.03em; }
+  h1, h2, h3, .brand, .trust-value { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; -webkit-text-stroke: 0.018em currentColor; }
+  #hero h1 { font-size: clamp(2.3rem, 5.4vw, 4.1rem); line-height: 1.08; letter-spacing: 0.07em; max-width: 15ch; }
+  h2 { font-size: clamp(1.9rem, 4.2vw, 3.1rem); line-height: 1.12; }
+  h3 { font-size: 1.3rem; line-height: 1.25; }
+  .trust-value { font-size: 1.25rem; line-height: 1.25; }
+  .brand { font-size: 1.25rem; }
 
   #hero { color: var(--on-glow); }
   #hero .hero-sub { color: var(--on-glow); }
@@ -556,6 +556,27 @@ const content = {
   @media (min-width: 1100px) { .foot { grid-template-columns: 1.3fr 1fr 1fr 1fr; } }
   .foot-links { display: grid; gap: 0.3rem; }
   .foot-links a { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+  /* Services carousel: native scroll with snap, so swipe, trackpad and keyboard all work. */
+  .car-track { list-style: none; display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding: 0.25rem 0.1rem 0.5rem; }
+  .car-track::-webkit-scrollbar { display: none; }
+  .car-track:focus-visible { outline: 3px solid var(--primary-text); outline-offset: 3px; }
+  .car-card {
+    flex: 0 0 min(80%, 300px); scroll-snap-align: start; min-height: 220px; padding: 1.5rem;
+    display: flex; flex-direction: column; border-radius: var(--r); color: #F6F6F3;
+    background: radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--color-primary) 55%, var(--dark)) 0%, var(--dark) 62%);
+  }
+  .car-icon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: var(--r); background: rgba(247, 189, 141, 0.14); color: var(--accent); font-size: 1.6rem; margin-bottom: auto; }
+  .car-card h3 { margin-top: 1.5rem; color: var(--cream); }
+  .car-card p { margin-top: 0.4rem; color: rgba(246, 246, 243, 0.92); font-size: 1rem; line-height: 1.4; }
+  .car-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
+  .car-btn { width: 48px; height: 48px; flex-shrink: 0; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--dark); color: var(--cream); font-size: 1.2rem; cursor: pointer; }
+  .car-btn:hover { background: var(--color-primary); color: #fff; }
+  .car-dots { display: flex; }
+  .car-dot { position: relative; width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; }
+  .car-dot::before { content: ""; position: absolute; left: 9px; top: 9px; width: 10px; height: 10px; border-radius: 5px; background: color-mix(in srgb, var(--ink) 28%, transparent); transition: width 0.2s ease, left 0.2s ease; }
+  .car-dot[aria-current="true"]::before { left: 4px; width: 20px; background: var(--color-primary); }
+  @media (min-width: 900px) { .car-nav { justify-content: flex-start; } .car-dots { order: 3; margin-left: 1rem; } }
 
   /* Jump links (nav, "Get a Free Quote") land below the sticky header, not under it. */
   section[id] { scroll-margin-top: var(--header-h); }
@@ -679,19 +700,37 @@ if (c.rating) {
 app.append(h("section", { class: "trust", "aria-label": "Why choose us" }, h("div", { class: "wrap trust-grid" }, trustCells)));
 
 // ----- Services -----
+// Dutchies: a compact carousel instead of the photo grid (no service photos to fill it).
+// Native horizontal scroll with snap: swipe on phones, arrows and dots everywhere, wraps at the ends.
 if (c.services && c.services.length) {
-  const n = c.services.length;
-  const extra = (3 - (n % 3)) % 3; // cards that span 2 columns so the grid has no empty cell
-  const wideCount = extra === 0 && n >= 6 ? 3 : extra; // 6 or 9 services: still asymmetric
-  const wideAt = new Set([0, n - 1, Math.floor(n / 2)].slice(0, wideCount));
-  const cards = c.services.map((s, i) => {
-    const wide = wideAt.has(i);
-    return h("a", { class: "svc" + (wide ? " wide" : ""), href: "#contact" },
-      s.image ? h("img", { src: s.image, alt: s.name, loading: "lazy" }) : null,
-      h("div", { class: "svc-body" }, h("h3", {}, s.name), h("p", {}, s.desc))
-    );
-  });
-  app.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub), h("div", { class: "svc-grid" }, cards)]));
+  const track = h("ul", { class: "car-track", tabindex: "0", "aria-label": c.servicesHeading },
+    c.services.map((s, i) => h("li", { class: "car-card", "aria-roledescription": "slide", "aria-label": (i + 1) + " of " + c.services.length },
+      h("span", { class: "car-icon" }, icon(s.icon || "truck")),
+      h("h3", {}, s.name),
+      h("p", {}, s.desc)
+    ))
+  );
+  const prev = h("button", { class: "car-btn", type: "button", "aria-label": "Previous service" }, icon("caret-left"));
+  const next = h("button", { class: "car-btn", type: "button", "aria-label": "Next service" }, icon("caret-right"));
+  const dots = h("div", { class: "car-dots" }, c.services.map((s, i) =>
+    h("button", { class: "car-dot", type: "button", "aria-label": "Show " + s.name })));
+  const cards = [...track.children], dotEls = [...dots.children];
+  const step = () => cards[1] ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
+  const current = () => Math.round(track.scrollLeft / step());
+  const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+  const go = i => track.scrollTo({ left: cards[(i + cards.length) % cards.length].offsetLeft - cards[0].offsetLeft,
+    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  prev.addEventListener("click", () => go(track.scrollLeft <= 4 ? cards.length - 1 : current() - 1));
+  next.addEventListener("click", () => go(atEnd() ? 0 : current() + 1));
+  dotEls.forEach((d, i) => d.addEventListener("click", () => go(i)));
+  const mark = () => { const i = atEnd() ? cards.length - 1 : current(); dotEls.forEach((d, j) => d.setAttribute("aria-current", j === i ? "true" : "false")); };
+  track.addEventListener("scroll", () => requestAnimationFrame(mark), { passive: true });
+  app.append(section("services", "sec", [
+    head(c.servicesHeading, c.servicesSub),
+    h("div", { class: "car", "aria-roledescription": "carousel" }, track,
+      h("div", { class: "car-nav" }, prev, dots, next))
+  ]));
+  mark();
 }
 
 // ----- Work -----

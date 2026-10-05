@@ -54,7 +54,7 @@ The page copies how their logo is presented: navy Western lettering and a lion o
 | --- | --- | --- |
 | Colours | Red `#D32930`, navy `#0D082B`, peach `#F7BD8D`; glow `#EE9466` to `#C8202D` | Sampled from their logo graphic |
 | Emblem | `images/dutchies-emblem.png` | The navy lettering and lion lifted out of the graphic they supplied (original at the repo root, `474478559_…_n.jpg`), on a transparent background so it sits on the glow like their sign |
-| Fonts | Rye (headings, name), Pinyon Script (slogan), Outfit (body) | Rye is the closest Google font to the logo lettering; Pinyon Script to its script |
+| Fonts | Sancreek with a hairline outline (headings, name), Pinyon Script (slogan), Outfit (body) | Sancreek: the closest Google font to the logo lettering (solid Tuscan, same mid-stem spurs), picked by scoring 23 Western fonts against the logo's REMOVALS. Not the exact font: that is probably a non-Google face (Carnivalee Freakshow style). For an exact match, get the font name from whoever made the logo, then self-host it if it's licensed for commercial use |
 | Unused | `images/dutchies-logo.jpg` | Earlier crop of the full logo panel; handy later as a social share image |
 
 Text contrast on the glow was measured from the rendered page (desktop, 390px and 360px phones): all body text 4.5:1 or better, large text 3:1 or better.
@@ -112,10 +112,11 @@ What most Canberra removalist sites show, and where Dutchies stands:
 - Icons load as CSS links instead of the Phosphor JS loader. The loader's global `head` clashed with the renderer and stopped every icon loading. The scaffold on `main` still has this bug.
 - Re-themed to their logo: `colours.dark` and `colours.accent` added alongside primary. Navy hero, service tiles and footer; neutrals tinted navy and cream instead of the template's green-greys.
 - Hero shows the emblem (`heroBadge`) with the slogan (`tagline`) in script underneath, stacked like the logo: beside the headline on desktop, above it on phones.
-- Logo presentation: hero, featured review and quote section use the logo's glow with navy type; trust bar and footer are cream on navy. Headings, the name and trust values in Rye, uppercase, at weight 400 (one weight, so no fake bold).
+- Logo presentation: hero, featured review and quote section use the logo's glow with navy type; trust bar and footer are cream on navy. Headings, the name and trust values in Sancreek, uppercase, at weight 400 (one weight, so no fake bold).
 - Links: optional `href` on `rating`, `trust[]` and `reviews[]`, plus `reviewsMore` and a `links[]` footer column. External links open in a new tab.
 - Faded white text on red set to full opacity, because faded white fails contrast on this red.
 - "On the job" section (`about`), FAQ section (`faqs`, native details/summary), and nav links for both.
+- Services shown as a compact carousel (icon cards, native scroll with snap, arrows and dots that wrap) instead of the photo grid, since they have no service photos.
 - Quote form split into moving from / moving to / date / optional notes; form note links to call and text.
 - Sections get `scroll-margin-top`, so jump links land below the sticky header instead of under it.
 
