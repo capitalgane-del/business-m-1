@@ -11,7 +11,7 @@ Trading name is **Dutchies Removals** (not "Removalists"). ABN 21 690 437 968, s
 | Phone | 0411 331 779 | Every listing |
 | Email | dutchiesremovals1@gmail.com | Localsearch, Sirelo, Yellow Pages |
 | Location | Monash ACT 2904 (suburb only) | ABN record, Oneflare, Sirelo. Localsearch says Isabella Plains |
-| Hours | 7 days, 7am to 7pm | Yellow Pages, Localpx. Facebook says Mon to Fri 9 to 4 (Thu to 5), Sat 9 to 12:30 |
+| Hours | Mon to Fri 9am to 4pm (Thu to 5pm), Sat 9am to 12:30pm, Sun closed | Most recently posted: Facebook and Localsearch (newest address). Older: Oneflare Mon to Sat 7 to 5; Yellow Pages/Yelp (old Toukley NSW listing) 7 days 7 to 7. Yelp's "Updated December 2025" is Yelp refreshing its own page, not a new post |
 | Rating | 4.9 on Muval, 80+ reviews | Muval (indexed at 83 and at 97 reviews) |
 | Trust bar | Family owned, 17+ years | Oneflare, Service.com.au, Localsearch |
 | Trust bar | Top 10 in Canberra, 2019 and 2020 | Service.com.au awards (also Top 10 Hunter, Central and Northern NSW 2018) |
@@ -29,7 +29,7 @@ Other ratings if you want to swap: ServiceSeeking 5.0 (30 reviews), Find a Mover
 3. **Web3Forms key.** Sign up at web3forms.com with the inbox that should get leads.
 4. **Insurance.** Not listed anywhere. If they have public liability or goods in transit cover, add it to the trust bar. It's a top worry for people booking movers.
 5. **Google rating.** Couldn't find their Google Business Profile. If it's strong, it beats Muval in the trust bar because people recognise Google.
-6. **Confirm:** hours, Monash vs Isabella Plains, years in business (could be 20+ by now), service areas, Sirelo reviewer's name.
+6. **Confirm:** Monash vs Isabella Plains, years in business (could be 20+ by now), service areas, Sirelo reviewer's name.
 7. **Pricing.** Service.com.au lists $230/hour incl. GST. Not on the site. Ask whether they want rates shown.
 
 ## Changes from the template
@@ -44,7 +44,7 @@ Other ratings if you want to swap: ServiceSeeking 5.0 (30 reviews), Find a Mover
 - [ ] Check each review quote word for word against the live listing (the listing pages were blocked during research, so quotes came through search snippets)
 - [ ] Photos in (`heroImage`, `services[].image`, optional `beforeAfter` / `gallery`)
 - [ ] Web3Forms key in, test form sends to the client's inbox
-- [ ] Hours, location and areas confirmed by the client
+- [ ] Location and areas confirmed by the client
 - [ ] Live Muval review count in `rating.count`
 - [ ] `sample: false`
 - [ ] Self-host fonts and icons, buy a domain
