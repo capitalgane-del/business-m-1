@@ -101,6 +101,18 @@ const content = {
   // WORK: hidden until we have real job photos from the client.
   // To show it, add workHeading, workSub, beforeAfter[] and/or gallery[] (see the template).
 
+  // ABOUT (Dutchies): their truck on a job, from their Facebook (cropped, metadata stripped).
+  // Text: their Facebook "about" (friendly, polite & professional...) and listings (owner's 17 years).
+  about: {
+    heading: "On the job",
+    image: "images/on-the-job.jpg",
+    alt: "The Dutchies Removals truck open outside a customer's home, loading ramp down, with furniture blankets, trolleys and dollies ready",
+    text: [
+      "Dutchies Removals offer a friendly, polite and professional service, specialising in local and interstate removals.",
+      "Locally owned and operated. The owner has over 17 years of experience in removals."
+    ]
+  },
+
   // REVIEWS. First one is shown large: pick a real excerpt under 90 characters. Others under 3 lines. REAL ONLY.
   // All four are real, from their public listings. The pages were read through search snippets,
   // so check each quote word for word against the live listing before sample is set to false.
@@ -122,6 +134,18 @@ const content = {
     { icon: "house-line", title: "Free in-home quote", text: "We see what is moving before we give you a price." },
     { icon: "truck", title: "Moving day", text: "Loaded, moved and unloaded. Pre-pack service available beforehand." },
     { icon: "bed", title: "Set up at the new place", text: "Beds assembled, washing machines reattached and belongings placed exactly where you need them." }
+  ],
+
+  // FAQ (Dutchies): answers use only sourced facts (listings, Muval, Facebook). Questions are ours.
+  // Add insurance, pricing and AFRA questions once the client confirms the answers.
+  faqHeading: "Questions",
+  faqs: [
+    { q: "Are quotes free?", a: "Yes. Quotes are free and done in your home, so we can see what is moving." },
+    { q: "Do you move interstate?", a: "Yes. We service the ACT, NSW, Victoria and Queensland." },
+    { q: "Will you take apart and rebuild our beds?", a: "Yes. We assemble and disassemble beds, attach and reattach washing machines and place your belongings exactly where you need them." },
+    { q: "Can you pack for us?", a: "Yes. Our pre-pack service has your home packed up before moving day." },
+    { q: "What is a backload?", a: "Your goods share truck space with other moves heading the same way. Ask us about backloads when you call." },
+    { q: "Do you move single items?", a: "Yes. Single item removals are available." }
   ],
 
   contactHeading: "Get your free quote",
@@ -532,6 +556,33 @@ const content = {
   @media (min-width: 1100px) { .foot { grid-template-columns: 1.3fr 1fr 1fr 1fr; } }
   .foot-links { display: grid; gap: 0.3rem; }
   .foot-links a { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+  /* Jump links (nav, "Get a Free Quote") land below the sticky header, not under it. */
+  section[id] { scroll-margin-top: var(--header-h); }
+
+  /* About: their job photo beside their own words. Shaded so sections alternate. */
+  #about { background: var(--band); }
+  .about { display: grid; gap: 2rem; align-items: center; }
+  @media (min-width: 900px) { .about { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  .about-photo { width: 100%; height: auto; border-radius: var(--r); box-shadow: 0 30px 60px -30px rgba(13, 8, 43, 0.55); }
+  .about-body p { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 44ch; }
+  .about-body .btn { margin-top: 1.75rem; }
+
+  /* FAQ: native details/summary. */
+  .faq { max-width: 820px; }
+  .faq details { border-top: 1px solid var(--border); }
+  .faq details:last-child { border-bottom: 1px solid var(--border); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.15rem 0; font-weight: 700; font-size: 1.1rem; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; flex-shrink: 0; font-size: 1.6rem; font-weight: 400; line-height: 1; color: var(--primary-text); transition: transform 0.2s ease; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details p { padding-bottom: 1.25rem; color: var(--muted); max-width: 62ch; }
+
+  /* Quote form: from / to side by side when there is room; optional notes field shorter. */
+  .form-row { display: grid; gap: 1.1rem; }
+  @media (min-width: 520px) { .form-row { grid-template-columns: 1fr 1fr; } }
+  #contact-form textarea { min-height: 96px; }
+  .form-note a { color: var(--primary-text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -571,7 +622,9 @@ const hasReviews = c.reviews && c.reviews.length;
 const navLinks = [
   ["Services", "#services", c.services && c.services.length],
   ["Work", "#work", hasWork],
-  ["Reviews", "#reviews", hasReviews]
+  ["About", "#about", c.about],
+  ["Reviews", "#reviews", hasReviews],
+  ["FAQ", "#faq", c.faqs && c.faqs.length]
 ].filter(l => l[2]);
 app.append(
   h("header", { class: "site-header" },
@@ -664,6 +717,21 @@ if (hasWork) {
   app.append(section("work", "sec", parts));
 }
 
+// ----- About (Dutchies) -----
+// Real job photo beside their own description, then a nudge to the quote form.
+if (c.about) {
+  app.append(section("about", "sec",
+    h("div", { class: "about" },
+      h("img", { class: "about-photo", src: c.about.image, alt: c.about.alt, loading: "lazy", width: "1200", height: "1055" }),
+      h("div", { class: "about-body" },
+        h("h2", {}, c.about.heading),
+        c.about.text.map(t => h("p", {}, t)),
+        h("a", { class: "btn btn-primary", href: "#contact" }, c.quoteText)
+      )
+    )
+  ));
+}
+
 // ----- Reviews -----
 if (hasReviews) {
   const [first, ...rest] = c.reviews;
@@ -700,14 +768,30 @@ if (c.steps && c.steps.length) {
   ));
 }
 
+// ----- FAQ (Dutchies) -----
+// Native <details> so it works without JavaScript and with a keyboard or screen reader.
+if (c.faqs && c.faqs.length) {
+  app.append(section("faq", "sec", [
+    head(c.faqHeading),
+    h("div", { class: "faq" }, c.faqs.map(f => h("details", {}, h("summary", {}, f.q), h("p", {}, f.a))))
+  ]));
+}
+
 // ----- Contact -----
 const form = h("form", { id: "contact-form" },
   h("label", {}, "Name", h("input", { type: "text", name: "name", autocomplete: "name", required: "" })),
   h("label", {}, "Phone", h("input", { type: "tel", name: "phone", autocomplete: "tel", required: "" })),
-  h("label", {}, "Moving from, to and when?", h("textarea", { name: "message", required: "", placeholder: "e.g. 3 bedroom house, Monash to Goulburn, early December" })),
+  // Dutchies: separate from / to / date fields so each enquiry arrives ready to quote.
+  h("div", { class: "form-row" },
+    h("label", {}, "Moving from", h("input", { type: "text", name: "moving_from", placeholder: "Suburb", required: "" })),
+    h("label", {}, "Moving to", h("input", { type: "text", name: "moving_to", placeholder: "Suburb", required: "" }))
+  ),
+  h("label", {}, "Moving date (if you know it)", h("input", { type: "date", name: "moving_date" })),
+  h("label", {}, "Anything else? (optional)", h("textarea", { name: "message", placeholder: "e.g. 3 bedroom house, stairs at the new place, packing needed" })),
   h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
   h("button", { type: "submit", class: "btn btn-primary" }, c.quoteText),
-  h("p", { class: "form-note" }, "Prefer to talk? Call " + c.phone + ".")
+  h("p", { class: "form-note" }, "Prefer to talk? ", h("a", { href: c.phoneHref }, "Call"), " or ",
+    h("a", { href: c.phoneHref.replace("tel:", "sms:") }, "text"), " " + c.phone + ".")
 );
 app.append(
   h("section", { id: "contact", class: "sec" },
