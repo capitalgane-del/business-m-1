@@ -1,6 +1,6 @@
 # Dutchies Removals
 
-Site: `index.html`, built from `templates/website-template`. Status: mockup (`sample: true`).
+Site: `templates/website-template/index.html` on the Dutchies branches (`dutchies-removalist` and `claude/dutchies-removalists-website-23905k`). Netlify publishes that folder, so these notes sit outside it to stay off the live site. `main` keeps the clean scaffold. Status: mockup (`sample: true`).
 
 Trading name is **Dutchies Removals** (not "Removalists"). ABN 21 690 437 968, sole trader Karen Maree Dewal, trading name registered May 2017, ACT 2904. Allen (also spelt Allan in reviews) runs the moves; John and Eli are named in reviews. Their old website (`dutchies-removals.business.site`) was a Google Business Profile site, and Google shut those down in 2024, so they most likely have no website now.
 
@@ -37,7 +37,7 @@ Other ratings if you want to swap: ServiceSeeking 5.0 (30 reviews), Find a Mover
 - Static `<title>` and description in `<head>`, so Facebook and WhatsApp link previews show the business name instead of "Loading".
 - Form asks "Moving from, to and when?" with an example placeholder. The form note drops the template's "We reply the same business day" because it isn't confirmed.
 - On screens 400px wide or less, the business name in the header stacks onto two lines instead of being cut off.
-- Icons load as CSS links instead of the Phosphor JS loader. This fix is also in the template: the loader's global `head` clashed with the renderer and stopped every icon loading.
+- Icons load as CSS links instead of the Phosphor JS loader. The loader's global `head` clashed with the renderer and stopped every icon loading. The scaffold on `main` still has this bug.
 
 ## Before it goes live
 

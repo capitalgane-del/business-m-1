@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading</title>
-<meta name="description" content="">
-<meta name="theme-color" content="#1F5C3F">
+<!-- Static copies of pageTitle / metaDescription: Facebook and WhatsApp link previews do not run JavaScript. -->
+<title>Dutchies Removals | Family Removalists in Canberra</title>
+<meta name="description" content="Family owned Canberra removalists for local, country and interstate moves, backloading and packing. Free in-home quote. Call 0411 331 779.">
+<meta name="theme-color" content="#AE3E0D">
 
 <!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,96 +31,97 @@
    - No em dashes anywhere in the copy. Use a comma, a colon or a full stop.
    ============================================================ */
 const content = {
+  // Keep true until the review quotes are checked against the live listings
+  // and the Web3Forms key is in. See README.md in this folder.
   sample: true,
 
-  pageTitle: "Sample Landscapes | Backyard Landscaping in Kambah",
-  metaDescription: "Decks, retaining walls, turf and paving in Kambah and the Tuggeranong Valley. Free on-site quote, fixed written price.",
+  pageTitle: "Dutchies Removals | Family Removalists in Canberra",
+  metaDescription: "Family owned Canberra removalists for local, country and interstate moves, backloading and packing. Free in-home quote. Call 0411 331 779.",
 
-  businessName: "Sample Landscapes",
-  phone: "0400 000 000",
-  phoneHref: "tel:+61400000000",
-  email: "hello@example.com.au",
-  address: "Kambah ACT 2902",
-  hours: "Mon to Fri 7am to 5pm, Sat by appointment",
+  businessName: "Dutchies Removals",
+  phone: "0411 331 779",
+  phoneHref: "tel:+61411331779",
+  email: "dutchiesremovals1@gmail.com",
+  // Suburb only: the listed street address looks like a home address. Confirm with the client.
+  address: "Monash ACT 2904",
+  // Most recently posted hours: their Facebook page and Localsearch (the listing with their newest address).
+  // Older listings: Oneflare Mon to Sat 7am to 5pm; Yellow Pages/Yelp (old Toukley NSW base) 7 days 7am to 7pm.
+  hours: "Mon to Fri 9am to 4pm (Thu to 5pm), Sat 9am to 12:30pm, Sun closed",
 
   ctaText: "Call Now",
   quoteText: "Get a Free Quote",
 
   // HERO: one headline (2 lines max), one short sentence (under 20 words).
-  heroHeading: "Backyard landscaping in Kambah",
-  heroSub: "Decks, retaining walls, turf and paving. One local crew from quote to clean-up.",
+  heroHeading: "Family removalists in Canberra",
+  heroSub: "Local, country and interstate moves. Free in-home quote, beds rebuilt and furniture placed where you want it.",
   // Best single upgrade on any mockup: one real photo from their Facebook or Google listing.
-  heroImage: "https://picsum.photos/seed/sample-hero-yard/1800/1100",
+  // Empty = brand-colour hero until we have a photo of their truck or crew.
+  heroImage: "",
 
   // TRUST BAR sits directly under the hero. First cell is the rating.
-  rating: { score: "4.9", count: "27", source: "Google" },
+  // Muval shows 4.9 from 83 to 97 reviews depending on when it was indexed. Put in the live count.
+  rating: { score: "4.9", count: "80+", source: "Muval" },
   trust: [
-    { icon: "shield-check", value: "Fully insured", label: "Public liability cover on every job" },
-    { icon: "seal-check", value: "Fixed quotes", label: "Written price before work starts" },
-    { icon: "map-pin", value: "Local crew", label: "Kambah and the Tuggeranong Valley" }
+    { icon: "users-three", value: "Family owned", label: "Locally owned and operated in Canberra" },
+    { icon: "trophy", value: "Top 10 in Canberra", label: "Service.com.au awards, 2019 and 2020" },
+    { icon: "calendar-check", value: "17+ years", label: "Local, country and interstate moves" }
   ],
 
-  servicesHeading: "What we build",
-  servicesSub: "Pick one job or hand us the whole yard.",
+  servicesHeading: "What we move",
+  servicesSub: "One couch or a whole house, across town or interstate.",
   // 3 to 8 services. The layout adjusts so the grid never has a gap.
+  // image: "" = brand-colour tile. Drop in their own photos when we have them.
   services: [
-    { name: "Decks and pergolas", desc: "Timber and composite, built for Canberra summers and frosts.", image: "https://picsum.photos/seed/sample-deck/1000/800" },
-    { name: "Retaining walls", desc: "Stone and sleeper walls with proper drainage behind them.", image: "https://picsum.photos/seed/sample-wall/1000/800" },
-    { name: "Lawns and turf", desc: "Prepared base, quality turf, a lawn that actually takes.", image: "https://picsum.photos/seed/sample-lawn/1000/800" },
-    { name: "Paving and concreting", desc: "Paths, patios and driveways laid level and square.", image: "https://picsum.photos/seed/sample-paving/1000/800" },
-    { name: "Garden beds", desc: "Planting, mulch and irrigation that is easy to keep.", image: "https://picsum.photos/seed/sample-beds/1000/800" }
+    { name: "Local moves", desc: "Houses and units across Canberra and Queanbeyan.", image: "" },
+    { name: "Interstate moves", desc: "Between the ACT, NSW, Victoria and Queensland.", image: "" },
+    { name: "Country moves", desc: "Regional towns to and from Canberra.", image: "" },
+    { name: "Backloading", desc: "Share space on an interstate run and pay less than a full truck.", image: "" },
+    { name: "Packing service", desc: "We pack your home before moving day so the move itself is quicker.", image: "" },
+    { name: "Single items", desc: "One couch, fridge or washing machine, without booking a full move.", image: "" }
   ],
 
-  // WORK. Delete both arrays to hide the section.
-  workHeading: "Before and after",
-  workSub: "Real yards, same crew. Drag the handle.",
-  beforeAfter: [
-    { before: "https://picsum.photos/seed/sample-before-a/1000/750", after: "https://picsum.photos/seed/sample-after-a/1000/750", caption: "Rear yard, Kambah" },
-    { before: "https://picsum.photos/seed/sample-before-b/1000/750", after: "https://picsum.photos/seed/sample-after-b/1000/750", caption: "Courtyard, Wanniassa" }
-  ],
-  gallery: [
-    { image: "https://picsum.photos/seed/sample-g1/800/600", alt: "Finished timber deck" },
-    { image: "https://picsum.photos/seed/sample-g2/800/1000", alt: "Stone retaining wall" },
-    { image: "https://picsum.photos/seed/sample-g3/800/700", alt: "New lawn and garden beds" },
-    { image: "https://picsum.photos/seed/sample-g4/800/900", alt: "Paved entertaining area" },
-    { image: "https://picsum.photos/seed/sample-g5/800/600", alt: "Pergola over a deck" },
-    { image: "https://picsum.photos/seed/sample-g6/800/800", alt: "Curved garden bed" }
-  ],
+  // WORK: hidden until we have real job photos from the client.
+  // To show it, add workHeading, workSub, beforeAfter[] and/or gallery[] (see the template).
 
   // REVIEWS. First one is shown large: pick a real excerpt under 90 characters. Others under 3 lines. REAL ONLY.
-  reviewsHeading: "What locals say",
+  // All four are real, from their public listings. The pages were read through search snippets,
+  // so check each quote word for word against the live listing before sample is set to false.
+  reviewsHeading: "What customers say",
   reviews: [
-    { quote: "Turned a bare block into somewhere we actually sit outside. Spotless every single day.", author: "Craig H.", meta: "Gowrie, Google review" },
-    { quote: "Quote matched the final bill to the dollar.", author: "Priya N.", meta: "Calwell, Google review" },
-    { quote: "The retaining wall has been through two winters and has not moved.", author: "Tom B.", meta: "Monash, Google review" },
-    { quote: "Same bloke from first visit to final walk-through. Rare these days.", author: "Leanne O.", meta: "Theodore, Google review" }
+    { quote: "Very professional team. Punctual, friendly and excellent problem-solving skills.", author: "Joy", meta: "Oneflare review" },
+    { quote: "Allen arrived on time, packed everything efficiently and delivered to two locations for us.", author: "Joanna", meta: "Find a Mover review" },
+    { quote: "Allan and Eli went above and beyond what we expected of them. Polite, considerate and careful with our treasures.", author: "Sirelo customer", meta: "Sirelo review" },
+    { quote: "Very polite, careful and helpful.", author: "Ann", meta: "Interstate move, Find a Mover review" }
   ],
 
   processHeading: "How it works",
-  processSub: "Four steps, no surprises.",
+  processSub: "From first call to set up in your new place.",
   steps: [
-    { icon: "phone-call", title: "Call or send the form", text: "A few photos of your space and what you have in mind." },
-    { icon: "clipboard-text", title: "Get a fixed quote", text: "Free on-site visit, then a clear written price." },
-    { icon: "hammer", title: "We build it", text: "On time, tidy every day, and you stay in the loop." },
-    { icon: "thumbs-up", title: "Walk the finished job", text: "We check it with you before we pack up." }
+    { icon: "phone-call", title: "Call or send the form", text: "Tell us where you are moving from and to, and roughly when." },
+    { icon: "house-line", title: "Free in-home quote", text: "We see what is moving before we give you a price." },
+    { icon: "truck", title: "Moving day", text: "We load, drive and unload. Ask about packing before the day." },
+    { icon: "bed", title: "Set up at the new place", text: "Beds rebuilt, washing machine reconnected, furniture where you want it." }
   ],
 
   contactHeading: "Get your free quote",
-  contactSub: "Send a few details and we call you back the same business day.",
+  contactSub: "Tell us where you are moving from and to, and we will call you back to book a free in-home quote.",
   promises: [
-    "Free on-site quote",
-    "Fixed written price",
-    "Same person from quote to clean-up"
+    "Free in-home quote",
+    "Beds taken apart and rebuilt",
+    "Washing machine disconnected and reconnected",
+    "Family owned and operated"
   ],
 
-  areasHeading: "Where we work",
-  areas: ["Kambah", "Wanniassa", "Gowrie", "Chisholm", "Monash", "Gordon", "Calwell", "Theodore", "Greenway", "Conder", "Banks", "Woden"],
+  areasHeading: "Where we move",
+  areas: ["Tuggeranong", "Woden", "Weston Creek", "Molonglo", "Belconnen", "Gungahlin", "Inner North", "Inner South", "Queanbeyan", "Regional NSW", "Sydney", "Central Coast", "Melbourne", "Brisbane"],
 
   // Get a key at web3forms.com after the client signs up, or use your own and forward leads.
   web3formsKey: "YOUR_WEB3FORMS_ACCESS_KEY_HERE",
 
   // primary = brand colour. onPrimary = text on it (use #FAFAF8 on dark colours, #15191C on light ones).
-  colours: { primary: "#1F5C3F", onPrimary: "#FAFAF8" }
+  // Dutch orange to match the name: darkest shade that keeps white text readable everywhere.
+  // Swap for their truck or logo colour if they have one.
+  colours: { primary: "#AE3E0D", onPrimary: "#FAFAF8" }
 };
 </script>
 <script>
@@ -222,6 +224,8 @@ const content = {
   }
   .site-header .wrap { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1.25rem; }
   .brand { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Dutchies only: on 360px phones the name would be cut to "Dutchies Rem...". Stack it instead. */
+  @media (max-width: 400px) { .brand { white-space: normal; line-height: 1.05; } }
   .nav { display: none; gap: 2rem; font-weight: 500; }
   .nav a { color: var(--muted); }
   .nav a:hover { color: var(--ink); }
@@ -572,10 +576,10 @@ if (c.steps && c.steps.length) {
 const form = h("form", { id: "contact-form" },
   h("label", {}, "Name", h("input", { type: "text", name: "name", autocomplete: "name", required: "" })),
   h("label", {}, "Phone", h("input", { type: "tel", name: "phone", autocomplete: "tel", required: "" })),
-  h("label", {}, "What do you need done?", h("textarea", { name: "message", required: "" })),
+  h("label", {}, "Moving from, to and when?", h("textarea", { name: "message", required: "", placeholder: "e.g. 3 bedroom house, Monash to Goulburn, early December" })),
   h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
   h("button", { type: "submit", class: "btn btn-primary" }, c.quoteText),
-  h("p", { class: "form-note" }, "No obligation. We reply the same business day.")
+  h("p", { class: "form-note" }, "No obligation. We call you back to book your free in-home quote.")
 );
 app.append(
   h("section", { id: "contact", class: "sec" },
