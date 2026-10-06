@@ -1,6 +1,6 @@
 # Move Mate Removals and Storage
 
-Site: `templates/website-template/index.html` on the `move-mate` branch. Netlify (`ganeworks-website`) publishes that folder, so the branch preview is **https://move-mate--ganeworks-website.netlify.app/**. These notes sit outside the published folder so they stay off the live site. `main` keeps the clean scaffold. Status: cold-pitch preview (`sample: true`, `noindex`).
+Site: `templates/website-template/index.html` on the `move-mate` branch. The scaffold's own README sits at `templates/README.md` on this branch so it isn't published with the site. Netlify (`ganeworks-website`) publishes that folder, so the branch preview is **https://move-mate--ganeworks-website.netlify.app/**. These notes sit outside the published folder so they stay off the live site. `main` keeps the clean scaffold. Status: cold-pitch preview (`sample: true`, `noindex`).
 
 ## What we know (and where from)
 
@@ -34,7 +34,7 @@ Not found anywhere: reviews, a rating, a Google Business Profile, ABN, opening h
 
 **Ours, no facts in them**: section headings, "How it works" steps, form labels and messages, the storage paragraph ("Settlement dates do not always line up..."), "Not sure what you need?" card.
 
-**Deliberately left out**: insurance, prices, free quotes, response times, years in business, reviews, ratings, team size, truck sizes, packing service, service area. Each has a commented-out placeholder in the `content` object.
+**Deliberately left out**: insurance, prices, free quotes, response times, years in business, reviews, ratings, team size, truck sizes, packing service and a confirmed service area (the page only infers "around Canberra", see above). Insurance, prices, packing, reviews, rating and service area have commented-out placeholders in `content`. Free quotes, response times, years in business, team size and truck sizes have none: add them only once the client states them.
 
 ## Placeholders to fill (all in the `content` object)
 
