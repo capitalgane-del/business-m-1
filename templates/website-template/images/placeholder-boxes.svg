@@ -2,14 +2,14 @@
   <title id="t">Illustration: cardboard moving boxes stacked and taped, ready for storage, beside a floor lamp and a pot plant</title>
   <ellipse cx="330" cy="404" rx="300" ry="13" fill="#000" opacity="0.12"/>
   <g transform="translate(16 0)">
-  <path d="M34 250 C10 200 22 150 40 130 C52 175 56 215 50 252 Z" fill="#6E9A7B"/>
-  <path d="M52 252 C58 190 82 150 104 140 C100 190 84 228 62 256 Z" fill="#82AE8E"/>
-  <path d="M44 254 C30 214 0 196 -2 180 C30 186 50 220 56 256 Z" fill="#5C8869"/>
+  <path d="M34 250 C10 200 22 150 40 130 C52 175 56 215 50 252 Z" fill="#7D7A52"/>
+  <path d="M52 252 C58 190 82 150 104 140 C100 190 84 228 62 256 Z" fill="#918E62"/>
+  <path d="M44 254 C30 214 0 196 -2 180 C30 186 50 220 56 256 Z" fill="#6A6745"/>
   <path d="M22 250 H86 L78 330 Q77 340 67 340 H41 Q31 340 30 330 Z" fill="#D9D3CA"/>
   <rect x="18" y="246" width="72" height="12" rx="4" fill="#E8E3DB"/>
   </g>
-  <rect x="590" y="150" width="6" height="250" rx="3" fill="#59616C"/>
-  <ellipse cx="593" cy="400" rx="26" ry="6" fill="#59616C"/>
+  <rect x="590" y="150" width="6" height="250" rx="3" fill="#B07734"/>
+  <ellipse cx="593" cy="400" rx="26" ry="6" fill="#B07734"/>
   <path d="M556 158 H630 L614 96 H572 Z" fill="#EDE6DA"/>
   <path d="M556 158 H630 L627 146 H559 Z" fill="#000" opacity="0.06"/>
   <polygon points="120,282 280,282 315.2,260.0 155.2,260.0" fill="#DDB17E"/>

@@ -31,20 +31,13 @@
 <meta property="og:image:alt" content="Move Mate Removals and Storage logo with a removal truck. Fyshwick, Canberra. Phone 0422 394 487.">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- The logo leads the hero, so fetch it alongside the HTML. -->
+<!-- Everything is self-hosted: no third-party requests. The logo leads the hero, so it is fetched
+     alongside the HTML, as are the two font files the first screen uses. Fonts are the OFL
+     latin subsets (licences in fonts/). Montserrat: the closest Google font to the logo's heavy
+     geometric lettering. Icons are inline SVG paths (Phosphor, bold and fill) in the renderer. -->
 <link rel="preload" as="image" href="images/move-mate-logo.webp" type="image/webp" fetchpriority="high">
-
-<!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery.
-     Both load without blocking first paint, so the hero and form never wait on a CDN.
-     Icons are linked as CSS: the @phosphor-icons/web JS loader declares a global `head`
-     that clashes with the renderer below and stops every icon loading (bug still on main).
-     Montserrat: the closest Google font to the logo's heavy geometric lettering. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Outfit:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css" media="print" onload="this.media='all'">
+<link rel="preload" as="font" href="fonts/montserrat-latin-800-normal.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="fonts/outfit-latin-400-normal.woff2" type="font/woff2" crossorigin>
 
 <script>
 /* ============================================================
@@ -68,7 +61,7 @@
    ============================================================ */
 const content = {
   sample: true,
-  sampleText: "Website preview: photos are placeholders",
+  sampleText: "Website preview: images are placeholders",
 
   // [ours] from [Jett] + [IG] facts. Keep in sync with the static copies in <head>.
   pageTitle: "Move Mate Removals and Storage | Removalists in Fyshwick, Canberra",
@@ -90,7 +83,9 @@ const content = {
 
   phone: "0422 394 487",                                            // [Jett]
   phoneHref: "tel:+61422394487",
-  // Mobile number, so the site offers "text us". TODO: confirm they are happy to take texts.
+  // Mobile number, so the site offers "text us". TODO: confirm they are happy to take texts. If not,
+  // delete smsHref AND drop "or text"/"text" from servicesCta.text, steps[0].text, form.success,
+  // form.error, form.previewNotice and faqs[0].a, and remove "Text" from the contact_by options.
   smsHref: "sms:+61422394487",
   email: "info@movematetransport.com.au",                           // [Jett]
   // Suburb only until they confirm a street address they want public. 2609 = Fyshwick's postcode.
@@ -102,8 +97,11 @@ const content = {
   quoteText: "Get a quote",
 
   // HERO: the logo leads, then one headline (2 lines max) and one short sentence (under 20 words).
-  heroEyebrow: "Fyshwick, Canberra",                                // [Jett]
-  heroHeading: "Canberra removals and storage",                     // [ours] Fyshwick base + their name
+  // heroEyebrow: optional tracked gold label above the headline. Left empty because it would sit
+  // right under the logo's own "REMOVALS • STORAGE" line and repeat the location.
+  heroEyebrow: "",
+  // [ours] Fyshwick base + their name. TODO: "Canberra" inferred from the Fyshwick base; confirm.
+  heroHeading: "Canberra removals and storage",
   heroHeadingAccent: "storage",                                     // set in the logo's gold, like "MATE"
   heroSub: "Local, interstate and commercial moves, plus storage. Based in Fyshwick, ACT.",   // [IG] + [Jett]
   heroCallText: "Call 0422 394 487",
@@ -111,16 +109,19 @@ const content = {
   // heroImage = full-bleed photo behind the headline. Best single upgrade: one real photo of their
   // truck or crew from their Facebook. Set it and heroVisual is hidden.
   heroImage: "",
-  // Neutral placeholder: unbranded truck and boxes (so it can't pass for their truck).
+  // Neutral placeholder: an unbranded truck and boxes in the logo's palette (no name or logo on it,
+  // so it can't pass for their truck).
   heroVisual: "images/placeholder-truck.svg",
-  heroVisualAlt: "Illustration of a white removal truck with cardboard moving boxes stacked beside it",
+  heroVisualAlt: "Illustration of a cream removal truck with a gold stripe and cardboard moving boxes stacked beside it",
 
   // QUICK FACTS bar under the hero. Facts only, no trust claims we can't back up.
   // PLACEHOLDER: when they have a strong Google rating, uncomment and it shows first.
+  // score is drawn exactly (4.6 = 4 full stars and a half), never rounded up.
   // rating: { score: "", count: "", source: "Google", href: "" },
   facts: [
     { icon: "map-pin", value: "Based in Fyshwick", label: "Canberra, ACT" },                       // [Jett]
-    { icon: "road-horizon", value: "Local and interstate", label: "Moves around Canberra and out of the ACT" }, // [IG]
+    // [IG] local + interstate. [Jett]: "around Canberra" inferred from the Fyshwick base (README), confirm.
+    { icon: "road-horizon", value: "Local and interstate", label: "Moves around Canberra and out of the ACT" },
     { icon: "buildings", value: "Homes and businesses", label: "Residential and commercial relocations" },     // [IG]
     { icon: "warehouse", value: "Storage", label: "Storage solutions on offer" }                     // [IG]
     // PLACEHOLDER: insurance is the most-asked trust point for removalists. Only add once the
@@ -132,9 +133,10 @@ const content = {
   servicesHeading: "What we do",
   servicesSub: "Moving house, moving the office, or need somewhere to keep things for a while.",  // [ours] restates [IG]
   // Service names: [IG]. Descriptions: [ours], plain explanations, no promises.
-  // icon = Phosphor icon name. image (optional) = a real photo for the card, lazy-loaded.
+  // icon = a key in ICONS (renderer script); add the Phosphor bold path there to use another.
+  // image (optional) = a real photo for the card, lazy-loaded.
   services: [
-    { name: "Local relocations", desc: "House and unit moves around Canberra.", icon: "house-line" },
+    { name: "Local relocations", desc: "House and unit moves around Canberra.", icon: "house-line" },   // TODO: "around Canberra" inferred, confirm the service area
     { name: "Interstate relocations", desc: "Moving out of the ACT, or into it.", icon: "road-horizon" },
     { name: "Commercial relocations", desc: "Office and business moves.", icon: "buildings" },
     // TODO: confirm what "property staging solutions" covers for them (moving staging furniture? supplying it?).
@@ -161,9 +163,10 @@ const content = {
   // beforeAfter[] and/or gallery[] (see the scaffold on main). All images lazy-load.
 
   // REVIEWS: PLACEHOLDER. None found online. Real reviews only, with the client's OK. Format:
+  // stars = the reviewer's actual star count (leave it out and no stars are drawn).
   // reviewsHeading: "What customers say",
   // reviews: [
-  //   { quote: "", author: "", meta: "Google review", href: "" }
+  //   { quote: "", author: "", stars: 5, meta: "Google review", href: "" }
   // ],
 
   // [ours]: describes how any quote request works, no promises on times or prices.
@@ -188,7 +191,8 @@ const content = {
   ],
 
   // QUOTE FORM. Fields render in this order. type: text, tel, email, date, select, textarea,
-  // radios, checks, or row (two fields side by side on wider screens). Anything not
+  // radios, checks, row (two fields side by side on wider screens) or more (optional fields
+  // tucked into a "+" panel; it opens itself if something inside needs fixing). Anything not
   // required is marked "(optional)" automatically. Sent to Web3Forms under each field's name.
   form: {
     heading: "Quote request",
@@ -199,23 +203,26 @@ const content = {
         { name: "name", label: "Your name", type: "text", autocomplete: "name", required: true },
         { name: "phone", label: "Mobile", type: "tel", autocomplete: "tel", required: true }
       ] },
-      { name: "email", label: "Email", type: "email", autocomplete: "email" },
       { type: "row", fields: [
         { name: "moving_from", label: "Moving from", type: "text", placeholder: "Suburb", required: true },
         { name: "moving_to", label: "Moving to", type: "text", placeholder: "Suburb or city", required: true }
       ] },
       { type: "row", fields: [
+        // TODO: confirm they take small jobs (minimum hours?) before keeping "A few items".
         { name: "move_size", label: "What are you moving?", type: "select", placeholder: "Choose one",
           options: ["Studio or 1 bedroom", "2 bedrooms", "3 bedrooms", "4+ bedrooms", "A few items", "Office or business", "Property staging"] },
         { name: "moving_date", label: "Moving date", type: "date" }
       ] },
-      { name: "access", label: "Stairs or lifts at either end?", type: "select", placeholder: "Choose one",
-        options: ["No, ground level both ends", "Stairs", "Lift", "Not sure yet"] },
       { name: "extras", label: "Also", type: "checks",
         options: [{ name: "needs_storage", label: "I need storage" }, { name: "flexible_dates", label: "My dates are flexible" }] },
-      { name: "contact_by", label: "Best way to reach you", type: "radios", options: ["Call", "Text", "Email"] },
-      { name: "message", label: "Anything else we should know?", type: "textarea",
-        placeholder: "e.g. heavy or fragile items, narrow driveway, parking, items going into storage" }
+      { type: "more", label: "Add email, contact preference, stairs or notes (optional)", fields: [
+        { name: "contact_by", label: "Best way to reach you", type: "radios", options: ["Call", "Text", "Email"] },
+        { name: "email", label: "Email", type: "email", autocomplete: "email" },
+        { name: "access", label: "Stairs or lifts at either end?", type: "select", placeholder: "Choose one",
+          options: ["No, ground level both ends", "Stairs", "Lift", "Not sure yet"] },
+        { name: "message", label: "Anything else we should know?", type: "textarea",
+          placeholder: "e.g. heavy or fragile items, narrow driveway, parking, items going into storage" }
+      ] }
     ],
     // No reply-time promise until the client gives one.
     success: "Thanks, your quote request has been sent. For anything urgent, call or text 0422 394 487.",
@@ -232,7 +239,8 @@ const content = {
     { q: "Do you do interstate moves?", a: "Yes. Interstate relocations are one of our services. Send the form with both suburbs and your dates." },
     { q: "Can you store our things?", a: "Yes, we offer storage. Tick \"I need storage\" on the quote form or mention it when you call." },
     { q: "Do you move offices and businesses?", a: "Yes. Commercial relocations are one of our services." },
-    { q: "What is property staging?", a: "Furniture moved into a home so it shows well for a sale or rental, and out again afterwards. Call us to talk through what you need." },
+    // TODO: once they confirm what their staging covers, describe it here.
+    { q: "Do you do property staging?", a: "Yes. Property staging is one of our services. Call 0422 394 487 to talk through what you need." },
     { q: "Where are you based?", a: "Fyshwick, in Canberra." }
     // PLACEHOLDERS: add once the client confirms the answers.
     // { q: "Are you insured?", a: "" },
@@ -301,7 +309,7 @@ const content = {
     }
     document.title = c.pageTitle;
     document.querySelector('meta[name="description"]').setAttribute("content", c.metaDescription);
-    if (c.colours.black) document.querySelector('meta[name="theme-color"]').setAttribute("content", c.colours.black);
+    if (c.colours && c.colours.black) document.querySelector('meta[name="theme-color"]').setAttribute("content", c.colours.black);
     Object.entries(c.colours || {}).forEach(([k, v]) => root.style.setProperty("--c-" + k, v));
     if (c.heroImage) {
       root.style.setProperty("--hero-image", 'url("' + c.heroImage + '")');
@@ -356,6 +364,13 @@ const content = {
      gold rules either side of "REMOVALS • STORAGE". So: black throughout, gold for every call to
      action and accent, white type, tracked gold labels and a dashed gold "road" line as the motif.
      Always dark (the brand is), so it ignores the device's light/dark setting. */
+  @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/montserrat-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/montserrat-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/outfit-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/outfit-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/outfit-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/outfit-latin-700-normal.woff2") format("woff2"); }
+
   :root {
     color-scheme: dark;
     /* Fallbacks; the boot script overwrites these from content.colours. */
@@ -373,7 +388,7 @@ const content = {
     --bg: var(--c-black);
     --ink: var(--c-white);
     --muted: var(--c-muted);
-    --line: color-mix(in srgb, var(--c-gold) 22%, transparent);
+    --line: rgba(198, 149, 72, 0.22);   /* plain fallback for browsers without color-mix(); keep in step with colours.gold */
     --line-soft: rgba(252, 251, 251, 0.1);
     --field: var(--c-black);
     --field-border: rgba(252, 251, 251, 0.42);
@@ -386,9 +401,15 @@ const content = {
     --header-h: 68px;
     --hero-image: none;
   }
+  @supports (color: color-mix(in srgb, red 50%, blue)) {
+    :root { --line: color-mix(in srgb, var(--c-gold) 22%, transparent); }
+  }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-text-size-adjust: 100%; background: var(--bg); }
+  /* scroll-padding keeps anything scrolled to (anchor jumps, tabbing) clear of the sticky header
+     and, on phones, the fixed call bar. */
+  html { -webkit-text-size-adjust: 100%; background: var(--bg); scroll-padding-top: calc(var(--header-h) + 12px); }
+  @media (max-width: 767px) { html { scroll-padding-bottom: calc(84px + env(safe-area-inset-bottom)); } }
   @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   body {
     font-family: var(--font);
@@ -400,8 +421,8 @@ const content = {
   img { max-width: 100%; display: block; }
   a { color: inherit; text-decoration: none; }
   ul, ol { list-style: none; }
-  /* Reserve icon space so nothing shifts when the icon font arrives. */
-  i[class^="ph"] { display: inline-block; width: 1em; height: 1em; line-height: 1; flex-shrink: 0; }
+  .ico { display: inline-block; width: 1em; height: 1em; line-height: 1; flex-shrink: 0; vertical-align: -0.125em; }
+  .ico svg { display: block; width: 100%; height: 100%; }
 
   h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; line-height: 1.08; overflow-wrap: break-word; }
   h2 { font-size: clamp(1.95rem, 4.6vw, 3.1rem); }
@@ -414,7 +435,6 @@ const content = {
   .sec-alt { background: var(--c-black2); }
   .sec-head { margin-bottom: clamp(1.75rem, 4vw, 3rem); }
   .sec-head p:not(.eyebrow) { margin-top: 0.9rem; color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
-  section[id] { scroll-margin-top: var(--header-h); }
 
   /* Tracked gold label with a rule, like "REMOVALS • STORAGE" on the logo. */
   .eyebrow {
@@ -423,9 +443,8 @@ const content = {
     color: var(--c-goldText);
   }
   .eyebrow::before { content: ""; width: 34px; height: 2px; border-radius: 1px; background: var(--c-gold); }
-  .eyebrow i { font-size: 1rem; margin-left: -0.2rem; }
+  .eyebrow .ico { font-size: 1rem; margin-left: -0.2rem; }
   .gold { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  @media (forced-colors: active) { .gold { background: none; color: CanvasText; } }
 
   /* Dashed gold road line: the logo's road, used as a divider. */
   .road { height: 4px; background: repeating-linear-gradient(90deg, var(--c-gold) 0 30px, transparent 30px 54px); opacity: 0.55; }
@@ -456,7 +475,7 @@ const content = {
   .site-header {
     position: sticky; top: 0; z-index: 50; height: var(--header-h);
     display: flex; align-items: center; background: var(--c-black); border-bottom: 1px solid transparent;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    transition: border-color 0.2s ease;
   }
   .site-header.scrolled { border-bottom-color: var(--line); }
   .site-header .wrap { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1.25rem; }
@@ -468,21 +487,29 @@ const content = {
   .nav { display: none; gap: 1.75rem; font-weight: 500; }
   .nav a { color: var(--muted); }
   .nav a:hover { color: var(--c-white); }
-  @media (min-width: 960px) { .nav { display: flex; } }
+  @media (min-width: 960px) { .nav { display: flex; margin-left: auto; margin-right: 0.5rem; } }
   .header-cta { min-height: 46px; padding: 0.5rem 1rem; font-size: 1rem; flex-shrink: 0; margin-left: auto; }
   @media (min-width: 960px) { .header-cta { margin-left: 0; } }
   .cta-short { display: none; }
   @media (max-width: 400px) { .cta-long { display: none; } .cta-short { display: inline; } }
+  /* Phones and tablets: no header at all at the top (the hero logo and buttons are right there).
+     It slides in, with the logo, once the hero logo has scrolled away. On phones the call bar
+     carries the call button, so the header shows just the logo. */
+  @media (max-width: 959px) {
+    .hero-logo-live .site-header { position: fixed; left: 0; right: 0; transition: transform 0.25s ease, visibility 0s, border-color 0.2s ease; }
+    .hero-logo-live .site-header:not(.scrolled) { transform: translateY(-100%); visibility: hidden; transition: transform 0.25s ease, visibility 0s 0.25s; }
+  }
+  @media (max-width: 767px) { .header-cta { display: none; } }
 
   /* ---------- Hero ---------- */
   .hero {
     position: relative; isolation: isolate; overflow: hidden;
     padding: clamp(1.25rem, 4vw, 3.5rem) 1.25rem clamp(2rem, 5vw, 4rem);
     background:
-      radial-gradient(60% 55% at 78% 62%, color-mix(in srgb, var(--c-gold) 20%, transparent) 0%, transparent 70%),
+      radial-gradient(55% 45% at 75% 70%, color-mix(in srgb, var(--c-gold) 9%, transparent) 0%, transparent 70%),
       var(--c-black);
   }
-  html[data-hero-image] .hero { min-height: min(84dvh, 780px); display: flex; align-items: center; background: var(--hero-image) center / cover, var(--c-black); }
+  html[data-hero-image] .hero { min-height: min(84vh, 780px); min-height: min(84dvh, 780px); display: flex; align-items: center; background: var(--hero-image) center / cover, var(--c-black); }
   html[data-hero-image] .hero::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
     background: linear-gradient(90deg, rgba(20, 11, 6, 0.9) 0%, rgba(20, 11, 6, 0.65) 55%, rgba(20, 11, 6, 0.35) 100%);
@@ -491,7 +518,8 @@ const content = {
   .hero-grid { display: grid; gap: 1.5rem; align-items: center; }
   @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.1fr 1fr; gap: 3rem; } }
   .hero-logo { width: min(100%, 560px); height: auto; margin: 0 0 1.5rem -0.35rem; }
-  .hero h1 { font-size: clamp(2.1rem, 6.4vw, 3.6rem); max-width: 15ch; }
+  /* em, not ch: ch changes when the web font swaps in and would make the buttons jump. */
+  .hero h1 { font-size: clamp(1.95rem, 6.4vw, 3.6rem); max-width: 10.3em; text-wrap: balance; }
   .hero-sub { margin-top: 1rem; font-size: clamp(1.1rem, 2vw, 1.35rem); max-width: 36ch; color: var(--muted); line-height: 1.45; }
   .hero-actions { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
   @media (max-width: 480px) { .hero-actions .btn { width: 100%; } }
@@ -503,11 +531,14 @@ const content = {
   .facts { background: var(--c-black2); border-block: 1px solid var(--line); padding: 1.75rem 1.25rem; }
   .facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem 1rem; }
   @media (min-width: 900px) { .facts-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; } }
+  @media (max-width: 359px) { .facts-grid { grid-template-columns: 1fr; } }
   .fact { display: flex; gap: 0.75rem; align-items: flex-start; }
-  .fact > i { font-size: 1.3rem; padding: 0.5rem; box-sizing: content-box; border-radius: 10px; background: color-mix(in srgb, var(--c-gold) 14%, transparent); color: var(--c-goldText); }
+  .fact > .ico { font-size: 1.3rem; padding: 0.5rem; box-sizing: content-box; border-radius: 10px; background: color-mix(in srgb, var(--c-gold) 14%, transparent); color: var(--c-goldText); }
   .fact-value { font-family: var(--font-display); font-weight: 700; font-size: 1rem; line-height: 1.25; }
   .fact-label { font-size: 0.92rem; color: var(--muted); line-height: 1.35; margin-top: 0.2rem; }
   .fact a.fact-value { text-decoration: underline; text-underline-offset: 3px; }
+  /* Phones: icon and short value only (the services right below spell it out). */
+  @media (max-width: 560px) { .fact:not(:has(.stars)) .fact-label { display: none; } .fact { align-items: center; } }
   .stars { display: inline-flex; gap: 2px; font-size: 0.95rem; margin-top: 0.25rem; color: var(--c-gold); }
 
   /* ---------- Services ---------- */
@@ -536,9 +567,9 @@ const content = {
   /* ---------- Storage feature ---------- */
   .feature { display: grid; gap: 2rem; align-items: center; }
   @media (min-width: 900px) { .feature { grid-template-columns: 1fr 1fr; gap: 4rem; } }
-  .feature-media { background: radial-gradient(70% 70% at 50% 60%, color-mix(in srgb, var(--c-gold) 16%, var(--c-surface)) 0%, var(--c-surface) 75%); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1rem, 3vw, 2rem); }
+  .feature-media { background: radial-gradient(70% 70% at 50% 60%, color-mix(in srgb, var(--c-gold) 8%, var(--c-surface)) 0%, var(--c-surface) 75%); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1rem, 3vw, 2rem); }
   .feature-media img { width: 100%; height: auto; }
-  .feature-body p { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 44ch; }
+  .feature-body p:not(.eyebrow) { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 44ch; }
   .feature-body .btn { margin-top: 1.75rem; }
   @media (max-width: 480px) { .feature-body .btn { width: 100%; } }
 
@@ -564,6 +595,7 @@ const content = {
   /* ---------- Reviews (shown once real reviews are in) ---------- */
   .rev { display: grid; gap: 1.25rem; }
   @media (min-width: 900px) { .rev { grid-template-columns: 5fr 7fr; } }
+  .rev.rev-single { grid-template-columns: 1fr; max-width: 760px; }
   .rev-feature {
     background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); border-radius: var(--r);
     padding: clamp(1.75rem, 4vw, 2.75rem); display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
@@ -588,7 +620,7 @@ const content = {
   .step p { color: var(--muted); margin-top: 0.3rem; }
 
   /* ---------- Quote / contact ---------- */
-  #quote { background: radial-gradient(70% 60% at 15% 20%, color-mix(in srgb, var(--c-gold) 12%, transparent) 0%, transparent 70%), var(--c-black2); border-top: 1px solid var(--line); }
+  #quote { background: radial-gradient(70% 60% at 15% 20%, color-mix(in srgb, var(--c-gold) 7%, transparent) 0%, transparent 70%), var(--c-black2); border-top: 1px solid var(--line); }
   .contact-grid { display: grid; gap: 2rem; }
   @media (min-width: 900px) {
     .contact-grid { grid-template-columns: 5fr 6fr; align-items: start; gap: 4rem; }
@@ -597,13 +629,13 @@ const content = {
   .contact-sub { margin-top: 1rem; font-size: 1.15rem; color: var(--muted); max-width: 40ch; }
   .promises { margin-top: 1.5rem; display: grid; gap: 0.7rem; }
   .promises li { display: flex; gap: 0.7rem; align-items: center; font-size: 1.08rem; font-weight: 500; }
-  .promises i { font-size: 1.35rem; color: var(--c-gold); }
+  .promises .ico { font-size: 1.35rem; color: var(--c-gold); }
   .big-phone { display: inline-flex; align-items: center; gap: 0.7rem; margin-top: 1.75rem; font-family: var(--font-display); font-size: clamp(1.7rem, 4.4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; }
-  .big-phone i { color: var(--c-gold); }
+  .big-phone .ico { color: var(--c-gold); }
   .contact-alt { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-weight: 600; }
   .contact-alt a { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 40px; text-decoration: underline; text-decoration-color: var(--c-gold); text-underline-offset: 4px; overflow-wrap: anywhere; }
 
-  .form-card { scroll-margin-top: calc(var(--header-h) + 0.75rem); background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1.25rem, 3vw, 2.25rem); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
+  .form-card { background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1.25rem, 3vw, 2.25rem); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
   .form-title { font-size: 1.35rem; margin-bottom: 0.25rem; }
   .form-req { font-size: 0.95rem; color: var(--muted); margin-bottom: 1.1rem; }
   #quote-form { display: grid; gap: 1rem; }
@@ -618,7 +650,7 @@ const content = {
   }
   #quote-form input::placeholder, #quote-form textarea::placeholder { color: var(--muted); opacity: 0.8; }
   #quote-form input::-webkit-date-and-time-value { text-align: left; }
-  #quote-form input::-webkit-calendar-picker-indicator { filter: invert(0.85) sepia(0.4); cursor: pointer; }
+  #quote-form input::-webkit-calendar-picker-indicator { cursor: pointer; }
   #quote-form select {
     padding-right: 2.5rem; cursor: pointer;
     background-image: linear-gradient(45deg, transparent 50%, var(--c-gold) 50%), linear-gradient(135deg, var(--c-gold) 50%, transparent 50%);
@@ -635,10 +667,19 @@ const content = {
   .choice-opt input { width: 1.15rem; height: 1.15rem; accent-color: var(--c-gold); margin: 0; }
   .choice-opt:has(input:checked) { border-color: var(--c-gold); background: color-mix(in srgb, var(--c-gold) 14%, transparent); }
   .choice-opt:has(input:focus-visible) { outline: 3px solid var(--c-gold); outline-offset: 2px; }
+  /* Optional fields tucked into a "+" panel. Closed panels still submit their values. */
+  .more { border: 1.5px solid var(--field-border); border-radius: var(--r); }
+  .more summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 52px; padding: 0.7rem 0.9rem; font-weight: 600; font-size: 0.98rem; }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary::after { content: "+"; content: "+" / ""; flex-shrink: 0; font-size: 1.5rem; font-weight: 400; line-height: 1; color: var(--c-gold); }
+  .more[open] summary::after { content: "\2212"; content: "\2212" / ""; }
+  .more summary:focus-visible { outline: 3px solid var(--c-gold); outline-offset: 2px; }
+  .more-body { display: grid; gap: 1rem; padding: 0.25rem 0.9rem 1rem; }
   #quote-form button[type="submit"] { width: 100%; margin-top: 0.25rem; }
   .form-note { font-size: 0.95rem; color: var(--muted); }
   .form-note a { color: var(--c-goldText); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
   .form-success { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
+  .form-success:focus { outline: none; }
   .form-msg { font-weight: 600; padding: 0.85rem 1rem; border-radius: var(--r); background: color-mix(in srgb, var(--c-gold) 14%, transparent); border: 1px solid var(--line); }
   .form-error { color: #F2B8B5; background: rgba(179, 38, 30, 0.18); border-color: rgba(242, 184, 181, 0.4); }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
@@ -649,7 +690,8 @@ const content = {
   .faq details:last-child { border-bottom: 1px solid var(--line); }
   .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-weight: 600; font-size: 1.1rem; min-height: 48px; }
   .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: "+"; flex-shrink: 0; font-size: 1.6rem; font-weight: 400; line-height: 1; color: var(--c-gold); transition: transform 0.2s ease; }
+  /* The "/ ''" keeps the plus out of each question's accessible name. */
+  .faq summary::after { content: "+"; content: "+" / ""; flex-shrink: 0; font-size: 1.6rem; font-weight: 400; line-height: 1; color: var(--c-gold); transition: transform 0.2s ease; }
   .faq details[open] summary::after { transform: rotate(45deg); }
   .faq details p { padding-bottom: 1.25rem; color: var(--muted); max-width: 62ch; }
 
@@ -665,7 +707,7 @@ const content = {
   .foot { display: grid; gap: 2rem; }
   @media (min-width: 768px) { .foot { grid-template-columns: 1.4fr 1fr 1fr; } }
   .foot-logo { width: 220px; height: auto; margin-bottom: 1rem; }
-  .foot h3 { font-size: 1rem; margin-bottom: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-goldText); }
+  .foot h2 { font-size: 1rem; line-height: 1.25; margin-bottom: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-goldText); }
   .foot p, .foot a { color: var(--muted); }
   .foot a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 36px; }
   .foot a:hover { color: var(--c-white); }
@@ -700,6 +742,7 @@ const content = {
     }
     html.js-reveal .reveal.in { opacity: 1; transform: none; }
   }
+  @media (prefers-reduced-motion: reduce) { .site-header, .mobile-bar { transition: none !important; } }
 
   /* ---------- Mobile call bar ---------- */
   .mobile-bar {
@@ -714,6 +757,22 @@ const content = {
   /* Out of the way while someone is typing in the form (phone keyboards push fixed bars over fields). */
   .mobile-bar.typing { transform: translateY(110%); }
   @media (min-width: 768px) { .mobile-bar { display: none; } }
+
+  /* ---------- Notched iPhones in landscape: keep content clear of the notch ---------- */
+  .site-header .wrap, .hero, .facts, .sec, footer, .preview-strip {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+  footer .road { margin-left: calc(-1 * max(1.25rem, env(safe-area-inset-left))); margin-right: calc(-1 * max(1.25rem, env(safe-area-inset-right))); }
+
+  /* ---------- Windows high contrast (forced colours) ----------
+     The white "MOVE" would vanish on a forced white background, so the logo keeps its black plate;
+     buttons get a real border because forced colours drop backgrounds and box-shadows. */
+  @media (forced-colors: active) {
+    .hero-logo, .brand-logo, .foot-logo { forced-color-adjust: none; background-color: var(--c-black); border-radius: 8px; padding: 6px 10px; }
+    .btn { border: 2px solid ButtonText; }
+    .gold { background: none; color: CanvasText; }
+  }
 </style>
 </head>
 <body>
@@ -726,6 +785,10 @@ const content = {
 const c = content;
 const app = document.getElementById("app");
 
+// Icon paths: the Phosphor icons this site uses (bold, plus "-fill" variants), 1024 grid.
+// To use another icon, add its path from @phosphor-icons/web (src/bold/selection.json).
+const ICONS = {"phone-call":"M561.6 179.6c5.7-20.7 24.3-35.6 46.4-35.6 4.4 0 8.7 0.6 12.7 1.7l-0.3-0.1c126.5 33.8 224.2 131.4 257.4 255.4l0.6 2.5c1.2 4 1.9 8.6 1.9 13.4 0 26.5-21.5 48-48 48-22.4 0-41.3-15.4-46.5-36.2l-0.1-0.3c-24.9-93.2-96.8-165.2-188.2-189.6l-1.9-0.4c-20.7-5.7-35.6-24.3-35.6-46.4 0-4.4 0.6-8.7 1.7-12.7l-0.1 0.3zM911.4 734.3c-16.1 118.9-117 209.7-239 209.7-0.1 0-0.3-0-0.4-0l0 0c-326.4 0-592-265.6-592-592-0-0.1-0-0.2-0-0.4 0-122.1 90.7-223 208.4-238.9l1.2-0.1c2.9-0.4 6.3-0.6 9.7-0.6 32.6 0 60.7 19.5 73.2 47.5l0.2 0.5 84.4 188.5c0.1 0.3 0.2 0.5 0.3 0.8l-0-0c4.1 9.3 6.4 20.1 6.4 31.5 0 16.3-4.9 31.5-13.3 44.1l0.2-0.3c-1.1 1.7-2.2 3.2-3.5 4.7l0.1-0.1-76.2 90.8c28.2 51.4 82 104.6 134 132.8l89.2-76c1.3-1.1 2.8-2.2 4.3-3.2l0.2-0.1c12.5-8.5 27.8-13.5 44.4-13.5 11.4 0 22.3 2.4 32.1 6.7l-0.5-0.2 0.7 0.3 188.3 84.4c28.5 12.7 48 40.8 48 73.5 0 3.4-0.2 6.8-0.6 10l0-0.4zM814.2 734.1l-168-75.2-89.7 76.3c-1.3 1.1-2.8 2.3-4.3 3.3l-0.2 0.1c-12.4 8.3-27.7 13.3-44.2 13.3-12.6 0-24.4-2.9-35-8.1l0.5 0.2c-77.9-37.6-155.6-114.7-193.2-192-5-10.2-7.9-22.1-7.9-34.8 0-16.3 4.9-31.5 13.2-44.1l-0.2 0.3c1.1-1.7 2.3-3.2 3.5-4.7l-0 0.1 76.6-90.9-75.3-168c-65.6 14.8-113.9 72.7-113.9 141.8 0 0.1 0 0.2 0 0.3l-0-0c0.3 273.8 222.2 495.7 496 496l0 0c0.1 0 0.3 0 0.4 0 69.1 0 126.9-48.3 141.6-112.9l0.2-1zM550.5 389.9c39.9 12.9 70.7 43.7 83.3 82.7l0.3 0.9c6.3 19.6 24.4 33.6 45.8 33.6l0 0c5.2-0 10.1-0.8 14.8-2.3l-0.3 0.1c19.6-6.3 33.5-24.4 33.5-45.8 0-5.1-0.8-10-2.3-14.6l0.1 0.3c-22.5-69.9-76.5-123.9-144.8-145.9l-1.6-0.4c-4.6-1.6-9.8-2.5-15.3-2.5-26.5 0-48 21.5-48 48 0 21.7 14.4 40 34.1 46l0.3 0.1z","arrow-right":"M898 546l-288 288c-8.7 8.7-20.7 14.1-34 14.1-26.6 0-48.1-21.5-48.1-48.1 0-13.3 5.4-25.3 14.1-34l206-206h-588c-26.5 0-48-21.5-48-48s21.5-48 48-48v0h588l-206-206.1c-8.7-8.7-14.1-20.7-14.1-34 0-26.6 21.5-48.1 48.1-48.1 13.3 0 25.3 5.4 34 14.1l288 288c8.7 8.7 14.1 20.7 14.1 34 0 13.3-5.4 25.4-14.2 34.1l-0 0z","map-pin":"M512 240c-97.2 0-176 78.8-176 176s78.8 176 176 176c97.2 0 176-78.8 176-176v0c-0.1-97.2-78.8-175.9-176-176l-0-0zM512 496c-44.2 0-80-35.8-80-80s35.8-80 80-80c44.2 0 80 35.8 80 80v0c0 44.2-35.8 80-80 80v0zM512 48c-203.1 0.2-367.8 164.9-368 368l-0 0c0 309.4 326.6 541.6 340.5 551.3 7.7 5.4 17.2 8.7 27.5 8.7s19.9-3.2 27.7-8.8l-0.2 0.1c63.1-46.8 118.4-98.1 167.6-154.7l1.1-1.3c112.4-129 171.8-265.8 171.8-395.3-0.2-203.1-164.9-367.8-368-368l-0-0zM637.2 746.8c-38.4 43.9-79.3 83.4-123.4 119.3l-1.8 1.4c-45.9-37.3-86.8-76.8-124.2-119.6l-1-1.2c-66.8-77.4-146.8-197.6-146.8-330.8 0-150.2 121.8-272 272-272s272 121.8 272 272v0c0 133.2-80 253.5-146.8 330.8z","road-horizon":"M951.5 809.8c-6.8 3.9-14.9 6.2-23.5 6.2-17.9 0-33.5-9.8-41.7-24.2l-0.1-0.2-274.2-487.5h-52v16c0 26.5-21.5 48-48 48s-48-21.5-48-48v0-16h-52l-274.2 487.5c-8.3 14.9-24 24.9-42.1 24.9-26.5 0-48-21.5-48-48 0-8.8 2.4-17.1 6.5-24.2l-0.1 0.2 247.8-440.5h-205.9c-26.5 0-48-21.5-48-48s21.5-48 48-48v0h832c26.5 0 48 21.5 48 48s-21.5 48-48 48v0h-205.9l247.8 440.5c3.9 6.8 6.2 14.9 6.2 23.5 0 17.9-9.8 33.5-24.2 41.7l-0.2 0.1zM512 432c-26.5 0-48 21.5-48 48v0 64c0 26.5 21.5 48 48 48s48-21.5 48-48v0-64c0-26.5-21.5-48-48-48v0zM512 656c-26.5 0-48 21.5-48 48v0 64c0 26.5 21.5 48 48 48s48-21.5 48-48v0-64c0-26.5-21.5-48-48-48v0z","buildings":"M960 816h-48v-432c0-44.2-35.8-80-80-80v0h-144v-176c-0-44.2-35.8-80-80-80-12.3 0-23.9 2.8-34.3 7.7l0.5-0.2-416 194.2c-27.5 13.1-46.1 40.6-46.2 72.5l-0 0v493.8h-48c-26.5 0-48 21.5-48 48s21.5 48 48 48v0h896c26.5 0 48-21.5 48-48s-21.5-48-48-48v0zM816 400v416h-128v-416zM208 332.4l384-179.2v662.8h-384zM528 448v48c0 26.5-21.5 48-48 48s-48-21.5-48-48v0-48c0-26.5 21.5-48 48-48s48 21.5 48 48v0zM368 448v48c0 26.5-21.5 48-48 48s-48-21.5-48-48v0-48c0-26.5 21.5-48 48-48s48 21.5 48 48v0zM368 656v48c0 26.5-21.5 48-48 48s-48-21.5-48-48v0-48c0-26.5 21.5-48 48-48s48 21.5 48 48v0zM528 656v48c0 26.5-21.5 48-48 48s-48-21.5-48-48v0-48c0-26.5 21.5-48 48-48s48 21.5 48 48v0z","warehouse":"M960 720h-16v-475.5l26-5.6c22.3-4.5 38.8-23.9 38.8-47.1 0-26.5-21.5-48-48-48-3.8 0-7.5 0.4-11.1 1.3l0.3-0.1-896 192c-21.8 4.8-37.9 24-37.9 46.9 0 26.5 21.4 47.9 47.8 48l0 0c0 0 0.1 0 0.1 0 3.5 0 7-0.4 10.3-1.1l-0.3 0.1 5.9-1.3v290.3h-16c-26.5 0-48 21.5-48 48s21.5 48 48 48v0h896c26.5 0 48-21.5 48-48s-21.5-48-48-48v0zM176 409.1l672-144v454.9h-80v-240c0-26.5-21.5-48-48-48v0h-416c-26.5 0-48 21.5-48 48v0 240h-80zM672 576h-320v-48h320zM352 672h320v48h-320z","house-line":"M960 816h-48v-240c4.7 1.7 10.2 2.7 15.9 2.7 26.5 0 48-21.5 48-48 0-13.2-5.3-25.2-14-33.8l0 0-393.4-393.5c-14.5-14.5-34.5-23.4-56.6-23.4s-42.1 9-56.6 23.4l-393.4 393.4c-8.7 8.7-14.1 20.7-14.1 34 0 26.5 21.5 48 48 48 5.7 0 11.3-1 16.4-2.9l-0.3 0.1v240h-48c-26.5 0-48 21.5-48 48s21.5 48 48 48v0h896c26.5 0 48-21.5 48-48s-21.5-48-48-48v0zM208 486.6l304-304 304 304v329.4h-160v-208c0-26.5-21.5-48-48-48v0h-192c-26.5 0-48 21.5-48 48v0 208h-160zM560 816h-96v-160h96z","armchair":"M880 314.1v-26.1c-0.1-97.2-78.8-175.9-176-176l-384-0c-97.2 0.1-175.9 78.8-176 176l-0 0v26.1c-84.4 27.8-144.3 105.9-144.3 198s59.9 170.2 142.8 197.6l1.5 0.4v89.9c0 44.2 35.8 80 80 80v0h576c44.2 0 80-35.8 80-80v0-90c84.4-27.8 144.3-105.9 144.3-198s-59.9-170.2-142.8-197.6l-1.5-0.4zM320 208h384c44.2 0 80 35.8 80 80v0 18.5c-94.8 15.3-167.5 92.9-175.3 188.8l-0 0.7h-193.4c-7.8-96.6-80.5-174.2-174.1-189.4l-1.2-0.2v-18.5c0-44.2 35.8-80 80-80v0zM827.2 623.4c-24.4 2.5-43.2 22.9-43.2 47.8l-0 0v112.8h-544v-112.8c-0-24.8-18.9-45.3-43-47.7l-0.2-0c-56.8-5.9-100.8-53.5-100.8-111.4 0-61.9 50.1-112 112-112 61.9 0 112 50.1 112 112l0 0v144c0 26.5 21.5 48 48 48s48-21.5 48-48v0-64h192v64c0 26.5 21.5 48 48 48s48-21.5 48-48v0-144c0-61.9 50.1-112 112-112 61.9 0 112 50.1 112 112 0 57.9-43.9 105.5-100.3 111.4l-0.5 0z","chat-circle-text":"M688 432c0 26.5-21.5 48-48 48v0h-256c-26.5 0-48-21.5-48-48s21.5-48 48-48v0h256c26.5 0 48 21.5 48 48v0zM640 544h-256c-26.5 0-48 21.5-48 48s21.5 48 48 48v0h256c26.5 0 48-21.5 48-48s-21.5-48-48-48v0zM944 512c0 0 0 0.1 0 0.1 0 238.6-193.4 432-432 432-71.9 0-139.7-17.6-199.3-48.6l2.4 1.1-129.7 43.4c-7.6 2.7-16.4 4.2-25.6 4.2-44.2 0-80-35.8-80-80 0-9.1 1.5-17.9 4.4-26.1l-0.2 0.6 43.2-129.7c-29.8-57.1-47.2-124.7-47.2-196.4 0-238.6 193.4-432 432-432 238.4 0 431.7 193.1 432 431.5l0 0zM848 512c-0.1-185.5-150.5-335.9-336-335.9-185.6 0-336 150.4-336 336 0 61.9 16.7 119.9 45.9 169.7l-0.9-1.6c4.1 6.9 6.5 15.2 6.5 24.1 0 5.4-0.9 10.7-2.6 15.5l0.1-0.3-39.7 119.2 119.2-39.7c4.5-1.6 9.8-2.5 15.2-2.5l0-0c8.8 0 17.1 2.4 24.2 6.6l-0.2-0.1c48.3 28.4 106.3 45.2 168.3 45.2 185.6 0 336-150.4 336-336 0-0-0-0.1-0-0.1l0 0z","clipboard-text":"M688 656c0 26.5-21.5 48-48 48v0h-256c-26.5 0-48-21.5-48-48s21.5-48 48-48v0h256c26.5 0 48 21.5 48 48v0zM640 448h-256c-26.5 0-48 21.5-48 48s21.5 48 48 48v0h256c26.5 0 48-21.5 48-48s-21.5-48-48-48v0zM880 192v672c0 44.2-35.8 80-80 80v0h-576c-44.2 0-80-35.8-80-80v0-672c0-44.2 35.8-80 80-80v0h138.1c37.8-39.5 91-64 149.9-64s112 24.5 149.8 63.9l0.1 0.1h138.1c44.2 0 80 35.8 80 80v0zM401.2 240h221.7c-8.1-54.6-54.7-95.9-110.8-95.9s-102.7 41.4-110.8 95.3l-0.1 0.6zM784 208h-69.6c3.6 14.4 5.6 31 5.6 48l0 0v32c0 26.5-21.5 48-48 48v0h-320c-26.5 0-48-21.5-48-48v0-32c0-17 2.1-33.6 5.9-49.4l-0.3 1.4h-69.6v640h544z","truck":"M1020.6 462.2l-56-140c-12-29.6-40.6-50.2-73.9-50.2-0.1 0-0.2 0-0.3 0l0-0h-106.3v-16c0-26.5-21.5-48-48-48v0h-608c-44.2 0-80 35.8-80 80v0 448c0 44.2 35.8 80 80 80v0h56.2c20.4 56.4 73.4 96 135.8 96s115.4-39.6 135.4-95l0.3-1h176.5c20.4 56.4 73.4 96 135.8 96s115.4-39.6 135.4-95l0.3-1h40.2c44.2 0 80-35.8 80-80v0-256c-0.6-6.6-1.8-12.7-3.6-18.5l0.2 0.6zM784 368h95.5l25.6 64h-121.1zM320 816c-26.5 0-48-21.5-48-48s21.5-48 48-48c26.5 0 48 21.5 48 48v0c0 26.5-21.5 48-48 48v0zM688 648.3c-25.5 17.3-44.9 41.8-55.4 70.7l-0.3 1h-176.5c-20.4-56.4-73.4-96-135.8-96s-115.4 39.6-135.4 95l-0.3 1h-40.2v-160h544zM688 464h-544v-160h544zM768 816c-26.5 0-48-21.5-48-48s21.5-48 48-48c26.5 0 48 21.5 48 48v0c0 26.5-21.5 48-48 48v0zM928 720h-24.2c-18.6-51.3-64.1-88.6-119.1-95l-0.7-0.1v-96.9h144z","chat-text":"M864 176h-704c-44.2 0-80 35.8-80 80v0 640c-0 0.1-0 0.2-0 0.3 0 31.8 18.7 59.2 45.8 71.9l0.5 0.2c9.9 4.8 21.6 7.6 33.9 7.6l0 0c19.6-0.1 37.5-7.2 51.4-19l-0.1 0.1 0.5-0.4 125.9-108.7h526.1c44.2 0 80-35.8 80-80v0-512c0-44.2-35.8-80-80-80v0zM848 752h-528c-0-0-0.1-0-0.1-0-12 0-23 4.4-31.3 11.7l0.1-0-112.6 97.2v-588.9h672zM336 432c0-26.5 21.5-48 48-48v0h256c26.5 0 48 21.5 48 48s-21.5 48-48 48v0h-256c-26.5 0-48-21.5-48-48v0zM336 592c0-26.5 21.5-48 48-48v0h256c26.5 0 48 21.5 48 48s-21.5 48-48 48v0h-256c-26.5 0-48-21.5-48-48v0z","envelope-simple":"M896 176h-768c-26.5 0-48 21.5-48 48v0 544c0 44.2 35.8 80 80 80v0h704c44.2 0 80-35.8 80-80v0-544c0-26.5-21.5-48-48-48v0zM772.6 272l-260.6 238.9-260.6-238.9zM176 752v-418.9l303.6 278.3c8.5 7.8 19.9 12.6 32.4 12.6s23.9-4.8 32.5-12.7l-0 0 303.6-278.3v418.9z","facebook-logo":"M512 80c-238.6 0-432 193.4-432 432s193.4 432 432 432c238.6 0 432-193.4 432-432v0c-0.3-238.5-193.5-431.7-432-432l-0-0zM560 844.5v-220.5h80c26.5 0 48-21.5 48-48s-21.5-48-48-48v0h-80v-80c0-26.5 21.5-48 48-48v0h64c26.5 0 48-21.5 48-48s-21.5-48-48-48v0h-64c-79.5 0-144 64.5-144 144v0 80h-80c-26.5 0-48 21.5-48 48s21.5 48 48 48v0h80v220.5c-163.8-24.3-288-163.9-288-332.6 0-185.6 150.4-336 336-336s336 150.4 336 336c0 168.6-124.2 308.3-286.2 332.3l-1.8 0.2z","instagram-logo":"M512 320c-106 0-192 86-192 192s86 192 192 192c106 0 192-86 192-192v0c-0.1-106-86-191.9-192-192l-0-0zM512 608c-53 0-96-43-96-96s43-96 96-96c53 0 96 43 96 96v0c0 53-43 96-96 96v0zM704 80h-384c-132.5 0.2-239.8 107.5-240 240l-0 0v384c0.2 132.5 107.5 239.8 240 240l384 0c132.5-0.2 239.8-107.5 240-240l0-0v-384c-0.2-132.5-107.5-239.8-240-240l-0-0zM848 704c0 79.5-64.5 144-144 144v0h-384c-79.5 0-144-64.5-144-144v0-384c0-79.5 64.5-144 144-144v0h384c79.5 0 144 64.5 144 144v0zM784 304c0 35.3-28.7 64-64 64s-64-28.7-64-64c0-35.3 28.7-64 64-64v0c35.3 0 64 28.7 64 64v0z","arrow-up-right":"M816 256v416c0 26.5-21.5 48-48 48s-48-21.5-48-48v0-300l-430 430c-8.7 8.7-20.7 14.1-34 14.1-26.6 0-48.1-21.5-48.1-48.1 0-13.3 5.4-25.3 14.1-34l430-430h-300c-26.5 0-48-21.5-48-48s21.5-48 48-48v0h416c26.5 0 48 21.5 48 48v0z","arrows-left-right":"M866 738l-128 128c-8.7 8.7-20.7 14.1-34 14.1-26.6 0-48.1-21.5-48.1-48.1 0-13.3 5.4-25.3 14.1-34l-0 0 46-46h-524c-26.5 0-48-21.5-48-48s21.5-48 48-48v0h524l-46.1-46c-8.7-8.7-14.1-20.7-14.1-34 0-26.6 21.5-48.1 48.1-48.1 13.3 0 25.3 5.4 34 14.1l128 128c8.7 8.7 14.1 20.7 14.1 34 0 13.3-5.4 25.3-14.1 34l-0 0zM286 482c8.7 8.7 20.7 14.1 34 14.1 26.6 0 48.1-21.5 48.1-48.1 0-13.3-5.4-25.3-14.1-34l-46-46h524c26.5 0 48-21.5 48-48s-21.5-48-48-48v0h-524l46-46c8.7-8.7 14.1-20.7 14.1-34 0-26.6-21.5-48.1-48.1-48.1-13.3 0-25.3 5.4-34 14.1l-128 128c-8.7 8.7-14.1 20.7-14.1 34s5.4 25.3 14.1 34l0 0z","shield-check":"M832 144h-640c-44.2 0-80 35.8-80 80v0 224c0 217.2 105.3 348.9 193.6 421.2 94.8 77.6 189.8 104 193.8 105.2 3.8 1.1 8.1 1.7 12.6 1.7s8.8-0.6 13-1.8l-0.3 0.1c4-1.1 98.9-27.6 193.8-105.2 88.3-72.3 193.6-204 193.6-421.2v-224c0-44.2-35.8-80-80-80v0zM816 448c0 142.8-52.4 258.8-155.6 344.6-42.3 35.1-91.4 63.8-144.9 83.8l-3.5 1.1c-56.9-21.1-106.1-49.8-149.2-85.6l0.8 0.7c-103.3-85.8-155.6-201.8-155.6-344.6v-208h608zM318 578c-8.7-8.7-14.1-20.7-14.1-34 0-26.6 21.5-48.1 48.1-48.1 13.3 0 25.3 5.4 34 14.1l0 0 62 62 190-190.1c8.7-8.7 20.7-14.1 34-14.1 26.6 0 48.1 21.5 48.1 48.1 0 13.3-5.4 25.3-14.1 34l-224 224c-8.7 8.7-20.7 14.1-34 14.1s-25.3-5.4-34-14.1l-0-0z","check-circle":"M706 382c8.7 8.7 14.1 20.7 14.1 34s-5.4 25.3-14.1 34l-0 0-224 224c-8.7 8.7-20.7 14.1-34 14.1s-25.3-5.4-34-14.1l-0-0-96-96c-8.7-8.7-14.1-20.7-14.1-34 0-26.6 21.5-48.1 48.1-48.1 13.3 0 25.3 5.4 34 14.1l0 0 62 62 190-190.1c8.7-8.7 20.7-14 33.9-14 13.3 0 25.3 5.4 34 14.1l0 0zM944 512c0 238.6-193.4 432-432 432s-432-193.4-432-432c0-238.6 193.4-432 432-432v0c238.5 0.3 431.7 193.5 432 432l0 0zM848 512c0-185.6-150.4-336-336-336s-336 150.4-336 336c0 185.6 150.4 336 336 336v0c185.5-0.2 335.8-150.5 336-336l0-0z","star":"M972 384c-10.2-30.9-37.7-53.3-70.7-56l-0.3-0-226.4-18.3-87.4-211.2c-12.5-29.9-41.5-50.5-75.3-50.5s-62.8 20.6-75.1 49.9l-0.2 0.5-87.3 211.3-226.4 18.2c-42.2 3.6-75.1 38.7-75.1 81.5 0 24.7 11 46.9 28.3 61.9l0.1 0.1 172.7 149-52.8 222.8c-1.5 5.8-2.3 12.5-2.3 19.4 0 45 36.5 81.5 81.5 81.5 15.9 0 30.6-4.5 43.2-12.4l-0.3 0.2 193.7-119.2 193.7 119.2c12.1 7.6 26.9 12.1 42.7 12.1 45 0 81.6-36.5 81.6-81.6 0-6.8-0.8-13.4-2.4-19.6l0.1 0.6-52.8-222.8 172.7-149c17.5-15.1 28.5-37.3 28.5-62 0-9.2-1.5-18-4.3-26.2l0.2 0.6zM690.1 566.8c-10.2 8.9-16.7 21.9-16.7 36.4 0 3.9 0.5 7.8 1.4 11.4l-0.1-0.3 51.6 217.8-189.2-116.3c-7.2-4.5-15.8-7.1-25.2-7.1s-18 2.7-25.4 7.2l0.2-0.1-189.2 116.3 51.6-217.6c0.8-3.3 1.3-7.2 1.3-11.1 0-14.5-6.4-27.5-16.6-36.3l-0.1-0.1-169.1-146 221.6-17.9c18.3-1.5 33.6-13.1 40.4-29.2l0.1-0.3 85.1-206 85.1 206c6.9 16.4 22.2 28 40.3 29.5l0.2 0 221.6 17.9z","package":"M902.4 250.6l-352-192.7c-11.1-6.2-24.3-9.9-38.4-9.9s-27.3 3.7-38.8 10.1l0.4-0.2-352 192.7c-25 13.9-41.6 40.1-41.6 70.2 0 0 0 0 0 0l-0-0v382.5c-0 0-0 0-0 0 0 30.1 16.6 56.3 41.2 70l0.4 0.2 352 192.7c11.1 6.2 24.3 9.9 38.4 9.9s27.3-3.7 38.8-10.1l-0.4 0.2 352-192.7c25-13.9 41.6-40.1 41.6-70.2 0-0-0-0-0-0l0 0v-382.5c0-0 0-0 0-0 0-30.1-16.6-56.3-41.2-70l-0.4-0.2zM512 146.3l288 157.7-85.7 46.9-288-157.7zM512 461.6l-288-157.6 102.2-56 288 157.6zM176 387.2l288 157.6v306.7l-288-157.7zM560 851.4v-306.7l96-52.5v115.8c0 26.5 21.5 48 48 48s48-21.5 48-48v0-168.3l96-52.5v306.6z","map-pin-fill":"M512 64c-194.3 0.2-351.8 157.7-352 352l-0 0c0 301.2 320 528.7 333.6 538.2 5.1 3.6 11.5 5.8 18.4 5.8s13.2-2.2 18.5-5.9l-0.1 0.1c13.6-9.5 333.6-237 333.6-538.2-0.2-194.3-157.7-351.8-352-352l-0-0zM512 288c70.7 0 128 57.3 128 128s-57.3 128-128 128c-70.7 0-128-57.3-128-128v0c0-70.7 57.3-128 128-128v0z","check-circle-fill":"M512 96c-229.8 0-416 186.2-416 416s186.2 416 416 416c229.8 0 416-186.2 416-416v0c-0.2-229.7-186.3-415.8-416-416l-0-0zM694.6 438.6l-224 224c-5.8 5.8-13.8 9.4-22.6 9.4s-16.8-3.6-22.6-9.4l-0-0-96-96c-5.8-5.8-9.4-13.8-9.4-22.6 0-17.7 14.3-32 32-32 8.8 0 16.8 3.6 22.6 9.4l73.4 73.4 201.4-201.4c5.8-5.8 13.8-9.4 22.6-9.4 17.7 0 32 14.3 32 32 0 8.8-3.6 16.8-9.4 22.6l0-0z","star-fill":"M937.2 459.4l-180 155.3 54.8 232.3c1.2 4.6 1.8 9.9 1.8 15.3 0 36.2-29.4 65.6-65.6 65.6-12.7 0-24.5-3.6-34.5-9.8l0.3 0.2-202-124.3-202.1 124.3c-9.7 6-21.5 9.5-34.1 9.5-36.2 0-65.6-29.4-65.6-65.6 0-5.4 0.7-10.7 1.9-15.7l-0.1 0.5 55-232.3-180-155.3c-14-12.1-22.8-29.9-22.8-49.8 0-34.3 26.3-62.5 59.8-65.6l0.3-0 236-19 91-220.3c10-24 33.4-40.6 60.5-40.6s50.5 16.6 60.4 40.2l0.2 0.4 91 220.3 236 19c33.9 3 60.3 31.2 60.3 65.6 0 19.9-8.8 37.7-22.7 49.8l-0.1 0.1z","star-half-fill":"M956.7 389c-8.3-24.8-30.3-42.8-56.8-45l-0.2-0-236-19-91.1-220.4c-10-24-33.4-40.6-60.5-40.6s-50.5 16.6-60.4 40.2l-0.2 0.4-91 220.3-236.1 19.1c-33.9 3-60.3 31.2-60.3 65.6 0 19.9 8.8 37.7 22.7 49.8l0.1 0.1 180 155.3-54.8 232.2c-1.2 4.6-1.8 9.9-1.8 15.3 0 36.2 29.4 65.6 65.6 65.6 12.7 0 24.5-3.6 34.5-9.8l-0.3 0.2 202-124.3 202.1 124.3c9.7 6 21.5 9.5 34.1 9.5 36.2 0 65.6-29.4 65.6-65.6 0-5.4-0.7-10.7-1.9-15.7l0.1 0.5-55-232.3 180-155.3c14.1-12.1 23-30 23-50 0-7.3-1.2-14.3-3.4-20.9l0.1 0.5zM895.4 410.9l-194.8 168c-6.8 5.9-11.1 14.6-11.1 24.2 0 2.6 0.3 5.2 0.9 7.6l-0-0.2 59.5 251.2c0.1 0.2 0.1 0.4 0.1 0.6 0 0.6-0.3 1.1-0.8 1.3l-0 0c-0.7 0.6-0.9 0.4-1.5 0l-218.9-134.6c-4.7-2.9-10.5-4.7-16.7-4.7-0 0-0.1 0-0.1 0l0-0v-596.4c1 0 1.1 0.3 1.4 1l98.6 238.4c4.6 10.9 14.8 18.7 26.9 19.7l0.1 0 255.6 20.6c0.6 0 1 0 1.4 1.2s0 1.6-0.6 2z"};
+
 function h(tag, props, ...kids) {
   const el = document.createElement(tag);
   Object.entries(props || {}).forEach(([k, v]) => {
@@ -736,14 +799,24 @@ function h(tag, props, ...kids) {
   kids.flat(Infinity).forEach(k => { if (k != null && k !== false) el.append(k.nodeType ? k : document.createTextNode(k)); });
   return el;
 }
-const icon = (name, weight) => h("i", { class: (weight || "ph-bold") + " ph-" + name, "aria-hidden": "true" });
-const stars = (n, label) => {
-  const s = h("span", { class: "stars", role: "img", "aria-label": label || (n + " out of 5 stars") });
-  for (let i = 0; i < n; i++) s.append(icon("star", "ph-fill"));
+// Inline SVG icons: they paint with the page, no icon font to wait for.
+const icon = (name, weight) => {
+  const i = h("i", { class: "ico", "aria-hidden": "true" });
+  const d = (weight === "fill" && ICONS[name + "-fill"]) || ICONS[name];
+  if (!d) { console.warn("Icon not in ICONS: " + name); return i; }
+  i.innerHTML = '<svg viewBox="0 0 1024 1024" fill="currentColor" focusable="false"><path d="' + d + '"/></svg>';
+  return i;
+};
+// Draws the real score: full stars, a half star from .5, outlines for the rest. Never rounds up.
+const stars = (score, label) => {
+  const v = Math.max(0, Math.min(5, parseFloat(score) || 0));
+  const full = Math.floor(v), half = v - full >= 0.5;
+  const s = h("span", { class: "stars", role: "img", "aria-label": label || (v + " out of 5 stars") });
+  for (let i = 0; i < 5; i++) s.append(i < full ? icon("star", "fill") : (i === full && half ? icon("star-half", "fill") : icon("star")));
   return s;
 };
 const section = (id, cls, inner) => h("section", { id, class: cls }, h("div", { class: "wrap" }, inner));
-const eyebrow = (text, ic) => text ? h("p", { class: "eyebrow" }, ic ? icon(ic, "ph-fill") : null, text) : null;
+const eyebrow = (text, ic) => text ? h("p", { class: "eyebrow" }, ic ? icon(ic, "fill") : null, text) : null;
 const head = (title, sub, eb) => h("div", { class: "sec-head" }, eyebrow(eb), h("h2", {}, title), sub ? h("p", {}, sub) : null);
 // Wraps one word of a heading in the logo's gold, the way "MATE" sits beside "MOVE".
 const accent = (text, word) => {
@@ -754,9 +827,19 @@ const logoImg = (cls, eager) => h("img", { class: cls, src: c.logo, alt: c.logoA
   decoding: "async", fetchpriority: eager ? "high" : null, loading: eager ? null : "lazy" });
 // External profiles open in a new tab so the site stays open.
 const ext = (href, cls, ...kids) => h("a", { href, class: cls, target: "_blank", rel: "noopener" }, kids);
+// Each optional section renders on its own: a bad content edit drops that section only,
+// never the quote form, footer or call bar.
+const block = (name, fn) => { try { fn(); } catch (err) { console.error("content." + name + " could not render:", err); } };
 
+const reviews = (c.reviews || []).filter(r => r && r.quote && r.author);
 const hasWork = (c.beforeAfter && c.beforeAfter.length) || (c.gallery && c.gallery.length);
-const hasReviews = c.reviews && c.reviews.length;
+const hasReviews = reviews.length > 0;
+const fm = Object.assign({
+  heading: "Quote request", submitText: "Send", fields: [],
+  success: "Thanks, sent. Call " + c.phone + " for anything urgent.",
+  error: "That did not send. Please call " + c.phone + ".",
+  previewNotice: "Preview only, nothing was sent. Please call " + c.phone + "."
+}, c.form);
 
 // ----- Preview strip -----
 if (c.sample) {
@@ -785,8 +868,41 @@ const header = h("header", { class: "site-header" },
 );
 app.append(header);
 
+// Main, footer and call bar go in first; sections then fill <main> in order.
 const main = h("main", { id: "main" });
 app.append(main);
+
+// ----- Footer -----
+app.append(
+  h("footer", {},
+    h("div", { class: "road", "aria-hidden": "true" }),
+    h("div", { class: "wrap foot" },
+      h("div", {},
+        c.logo ? logoImg("foot-logo", false) : h("p", { class: "brand-text" }, c.businessName),
+        h("p", {}, c.heroSub)),
+      h("div", {}, h("h2", {}, "Contact"),
+        h("div", { class: "foot-list" },
+          h("a", { href: c.phoneHref }, icon("phone-call"), c.phone),
+          c.smsHref ? h("a", { href: c.smsHref }, icon("chat-text"), "Text " + c.phone) : null,
+          c.email ? h("a", { href: "mailto:" + c.email }, icon("envelope-simple"), c.email) : null,
+          h("p", {}, c.address))),
+      c.hours ? h("div", {}, h("h2", {}, "Hours"), h("p", {}, c.hours)) : null,
+      c.links && c.links.length ? h("div", {}, h("h2", {}, "Find us online"),
+        h("ul", { class: "foot-list", role: "list" }, c.links.map(l => h("li", {}, ext(l.href, null, icon(l.icon || "arrow-up-right"), l.label))))) : null
+    ),
+    h("div", { class: "wrap foot-base" },
+      h("p", {}, "© " + new Date().getFullYear() + " " + c.businessName),
+      c.credit ? h("p", {}, c.credit) : null
+    )
+  )
+);
+
+// ----- Mobile call bar -----
+const bar = h("nav", { class: "mobile-bar", "aria-label": "Call or get a quote" },
+  h("a", { class: "btn btn-gold", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+  h("a", { class: "btn btn-line", href: "#quote-card" }, c.quoteText)
+);
+app.append(bar);
 
 // ----- Hero -----
 // The logo leads. The text headline under it says what they do and where (and is the page's h1).
@@ -797,8 +913,8 @@ main.append(
       h("div", {},
         heroLogo,
         eyebrow(c.heroEyebrow, "map-pin"),
-        h("h1", {}, accent(c.heroHeading, c.heroHeadingAccent)),
-        h("p", { class: "hero-sub" }, c.heroSub),
+        h("h1", {}, accent(c.heroHeading || c.businessName, c.heroHeadingAccent)),
+        c.heroSub ? h("p", { class: "hero-sub" }, c.heroSub) : null,
         h("div", { class: "hero-actions" },
           h("a", { class: "btn btn-gold", href: c.phoneHref }, icon("phone-call"), c.heroCallText || c.ctaText),
           h("a", { class: "btn btn-line", href: "#quote-card" }, c.quoteText, icon("arrow-right"))
@@ -813,31 +929,37 @@ main.append(
   h("div", { class: "road", "aria-hidden": "true" })
 );
 // Header logo appears once the hero logo has scrolled out of view, so there are never two on screen.
+// Uses the newest entry: a delayed callback can deliver several at once.
 if (heroLogo && "IntersectionObserver" in window) {
   document.documentElement.classList.add("hero-logo-live");
-  new IntersectionObserver(([e]) => header.classList.toggle("scrolled", !e.isIntersecting),
-    { rootMargin: "-" + (header.offsetHeight || 68) + "px 0px 0px 0px" }).observe(heroLogo);
+  new IntersectionObserver(entries => {
+    const e = entries[entries.length - 1];
+    header.classList.toggle("scrolled", !e.isIntersecting);
+  }, { rootMargin: "-" + (header.offsetHeight || 68) + "px 0px 0px 0px" }).observe(heroLogo);
 }
 
 // ----- Facts bar -----
-const factCells = [];
-if (c.rating && c.rating.score) {
-  const label = c.rating.score + " on " + c.rating.source;
-  factCells.push(h("div", { class: "fact" }, icon("star", "ph-fill"),
-    h("div", {},
-      c.rating.href ? ext(c.rating.href, "fact-value", label) : h("div", { class: "fact-value" }, label),
-      stars(5, "Rated " + c.rating.score + " out of 5"),
-      h("div", { class: "fact-label" }, c.rating.count + " reviews"))));
-}
-(c.facts || []).forEach(f => factCells.push(
-  h("div", { class: "fact" }, icon(f.icon),
-    h("div", {}, f.href ? ext(f.href, "fact-value", f.value) : h("div", { class: "fact-value" }, f.value),
-      h("div", { class: "fact-label" }, f.label)))
-));
-if (factCells.length) main.append(h("section", { class: "facts", "aria-label": "At a glance" }, h("div", { class: "wrap facts-grid" }, factCells)));
+block("facts", () => {
+  const factCells = [];
+  if (c.rating && c.rating.score) {
+    const label = c.rating.score + " on " + c.rating.source;
+    factCells.push(h("div", { class: "fact" }, icon("star", "fill"),
+      h("div", {},
+        c.rating.href ? ext(c.rating.href, "fact-value", label) : h("div", { class: "fact-value" }, label),
+        stars(c.rating.score, "Rated " + c.rating.score + " out of 5"),
+        h("div", { class: "fact-label" }, c.rating.count + " reviews"))));
+  }
+  (c.facts || []).forEach(f => factCells.push(
+    h("div", { class: "fact" }, icon(f.icon),
+      h("div", {}, f.href ? ext(f.href, "fact-value", f.value) : h("div", { class: "fact-value" }, f.value),
+        h("div", { class: "fact-label" }, f.label)))
+  ));
+  if (factCells.length) main.append(h("section", { class: "facts", "aria-label": "At a glance" }, h("div", { class: "wrap facts-grid" }, factCells)));
+});
 
 // ----- Services -----
-if (c.services && c.services.length) {
+block("services", () => {
+  if (!(c.services && c.services.length)) return;
   const cards = c.services.map(s => h("article", { class: "svc-card" },
     s.image ? h("img", { class: "svc-photo", src: s.image, alt: s.alt || s.name, loading: "lazy", decoding: "async", width: "800", height: "500" }) : null,
     h("span", { class: "svc-icon" }, icon(s.icon || "truck")),
@@ -856,10 +978,11 @@ if (c.services && c.services.length) {
   const extra = (3 - (n % 3)) % 3;
   [0, n - 1].slice(0, extra).forEach(i => cards[i].classList.add("wide"));
   main.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub, c.servicesEyebrow), h("div", { class: "svc-grid" }, cards)]));
-}
+});
 
 // ----- Storage feature -----
-if (c.storage) {
+block("storage", () => {
+  if (!c.storage) return;
   main.append(section("storage", "sec sec-alt",
     h("div", { class: "feature" },
       c.storage.image ? h("div", { class: "feature-media" },
@@ -867,15 +990,16 @@ if (c.storage) {
       h("div", { class: "feature-body" },
         eyebrow(c.storage.eyebrow),
         h("h2", {}, c.storage.heading),
-        c.storage.text.map(t => h("p", {}, t)),
-        h("a", { class: "btn btn-gold", href: "#quote-card" }, c.storage.button, icon("arrow-right"))
+        [].concat(c.storage.text || []).map(t => h("p", {}, t)),
+        h("a", { class: "btn btn-gold", href: "#quote-card" }, c.storage.button || c.quoteText, icon("arrow-right"))
       )
     )
   ));
-}
+});
 
 // ----- Work -----
-if (hasWork) {
+block("work", () => {
+  if (!hasWork) return;
   const parts = [head(c.workHeading, c.workSub, c.workEyebrow)];
   if (c.beforeAfter && c.beforeAfter.length) {
     parts.push(h("div", { class: "ba-grid" }, c.beforeAfter.map(p => {
@@ -895,33 +1019,36 @@ if (hasWork) {
     parts.push(h("div", { class: "gallery" }, c.gallery.map(g => h("img", { src: g.image, alt: g.alt, loading: "lazy" }))));
   }
   main.append(section("work", "sec sec-alt", parts));
-}
+});
 
 // ----- Reviews -----
-if (hasReviews) {
-  const [first, ...rest] = c.reviews;
+// Stars only when the review's real star count is recorded.
+block("reviews", () => {
+  if (!hasReviews) return;
+  const [first, ...rest] = reviews;
   const meta = r => h("div", { class: "rev-meta" }, r.href ? ext(r.href, null, r.meta) : r.meta);
   const feature = h("figure", { class: "rev-feature" },
-    stars(5),
+    first.stars ? stars(first.stars) : null,
     h("blockquote", {}, "“" + first.quote + "”"),
     h("figcaption", {}, h("div", { class: "rev-author" }, first.author), meta(first))
   );
-  const list = h("div", { class: "rev-list" }, rest.map(r =>
+  const list = rest.length ? h("div", { class: "rev-list" }, rest.map(r =>
     h("figure", { class: "rev-card" },
-      stars(5),
+      r.stars ? stars(r.stars) : null,
       h("blockquote", {}, "“" + r.quote + "”"),
       h("figcaption", {}, h("span", { class: "rev-author" }, r.author), meta(r))
     )
-  ));
-  main.append(section("reviews", "sec", [head(c.reviewsHeading, null, c.reviewsEyebrow), h("div", { class: "rev" }, feature, list)]));
-}
+  )) : null;
+  main.append(section("reviews", "sec", [head(c.reviewsHeading, null, c.reviewsEyebrow), h("div", { class: rest.length ? "rev" : "rev rev-single" }, feature, list)]));
+});
 
 // ----- Process -----
-if (c.steps && c.steps.length) {
+block("steps", () => {
+  if (!(c.steps && c.steps.length)) return;
   main.append(section("process", "sec",
     h("div", { class: "proc" },
       head(c.processHeading, c.processSub, c.processEyebrow),
-      h("ol", { class: "steps" }, c.steps.map((s, i) =>
+      h("ol", { class: "steps", role: "list" }, c.steps.map((s, i) =>
         h("li", { class: "step" },
           h("div", { class: "step-icon" }, icon(s.icon), h("span", { class: "step-num", "aria-hidden": "true" }, String(i + 1))),
           h("div", {}, h("h3", {}, s.title), h("p", {}, s.text))
@@ -929,115 +1056,129 @@ if (c.steps && c.steps.length) {
       ))
     )
   ));
-}
+});
 
 // ----- Quote form -----
 // Built from content.form.fields. Every control has a visible label; groups use fieldset + legend.
-const optional = f => f.required ? null : h("span", { class: "opt" }, " (optional)");
-function field(f) {
-  if (f.type === "row") return h("div", { class: "form-row" }, f.fields.map(field));
-  if (f.type === "radios" || f.type === "checks") {
-    const radio = f.type === "radios";
-    return h("fieldset", { class: "choice" },
-      h("legend", {}, f.label, radio ? null : optional(f)),
-      h("div", { class: "choice-opts" }, f.options.map((o, i) => h("label", { class: "choice-opt" },
-        radio ? h("input", { type: "radio", name: f.name, value: o, checked: i === 0 })
-              : h("input", { type: "checkbox", name: o.name, value: "Yes" }),
-        h("span", {}, radio ? o : o.label)
-      )))
-    );
-  }
-  let control;
-  const base = { name: f.name, id: "f-" + f.name, required: !!f.required, autocomplete: f.autocomplete };
-  if (f.type === "select") {
-    control = h("select", base, h("option", { value: "" }, f.placeholder || "Choose one"), f.options.map(o => h("option", {}, o)));
-  } else if (f.type === "textarea") {
-    control = h("textarea", Object.assign(base, { placeholder: f.placeholder, rows: "3" }));
-  } else {
-    control = h("input", Object.assign(base, { type: f.type, placeholder: f.placeholder }));
-    if (f.type === "date") {
-      const d = new Date();
-      control.min = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+block("form", () => {
+  const optional = f => f.required ? null : h("span", { class: "opt" }, " (optional)");
+  function field(f) {
+    if (f.type === "row") return h("div", { class: "form-row" }, f.fields.map(field));
+    if (f.type === "more") return h("details", { class: "more" }, h("summary", {}, f.label), h("div", { class: "more-body" }, f.fields.map(field)));
+    if (f.type === "radios" || f.type === "checks") {
+      const radio = f.type === "radios";
+      return h("fieldset", { class: "choice" },
+        h("legend", {}, f.label, radio ? null : optional(f)),
+        h("div", { class: "choice-opts" }, f.options.map((o, i) => h("label", { class: "choice-opt" },
+          radio ? h("input", { type: "radio", name: f.name, value: o, checked: i === 0 })
+                : h("input", { type: "checkbox", name: o.name, value: "Yes" }),
+          h("span", {}, radio ? o : o.label)
+        )))
+      );
     }
+    let control;
+    const base = { name: f.name, id: "f-" + f.name, required: !!f.required, autocomplete: f.autocomplete };
+    if (f.type === "select") {
+      control = h("select", base, h("option", { value: "" }, f.placeholder || "Choose one"), (f.options || []).map(o => h("option", {}, o)));
+    } else if (f.type === "textarea") {
+      control = h("textarea", Object.assign(base, { placeholder: f.placeholder, rows: "3" }));
+    } else {
+      control = h("input", Object.assign(base, { type: f.type, placeholder: f.placeholder }));
+      if (f.type === "date") {
+        const d = new Date();
+        control.min = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      }
+    }
+    return h("label", { class: "field", for: base.id }, h("span", {}, f.label, optional(f)), control);
   }
-  return h("label", { class: "field", for: base.id }, h("span", {}, f.label, optional(f)), control);
-}
-const form = h("form", { id: "quote-form" },
-  (c.form.fields || []).map(field),
-  h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
-  h("button", { type: "submit", class: "btn btn-gold" }, c.form.submitText),
-  h("p", { class: "form-note" }, "Prefer to talk? ", h("a", { href: c.phoneHref }, "Call"),
-    c.smsHref ? [" or ", h("a", { href: c.smsHref }, "text")] : null, " " + c.phone + "."),
-  h("div", { class: "form-status", role: "status", "aria-live": "polite" })
-);
-main.append(
-  h("section", { id: "quote", class: "sec", "aria-labelledby": "quote-heading" },
-    h("div", { class: "wrap contact-grid" },
-      h("div", {},
-        eyebrow(c.contactEyebrow),
-        h("h2", { id: "quote-heading" }, c.contactHeading),
-        h("p", { class: "contact-sub" }, c.contactSub),
-        h("ul", { class: "promises" }, (c.promises || []).map(p => h("li", {}, icon("check-circle", "ph-fill"), p))),
-        h("a", { class: "big-phone", href: c.phoneHref }, icon("phone-call"), c.phone),
-        h("p", { class: "contact-alt" },
-          c.smsHref ? h("a", { href: c.smsHref }, icon("chat-text"), "Text us") : null,
-          c.email ? h("a", { href: "mailto:" + c.email }, icon("envelope-simple"), c.email) : null)
-      ),
-      h("div", { class: "form-card", id: "quote-card" },
-        h("h3", { class: "form-title" }, c.form.heading),
-        c.form.intro ? h("p", { class: "form-req" }, c.form.intro) : null,
-        form)
+  const status = h("div", { class: "form-status", role: "status", "aria-live": "polite" });
+  const form = h("form", { id: "quote-form" },
+    fm.fields.map(field),
+    h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
+    h("button", { type: "submit", class: "btn btn-gold" }, fm.submitText),
+    h("p", { class: "form-note" }, "Prefer to talk? ", h("a", { href: c.phoneHref }, "Call"),
+      c.smsHref ? [" or ", h("a", { href: c.smsHref }, "text")] : null, " " + c.phone + "."),
+    status
+  );
+  main.append(
+    h("section", { id: "quote", class: "sec", "aria-labelledby": "quote-heading" },
+      h("div", { class: "wrap contact-grid" },
+        h("div", {},
+          eyebrow(c.contactEyebrow),
+          h("h2", { id: "quote-heading" }, c.contactHeading),
+          h("p", { class: "contact-sub" }, c.contactSub),
+          h("ul", { class: "promises", role: "list" }, (c.promises || []).map(p => h("li", {}, icon("check-circle", "fill"), p))),
+          h("a", { class: "big-phone", href: c.phoneHref }, icon("phone-call"), c.phone),
+          h("p", { class: "contact-alt" },
+            c.smsHref ? h("a", { href: c.smsHref }, icon("chat-text"), "Text us") : null,
+            c.email ? h("a", { href: "mailto:" + c.email }, icon("envelope-simple"), c.email) : null)
+        ),
+        h("div", { class: "form-card", id: "quote-card" },
+          h("h3", { class: "form-title" }, fm.heading),
+          fm.intro ? h("p", { class: "form-req" }, fm.intro) : null,
+          form)
+      )
     )
-  )
-);
+  );
+
+  // Call bar slides away while typing (phone keyboards push it over the field).
+  form.addEventListener("focusin", e => { if (e.target.matches("input, select, textarea")) bar.classList.add("typing"); });
+  form.addEventListener("focusout", () => bar.classList.remove("typing"));
+  // A field inside a closed "+" panel that needs fixing: open the panel so the browser can show it.
+  form.addEventListener("invalid", e => { const d = e.target.closest("details"); if (d) d.open = true; }, true);
+
+  // ----- Web3Forms submit -----
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const say = (text, cls) => {
+      status.replaceChildren(h("p", { class: "form-msg " + (cls || "") }, text));
+      status.scrollIntoView({ block: "center" });   // clears the call bar on phones
+    };
+    // Preview: no key yet, so say so plainly instead of pretending to send.
+    if (!c.web3formsKey || /YOUR_|_HERE/.test(c.web3formsKey)) { say(fm.previewNotice); return; }
+
+    const btn = form.querySelector('button[type="submit"]');
+    const original = btn.textContent;
+    btn.textContent = "Sending";
+    btn.disabled = true;
+    const data = new FormData(form);
+    data.append("access_key", c.web3formsKey);
+    data.append("subject", "New quote request: " + c.businessName);
+    data.append("from_name", c.businessName + " website");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
+      const out = await res.json();
+      if (!out.success) throw new Error(out.message || "Submission failed");
+      // Swap the form for the thank-you, bring it into view and move focus there so screen readers read it.
+      const ok = h("p", { class: "form-success", tabindex: "-1" }, fm.success);
+      form.replaceChildren(ok);
+      document.getElementById("quote-card").scrollIntoView({ block: "start" });
+      ok.focus({ preventScroll: true });
+      bar.classList.remove("typing");
+    } catch (err) {
+      console.error("Web3Forms:", err);
+      btn.textContent = original;
+      btn.disabled = false;
+      say(fm.error, "form-error");
+    }
+  });
+});
 
 // ----- FAQ -----
 // Native <details> so it works with a keyboard and screen reader, no script needed.
-if (c.faqs && c.faqs.length) {
+block("faqs", () => {
+  if (!(c.faqs && c.faqs.length)) return;
   main.append(section("faq", "sec", [
     head(c.faqHeading, null, c.faqEyebrow),
     h("div", { class: "faq" }, c.faqs.map(f => h("details", {}, h("summary", {}, f.q), h("p", {}, f.a))))
   ]));
-}
+});
 
 // ----- Areas -----
-if (c.areas && c.areas.length) {
-  main.append(section("areas", "sec sec-alt", [head(c.areasHeading, null, c.areasEyebrow), h("ul", { class: "areas" }, c.areas.map(a => h("li", {}, a)))]));
-}
-
-// ----- Footer -----
-app.append(
-  h("footer", {},
-    h("div", { class: "road", "aria-hidden": "true" }),
-    h("div", { class: "wrap foot" },
-      h("div", {},
-        c.logo ? logoImg("foot-logo", false) : h("h3", {}, c.businessName),
-        h("p", {}, c.heroSub)),
-      h("div", {}, h("h3", {}, "Contact"),
-        h("div", { class: "foot-list" },
-          h("a", { href: c.phoneHref }, icon("phone-call"), c.phone),
-          c.smsHref ? h("a", { href: c.smsHref }, icon("chat-text"), "Text " + c.phone) : null,
-          c.email ? h("a", { href: "mailto:" + c.email }, icon("envelope-simple"), c.email) : null,
-          h("p", {}, c.address))),
-      c.hours ? h("div", {}, h("h3", {}, "Hours"), h("p", {}, c.hours)) : null,
-      c.links && c.links.length ? h("div", {}, h("h3", {}, "Find us online"),
-        h("ul", { class: "foot-list" }, c.links.map(l => h("li", {}, ext(l.href, null, icon(l.icon || "arrow-up-right"), l.label))))) : null
-    ),
-    h("div", { class: "wrap foot-base" },
-      h("p", {}, "© " + new Date().getFullYear() + " " + c.businessName),
-      c.credit ? h("p", {}, c.credit) : null
-    )
-  )
-);
-
-// ----- Mobile call bar -----
-const bar = h("nav", { class: "mobile-bar", "aria-label": "Call or get a quote" },
-  h("a", { class: "btn btn-gold", href: c.phoneHref }, icon("phone-call"), c.ctaText),
-  h("a", { class: "btn btn-line", href: "#quote-card" }, c.quoteText)
-);
-app.append(bar);
-form.addEventListener("focusin", () => bar.classList.add("typing"));
-form.addEventListener("focusout", () => bar.classList.remove("typing"));
+block("areas", () => {
+  if (!(c.areas && c.areas.length)) return;
+  main.append(section("areas", "sec sec-alt", [head(c.areasHeading, null, c.areasEyebrow), h("ul", { class: "areas", role: "list" }, c.areas.map(a => h("li", {}, a)))]));
+});
 
 // ----- Scroll reveal -----
 // Skipped for reduced motion or browsers without IntersectionObserver, so nothing is ever left
@@ -1084,35 +1225,6 @@ form.addEventListener("focusout", () => bar.classList.remove("typing"));
   }, { threshold: 0.1, rootMargin: "0px 0px -5% 0px" });
   targets.forEach(el => io.observe(el));
 })();
-
-// ----- Web3Forms submit -----
-form.addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const status = form.querySelector(".form-status");
-  const say = (text, cls) => { status.replaceChildren(h("p", { class: "form-msg " + (cls || "") }, text)); };
-  // Preview: no key yet, so say so plainly instead of pretending to send.
-  if (!c.web3formsKey || /YOUR_|_HERE/.test(c.web3formsKey)) { say(c.form.previewNotice); return; }
-
-  const btn = form.querySelector('button[type="submit"]');
-  const original = btn.textContent;
-  btn.textContent = "Sending";
-  btn.disabled = true;
-  const data = new FormData(form);
-  data.append("access_key", c.web3formsKey);
-  data.append("subject", "New quote request: " + c.businessName);
-  data.append("from_name", c.businessName + " website");
-  try {
-    const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
-    const out = await res.json();
-    if (!out.success) throw new Error(out.message || "Submission failed");
-    form.replaceChildren(h("p", { class: "form-success", role: "status" }, c.form.success));
-  } catch (err) {
-    console.error("Web3Forms:", err);
-    btn.textContent = original;
-    btn.disabled = false;
-    say(c.form.error, "form-error");
-  }
-});
 </script>
 </body>
 </html>
