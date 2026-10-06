@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <!-- PREVIEW ONLY: unapproved spec site, keep it out of search results. Remove at launch. -->
-<meta name="robots" content="noindex">
+<meta name="robots" content="noindex, nofollow">
 
 <!-- Static copies of content.pageTitle, metaDescription and the share details. Link previews
      (iMessage, Facebook, WhatsApp) do not run JavaScript, so these have to be right in the HTML.
@@ -31,12 +31,12 @@
 <meta property="og:image:alt" content="Move Mate Removals and Storage logo, the headline &quot;Canberra removals and storage&quot; and phone 0422 394 487, beside an illustrated removal truck and boxes. Fyshwick, Canberra.">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- Everything is self-hosted: no third-party requests. The logo leads the hero, so it is fetched
-     alongside the HTML, as are the two font files the first screen uses. Fonts are the OFL
-     latin subsets (licences in fonts/). Montserrat: the closest Google font to the logo's heavy
-     geometric lettering. Icons are inline SVG paths (Phosphor, bold and fill) in the renderer. -->
+<!-- Everything is self-hosted: no third-party requests. The logo sits in the header on every
+     screen, so it is fetched alongside the HTML, as are the two font files the first screen uses.
+     Outfit, the template font (OFL latin subset, licence in fonts/). Icons are inline SVG paths
+     (Phosphor, bold and fill) in the renderer. -->
 <link rel="preload" as="image" href="images/move-mate-logo.webp" type="image/webp" fetchpriority="high">
-<link rel="preload" as="font" href="fonts/montserrat-latin-800-normal.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="fonts/outfit-latin-800-normal.woff2" type="font/woff2" crossorigin>
 <link rel="preload" as="font" href="fonts/outfit-latin-400-normal.woff2" type="font/woff2" crossorigin>
 
 <script>
@@ -96,21 +96,17 @@ const content = {
   ctaText: "Call now",
   quoteText: "Get a quote",
 
-  // HERO: the logo leads, then one headline (2 lines max) and one short sentence (under 20 words).
-  // heroEyebrow: optional tracked gold label above the headline. Left empty because it would sit
-  // right under the logo's own "REMOVALS • STORAGE" line and repeat the location.
-  heroEyebrow: "",
+  // HERO: headline (2 lines max), one sentence (under 20 words), two buttons. The logo is in the header.
   // [ours] Fyshwick base + their name. TODO: "Canberra" inferred from the Fyshwick base; confirm.
   heroHeading: "Canberra removals and storage",
-  heroHeadingAccent: "storage",                                     // set in the logo's gold, like "MATE"
   heroSub: "Local, interstate and commercial moves, plus storage. Based in Fyshwick, ACT.",   // [IG] + [Jett]
   heroCallText: "Call 0422 394 487",
-  textPrompt: "Prefer to text?",
   // heroImage = full-bleed photo behind the headline. Best single upgrade: one real photo of their
   // truck or crew from their Facebook. Set it and heroVisual is hidden.
   heroImage: "",
-  // Neutral placeholder: an unbranded truck and boxes in the logo's palette (no name or logo on it,
-  // so it can't pass for their truck).
+  // Neutral placeholder (Jett asked for truck and boxes placeholders): an unbranded truck and boxes
+  // in the logo's palette, no name or logo on it, so it can't pass for their truck.
+  // TODO: replace with a real photo of their truck or crew via heroImage, then delete heroVisual.
   heroVisual: "images/placeholder-truck.svg",
   heroVisualAlt: "Illustration of a cream removal truck with a gold stripe and cardboard moving boxes stacked beside it",
 
@@ -124,13 +120,12 @@ const content = {
     // [IG] local + interstate. [Jett]: "around Canberra" inferred from the Fyshwick base (README), confirm.
     { icon: "road-horizon", value: "Local and interstate", label: "Moves around Canberra and out of the ACT" },
     { icon: "buildings", value: "Homes and businesses", label: "Residential and commercial relocations" },     // [IG]
-    { icon: "warehouse", value: "Storage", label: "Storage solutions on offer" }                     // [IG]
+    { icon: "warehouse", value: "Storage", label: "Storage available" }                                // [IG]
     // PLACEHOLDER: insurance is the most-asked trust point for removalists. Only add once the
     // client confirms cover and the insurer, e.g.
     // { icon: "shield-check", value: "Fully insured", label: "Goods in transit and public liability, with [insurer]" },
   ],
 
-  servicesEyebrow: "Services",
   servicesHeading: "What we do",
   servicesSub: "Moving house, moving the office, or need somewhere to keep things for a while.",  // [ours] restates [IG]
   // Service names: [IG]. Descriptions: [ours], plain explanations, no promises.
@@ -150,14 +145,12 @@ const content = {
   // STORAGE feature. [IG] "Storage facility solutions"; the rest is [ours].
   // TODO: once confirmed, add details here (site, unit sizes, short or long term, access).
   storage: {
-    eyebrow: "Storage",
     heading: "Need storage between moves?",
     text: [
       "Settlement dates do not always line up. Tell us when you ask for a quote and we can talk through storage for your things."
     ],
     image: "images/placeholder-boxes.svg",
-    alt: "Illustration of taped cardboard moving boxes stacked for storage, beside a floor lamp and a pot plant",
-    button: "Ask about storage"
+    alt: "Illustration of taped cardboard moving boxes stacked for storage, beside a floor lamp and a pot plant"   // TODO: a photo of their storage
   },
 
   // WORK: hidden until we have real job photos. To show it, add workHeading, workSub,
@@ -171,7 +164,6 @@ const content = {
   // ],
 
   // [ours]: describes how any quote request works, no promises on times or prices.
-  processEyebrow: "The process",
   processHeading: "How it works",
   processSub: "Three steps from first message to moving day.",
   steps: [
@@ -180,7 +172,6 @@ const content = {
     { icon: "truck", title: "Moving day", text: "We load up, move your things and unload at the other end." }
   ],
 
-  contactEyebrow: "Moving soon?",
   contactHeading: "Get a quote",
   contactSub: "Tell us where you are moving from and to, and roughly when. The more detail you give, the easier it is to quote.",
   // Facts from [IG] + [Jett], not promises.
@@ -233,7 +224,6 @@ const content = {
   },
 
   // [ours] questions; answers use only [IG] and [Jett] facts.
-  faqEyebrow: "FAQ",
   faqHeading: "Common questions",
   faqs: [
     { q: "How do I get a quote?", a: "Call or text 0422 394 487, or send the quote form with where you are moving from and to. The more detail you give, the easier it is to quote." },
@@ -281,19 +271,18 @@ const content = {
 
   credit: "Preview prepared by Ganeworks",
 
-  // COLOURS: sampled from their logo. black = the logo's background, gold = "MATE",
-  // white = "MOVE". black2/surface are lifted shades of the same black for bands and cards;
-  // goldText is the gold nudged brighter for small text on black. Each key becomes a
-  // CSS variable (--c-black, --c-gold, ...).
+  // COLOURS: sampled from their logo. primary = the gold of "MATE" (the one accent), black = the
+  // logo's background, white = "MOVE". black2/surface/deep are shades of the same black for bands,
+  // cards and the footer; primaryText is the gold nudged brighter for small text on black;
+  // onPrimary = text on gold (6:1). Each key becomes a CSS variable (--c-primary, --c-black, ...).
   colours: {
+    primary: "#C69548",
+    onPrimary: "#140B06",
+    primaryText: "#D9A75A",
     black: "#140B06",
     deep: "#0C0603",
     black2: "#1C120B",
     surface: "#251810",
-    gold: "#C69548",
-    goldDeep: "#B07734",
-    goldText: "#D9A75A",
-    onGold: "#140B06",
     white: "#FCFBFB",
     muted: "#BFB3A8"
   }
@@ -360,50 +349,46 @@ const content = {
 </script>
 
 <style>
-  /* Design read: removalist lead-gen site for people mid-move, on their phone, comparing quotes.
-     Built from their logo: white and gold lettering on a warm black, a road running through the O,
-     gold rules either side of "REMOVALS • STORAGE". So: black throughout, gold for every call to
-     action and accent, white type, tracked gold labels and a dashed gold "road" line as the motif.
-     Always dark (the brand is), so it ignores the device's light/dark setting. */
-  @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/montserrat-latin-700-normal.woff2") format("woff2"); }
-  @font-face { font-family: "Montserrat"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/montserrat-latin-800-normal.woff2") format("woff2"); }
+  /* Design read: removals site for people mid-move in Canberra, on their phone, comparing quotes.
+     Trust-first, primary action is a call, secondary a quote. Colours from their logo: white and
+     gold lettering on a warm black. So: black throughout, the logo's gold as the one accent (buttons,
+     icons), white type. Always dark (Jett asked for "a lot of black"), so it ignores the device's
+     light/dark setting. */
   @font-face { font-family: "Outfit"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/outfit-latin-400-normal.woff2") format("woff2"); }
   @font-face { font-family: "Outfit"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/outfit-latin-500-normal.woff2") format("woff2"); }
   @font-face { font-family: "Outfit"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/outfit-latin-600-normal.woff2") format("woff2"); }
   @font-face { font-family: "Outfit"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/outfit-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/outfit-latin-800-normal.woff2") format("woff2"); }
 
   :root {
     color-scheme: dark;
     /* Fallbacks; the boot script overwrites these from content.colours. */
+    --c-primary: #C69548;
+    --c-onPrimary: #140B06;
+    --c-primaryText: #D9A75A;
     --c-black: #140B06;
     --c-deep: #0C0603;
     --c-black2: #1C120B;
     --c-surface: #251810;
-    --c-gold: #C69548;
-    --c-goldDeep: #B07734;
-    --c-goldText: #D9A75A;
-    --c-onGold: #140B06;
     --c-white: #FCFBFB;
     --c-muted: #BFB3A8;
 
     --bg: var(--c-black);
     --ink: var(--c-white);
     --muted: var(--c-muted);
-    --line: rgba(198, 149, 72, 0.22);   /* plain fallback for browsers without color-mix(); keep in step with colours.gold */
+    --line: rgba(198, 149, 72, 0.22);   /* plain fallback for browsers without color-mix(); keep in step with colours.primary */
     --line-soft: rgba(252, 251, 251, 0.1);
     --field: var(--c-black);
     --field-border: rgba(252, 251, 251, 0.42);
-    --gold-grad: linear-gradient(100deg, var(--c-gold) 0%, #D4A253 45%, var(--c-goldDeep) 100%);
 
     --font: "Outfit", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-    --font-display: "Montserrat", "Outfit", ui-sans-serif, system-ui, sans-serif;
     --r: 12px;
     --max: 1200px;
     --header-h: 68px;
     --hero-image: none;
   }
   @supports (color: color-mix(in srgb, red 50%, blue)) {
-    :root { --line: color-mix(in srgb, var(--c-gold) 22%, transparent); }
+    :root { --line: color-mix(in srgb, var(--c-primary) 22%, transparent); }
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -427,34 +412,22 @@ const content = {
   .ico { display: inline-block; width: 1em; height: 1em; line-height: 1; flex-shrink: 0; vertical-align: -0.125em; }
   .ico svg { display: block; width: 100%; height: 100%; }
 
-  h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; line-height: 1.08; overflow-wrap: break-word; }
+  h1, h2, h3 { font-weight: 800; letter-spacing: -0.025em; line-height: 1.08; overflow-wrap: break-word; }
   h2 { font-size: clamp(1.95rem, 4.6vw, 3.1rem); }
   h3 { font-size: 1.18rem; letter-spacing: -0.01em; line-height: 1.25; }
   /* No single word stranded on a last line (browsers without it just ignore it). */
   p, h3, li { text-wrap: pretty; }
 
-  :focus-visible { outline: 3px solid var(--c-gold); outline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--c-primary); outline-offset: 3px; }
 
   .wrap { max-width: var(--max); margin: 0 auto; }
   .sec { padding: clamp(3.5rem, 8vw, 6.5rem) 1.25rem; }
   .sec-alt { background: var(--c-black2); }
   .sec-head { margin-bottom: clamp(1.75rem, 4vw, 3rem); }
-  .sec-head p:not(.eyebrow) { margin-top: 0.9rem; color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
+  .sec-head p { margin-top: 0.9rem; color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
 
-  /* Tracked gold label with a rule, like "REMOVALS • STORAGE" on the logo. */
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem;
-    font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.24em; text-transform: uppercase;
-    color: var(--c-goldText);
-  }
-  .eyebrow::before { content: ""; width: 34px; height: 2px; border-radius: 1px; background: var(--c-gold); }
-  .eyebrow .ico { font-size: 1rem; margin-left: -0.2rem; }
-  .gold { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-  /* Dashed gold road line: the logo's road, used as a divider. */
-  .road { height: 4px; background: repeating-linear-gradient(90deg, var(--c-gold) 0 30px, transparent 30px 54px); opacity: 0.55; }
-
-  .skip-link { position: absolute; left: 0.75rem; top: -100px; z-index: 100; padding: 0.75rem 1rem; border-radius: var(--r); background: var(--c-gold); color: var(--c-onGold); font-weight: 700; }
+  .skip-link { position: absolute; left: 0.75rem; top: -100px; z-index: 60; padding: 0.75rem 1rem; border-radius: var(--r); background: var(--c-primary); color: var(--c-onPrimary); font-weight: 700; }
   .skip-link:focus { top: 0.75rem; }
 
   /* ---------- Buttons ---------- */
@@ -466,8 +439,8 @@ const content = {
     transition: transform 0.15s ease, filter 0.15s ease, background-color 0.15s ease;
   }
   .btn:active { transform: translateY(1px) scale(0.98); }
-  .btn-gold { background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25); }
-  .btn-gold:hover { filter: brightness(1.08); }
+  .btn-primary { background: var(--c-primary); color: var(--c-onPrimary); }
+  .btn-primary:hover { filter: brightness(1.08); }
   .btn-line { background: transparent; color: var(--c-white); box-shadow: inset 0 0 0 2px rgba(252, 251, 251, 0.75); }
   .btn-line:hover { background: rgba(252, 251, 251, 0.08); }
   .btn-dark { background: var(--c-black); color: var(--c-white); }
@@ -484,38 +457,25 @@ const content = {
   }
   .site-header.scrolled { border-bottom-color: var(--line); }
   .site-header .wrap { width: 100%; max-width: calc(var(--max) + 2.5rem); display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1.25rem; }
-  .brand { display: flex; align-items: center; min-width: 0; transition: opacity 0.2s ease, visibility 0.2s ease; }
+  .brand { display: flex; align-items: center; min-width: 0; min-height: 48px; }
   .brand-logo { height: 40px; width: auto; }
-  .brand-text { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; }
-  /* The hero shows the big logo, so the header one waits until that has scrolled away. */
-  .hero-logo-live .site-header:not(.scrolled) .brand { opacity: 0; visibility: hidden; }
+  .brand-text { font-weight: 800; font-size: 1.15rem; }
   .nav { display: none; gap: 1.75rem; font-weight: 500; }
-  .nav a { color: var(--muted); }
+  .nav a { color: var(--muted); display: inline-flex; align-items: center; min-height: 48px; }
   .nav a:hover { color: var(--c-white); }
   @media (min-width: 960px) { .nav { display: flex; margin-left: auto; margin-right: 0.5rem; } }
-  .header-cta { min-height: 46px; padding: 0.5rem 1rem; font-size: 1rem; flex-shrink: 0; margin-left: auto; }
+  .header-cta { min-height: 48px; padding: 0.5rem 1rem; font-size: 1rem; flex-shrink: 0; margin-left: auto; }
   @media (min-width: 960px) { .header-cta { margin-left: 0; } }
   .cta-short { display: none; }
   @media (max-width: 400px) { .cta-long { display: none; } .cta-short { display: inline; } }
-  /* Phones and tablets: no header at all at the top (the hero logo and buttons are right there).
-     It slides in, with the logo, once the hero logo has scrolled away. On phones the call bar
-     carries the call button, so the header shows just the logo. Phones held sideways (wide but
-     short, no call bar) keep the sticky header so a call button is always on screen. */
-  @media (max-width: 767px), (max-width: 959px) and (min-height: 600px) {
-    .hero-logo-live .site-header { position: fixed; left: 0; right: 0; transition: transform 0.25s ease, visibility 0s, border-color 0.2s ease; }
-    .hero-logo-live .site-header:not(.scrolled) { transform: translateY(-100%); visibility: hidden; transition: transform 0.25s ease, visibility 0s 0.25s; }
-  }
-  @media (max-width: 767px) { .header-cta { display: none; } }
 
   /* ---------- Hero ---------- */
   .hero {
     position: relative; isolation: isolate; overflow: hidden;
     padding: clamp(1.25rem, 4vw, 3.5rem) 1.25rem clamp(2rem, 5vw, 4rem);
-    background:
-      radial-gradient(55% 45% at 75% 70%, color-mix(in srgb, var(--c-gold) 9%, transparent) 0%, transparent 70%),
-      var(--c-black);
+    background: var(--c-black);
   }
-  html[data-hero-image] .hero { min-height: min(84vh, 780px); min-height: min(84dvh, 780px); display: flex; align-items: center; background: var(--hero-image) center / cover, var(--c-black); }
+  html[data-hero-image] .hero { min-height: min(84dvh, 780px); display: flex; align-items: center; background: var(--hero-image) center / cover, var(--c-black); }
   html[data-hero-image] .hero::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
     background: linear-gradient(90deg, rgba(20, 11, 6, 0.9) 0%, rgba(20, 11, 6, 0.65) 55%, rgba(20, 11, 6, 0.35) 100%);
@@ -523,14 +483,11 @@ const content = {
   .hero .wrap { width: 100%; }
   .hero-grid { display: grid; gap: 1.5rem; align-items: center; }
   @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.1fr 1fr; gap: 3rem; } }
-  .hero-logo { width: min(100%, 560px); height: auto; margin: 0 0 1.5rem -0.35rem; }
   /* em, not ch: ch changes when the web font swaps in and would make the buttons jump. */
   .hero h1 { font-size: clamp(1.95rem, 6.4vw, 3.6rem); max-width: 10.3em; text-wrap: balance; }
   .hero-sub { margin-top: 1rem; font-size: clamp(1.1rem, 2vw, 1.35rem); max-width: 36ch; color: var(--muted); line-height: 1.45; }
   .hero-actions { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
   @media (max-width: 480px) { .hero-actions .btn { width: 100%; } }
-  .hero-text { margin-top: 1rem; color: var(--muted); font-size: 1rem; }
-  .hero-text a { color: var(--c-white); font-weight: 700; text-decoration: underline; text-decoration-color: var(--c-gold); text-decoration-thickness: 2px; text-underline-offset: 4px; }
   .hero-visual img { width: 100%; max-width: 620px; height: auto; margin: 0 auto; }
 
   /* ---------- Facts bar ---------- */
@@ -539,13 +496,13 @@ const content = {
   @media (min-width: 900px) { .facts-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; } }
   @media (max-width: 359px) { .facts-grid { grid-template-columns: 1fr; } }
   .fact { display: flex; gap: 0.75rem; align-items: flex-start; }
-  .fact > .ico { font-size: 1.3rem; padding: 0.5rem; box-sizing: content-box; border-radius: 10px; background: color-mix(in srgb, var(--c-gold) 14%, transparent); color: var(--c-goldText); }
-  .fact-value { font-family: var(--font-display); font-weight: 700; font-size: 1rem; line-height: 1.25; }
+  .fact > .ico { font-size: 1.3rem; padding: 0.5rem; box-sizing: content-box; border-radius: 10px; background: color-mix(in srgb, var(--c-primary) 14%, transparent); color: var(--c-primaryText); }
+  .fact-value { font-weight: 700; font-size: 1rem; line-height: 1.25; }
   .fact-label { font-size: 0.92rem; color: var(--muted); line-height: 1.35; margin-top: 0.2rem; }
   .fact a.fact-value { text-decoration: underline; text-underline-offset: 3px; }
   /* Phones: icon and short value only (the services right below spell it out). */
   @media (max-width: 560px) { .fact:not(:has(.stars)) .fact-label { display: none; } .fact { align-items: center; } }
-  .stars { display: inline-flex; gap: 2px; font-size: 0.95rem; margin-top: 0.25rem; color: var(--c-gold); }
+  .stars { display: inline-flex; gap: 2px; font-size: 0.95rem; margin-top: 0.25rem; color: var(--c-primary); }
 
   /* ---------- Services ---------- */
   .svc-grid { display: grid; grid-template-columns: 1fr; gap: 0.85rem; }
@@ -558,25 +515,25 @@ const content = {
     background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.25rem;
     align-content: start;
   }
-  .svc-icon { grid-row: span 2; width: 52px; height: 52px; display: grid; place-items: center; border-radius: var(--r); background: color-mix(in srgb, var(--c-gold) 14%, transparent); color: var(--c-goldText); font-size: 1.55rem; }
+  .svc-icon { grid-row: span 2; width: 52px; height: 52px; display: grid; place-items: center; border-radius: var(--r); background: color-mix(in srgb, var(--c-primary) 14%, transparent); color: var(--c-primaryText); font-size: 1.55rem; }
   .svc-card p { color: var(--muted); font-size: 1rem; line-height: 1.45; text-wrap: balance; }
   .svc-photo { grid-column: 1 / -1; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: calc(var(--r) - 4px); margin-bottom: 0.75rem; }
   @media (min-width: 768px) {
     .svc-card { grid-template-columns: 1fr; padding: 1.5rem; }
     .svc-icon { grid-row: auto; margin-bottom: 1rem; }
   }
-  .svc-cta { background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); border-color: transparent; display: flex; flex-direction: column; justify-content: center; gap: 0.35rem; }
-  .svc-cta p { color: var(--c-onGold); }
+  .svc-cta { background: var(--c-primary); color: var(--c-onPrimary); border-color: transparent; display: flex; flex-direction: column; justify-content: center; gap: 0.35rem; }
+  .svc-cta p { color: var(--c-onPrimary); }
   .svc-cta .btn { margin-top: 0.85rem; align-self: flex-start; min-height: 50px; padding: 0.6rem 1.2rem; font-size: 1rem; }
-  .svc-cta :focus-visible { outline-color: var(--c-onGold); }
+  .svc-cta :focus-visible { outline-color: var(--c-onPrimary); }
   @media (max-width: 480px) { .svc-cta .btn { align-self: stretch; } }
 
   /* ---------- Storage feature ---------- */
   .feature { display: grid; gap: 2rem; align-items: center; }
   @media (min-width: 900px) { .feature { grid-template-columns: 1fr 1fr; gap: 4rem; } }
-  .feature-media { background: radial-gradient(70% 70% at 50% 60%, color-mix(in srgb, var(--c-gold) 8%, var(--c-surface)) 0%, var(--c-surface) 75%); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1rem, 3vw, 2rem); }
+  .feature-media { background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1rem, 3vw, 2rem); }
   .feature-media img { width: 100%; height: auto; }
-  .feature-body p:not(.eyebrow) { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 44ch; }
+  .feature-body p { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 44ch; }
   .feature-body .btn { margin-top: 1.75rem; }
   @media (max-width: 480px) { .feature-body .btn { width: 100%; } }
 
@@ -588,11 +545,11 @@ const content = {
   .ba-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; background: var(--c-white); transform: translateX(-50%); pointer-events: none; }
   .ba-knob {
     position: absolute; top: 50%; left: var(--pos); transform: translate(-50%, -50%);
-    width: 48px; height: 48px; border-radius: var(--r); background: var(--c-gold); color: var(--c-onGold);
+    width: 48px; height: 48px; border-radius: var(--r); background: var(--c-primary); color: var(--c-onPrimary);
     display: grid; place-items: center; font-size: 1.4rem; pointer-events: none;
   }
   .ba-stage input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
-  .ba-stage:has(input:focus-visible) { outline: 3px solid var(--c-gold); outline-offset: 3px; }
+  .ba-stage:has(input:focus-visible) { outline: 3px solid var(--c-primary); outline-offset: 3px; }
   .ba-caption { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.75rem; font-weight: 600; }
   .ba-caption span:nth-child(2) { color: var(--muted); font-weight: 500; text-align: center; }
   .gallery { margin-top: 3rem; columns: 2; column-gap: 1rem; }
@@ -604,10 +561,10 @@ const content = {
   @media (min-width: 900px) { .rev { grid-template-columns: 5fr 7fr; } }
   .rev.rev-single { grid-template-columns: 1fr; max-width: 760px; }
   .rev-feature {
-    background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); border-radius: var(--r);
+    background: var(--c-primary); color: var(--c-onPrimary); border-radius: var(--r);
     padding: clamp(1.75rem, 4vw, 2.75rem); display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
   }
-  .rev-feature .stars { color: var(--c-onGold); }
+  .rev-feature .stars { color: var(--c-onPrimary); }
   .rev-feature blockquote { font-size: clamp(1.35rem, 2.6vw, 1.9rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
   .rev-list { display: grid; gap: 1rem; align-content: start; }
   .rev-card { background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.5rem; }
@@ -615,19 +572,18 @@ const content = {
   .rev-author { font-weight: 700; }
   .rev-meta { font-size: 0.95rem; color: var(--muted); }
   .rev-meta a { text-decoration: underline; text-underline-offset: 3px; }
-  .rev-feature .rev-meta { color: var(--c-onGold); }
+  .rev-feature .rev-meta { color: var(--c-onPrimary); }
 
   /* ---------- Process ---------- */
   .proc { display: grid; gap: 2rem; }
   @media (min-width: 900px) { .proc { grid-template-columns: 5fr 7fr; align-items: start; } }
   .step { display: grid; grid-template-columns: 56px 1fr; gap: 1rem; padding: 1.3rem 0; border-top: 1px solid var(--line); }
   .step:first-child { border-top: 0; padding-top: 0; }
-  .step-icon { position: relative; width: 56px; height: 56px; border-radius: var(--r); background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); display: grid; place-items: center; font-size: 1.5rem; }
-  .step-num { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: var(--c-white); color: var(--c-black); font-family: var(--font-display); font-size: 0.78rem; font-weight: 800; display: grid; place-items: center; }
+  .step-icon { width: 56px; height: 56px; border-radius: var(--r); background: var(--c-primary); color: var(--c-onPrimary); display: grid; place-items: center; font-size: 1.5rem; }
   .step p { color: var(--muted); margin-top: 0.3rem; }
 
   /* ---------- Quote / contact ---------- */
-  #quote { background: radial-gradient(70% 60% at 15% 20%, color-mix(in srgb, var(--c-gold) 7%, transparent) 0%, transparent 70%), var(--c-black2); border-top: 1px solid var(--line); }
+  #quote { background: var(--c-black2); border-top: 1px solid var(--line); }
   .contact-grid { display: grid; gap: 2rem; }
   @media (min-width: 900px) {
     .contact-grid { grid-template-columns: 5fr 6fr; align-items: start; gap: 4rem; }
@@ -636,11 +592,11 @@ const content = {
   .contact-sub { margin-top: 1rem; font-size: 1.15rem; color: var(--muted); max-width: 40ch; }
   .promises { margin-top: 1.5rem; display: grid; gap: 0.7rem; }
   .promises li { display: flex; gap: 0.7rem; align-items: center; font-size: 1.08rem; font-weight: 500; }
-  .promises .ico { font-size: 1.35rem; color: var(--c-gold); }
-  .big-phone { display: inline-flex; align-items: center; gap: 0.7rem; margin-top: 1.75rem; font-family: var(--font-display); font-size: clamp(1.7rem, 4.4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; }
-  .big-phone .ico { color: var(--c-gold); }
+  .promises .ico { font-size: 1.35rem; color: var(--c-primary); }
+  .big-phone { display: inline-flex; align-items: center; gap: 0.7rem; min-height: 48px; margin-top: 1.75rem; font-size: clamp(1.7rem, 4.4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; }
+  .big-phone .ico { color: var(--c-primary); }
   .contact-alt { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-weight: 600; }
-  .contact-alt a { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 40px; text-decoration: underline; text-decoration-color: var(--c-gold); text-underline-offset: 4px; overflow-wrap: anywhere; }
+  .contact-alt a { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 48px; text-decoration: underline; text-decoration-color: var(--c-primary); text-underline-offset: 4px; overflow-wrap: anywhere; }
 
   .form-card { background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1.25rem, 3vw, 2.25rem); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
   .form-title { font-size: 1.35rem; margin-bottom: 0.25rem; }
@@ -660,35 +616,35 @@ const content = {
   #quote-form input::-webkit-calendar-picker-indicator { cursor: pointer; }
   #quote-form select {
     padding-right: 2.5rem; cursor: pointer;
-    background-image: linear-gradient(45deg, transparent 50%, var(--c-gold) 50%), linear-gradient(135deg, var(--c-gold) 50%, transparent 50%);
+    background-image: linear-gradient(45deg, transparent 50%, var(--c-primary) 50%), linear-gradient(135deg, var(--c-primary) 50%, transparent 50%);
     background-position: calc(100% - 20px) 52%, calc(100% - 14px) 52%;
     background-size: 6px 6px; background-repeat: no-repeat;
   }
   #quote-form select option { background: var(--c-black); color: var(--c-white); }
   #quote-form textarea { min-height: 104px; resize: vertical; }
-  #quote-form :is(input, select, textarea):focus-visible { outline: 3px solid var(--c-gold); outline-offset: 1px; border-color: var(--c-gold); }
+  #quote-form :is(input, select, textarea):focus-visible { outline: 3px solid var(--c-primary); outline-offset: 1px; border-color: var(--c-primary); }
   .choice { border: 0; min-width: 0; }
   .choice legend { font-weight: 600; font-size: 0.98rem; margin-bottom: 0.45rem; padding: 0; }
   .choice-opts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .choice-opt { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 46px; padding: 0.5rem 0.9rem; border: 1.5px solid var(--field-border); border-radius: var(--r); font-weight: 500; cursor: pointer; }
-  .choice-opt input { width: 1.15rem; height: 1.15rem; accent-color: var(--c-gold); margin: 0; }
-  .choice-opt:has(input:checked) { border-color: var(--c-gold); background: color-mix(in srgb, var(--c-gold) 14%, transparent); }
-  .choice-opt:has(input:focus-visible) { outline: 3px solid var(--c-gold); outline-offset: 2px; }
+  .choice-opt { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 48px; padding: 0.5rem 0.9rem; border: 1.5px solid var(--field-border); border-radius: var(--r); font-weight: 500; cursor: pointer; }
+  .choice-opt input { width: 1.15rem; height: 1.15rem; accent-color: var(--c-primary); margin: 0; }
+  .choice-opt:has(input:checked) { border-color: var(--c-primary); background: color-mix(in srgb, var(--c-primary) 14%, transparent); }
+  .choice-opt:has(input:focus-visible) { outline: 3px solid var(--c-primary); outline-offset: 2px; }
   @media (max-width: 519px) { .choice-opt { flex: 1 1 auto; } }
   /* Optional fields tucked into a "+" panel. Closed panels still submit their values. */
   .more { border: 1.5px solid var(--field-border); border-radius: var(--r); }
   .more summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 52px; padding: 0.7rem 0.9rem; font-weight: 600; font-size: 0.98rem; }
   .more summary::-webkit-details-marker { display: none; }
-  .more summary::after { content: "+"; content: "+" / ""; flex-shrink: 0; font-size: 1.5rem; font-weight: 400; line-height: 1; color: var(--c-gold); }
+  .more summary::after { content: "+"; content: "+" / ""; flex-shrink: 0; font-size: 1.5rem; font-weight: 400; line-height: 1; color: var(--c-primary); }
   .more[open] summary::after { content: "\2212"; content: "\2212" / ""; }
-  .more summary:focus-visible { outline: 3px solid var(--c-gold); outline-offset: 2px; }
+  .more summary:focus-visible { outline: 3px solid var(--c-primary); outline-offset: 2px; }
   .more-body { display: grid; gap: 1rem; padding: 0.25rem 0.9rem 1rem; }
   #quote-form button[type="submit"] { width: 100%; margin-top: 0.25rem; }
   .form-note { font-size: 0.95rem; color: var(--muted); }
-  .form-note a { color: var(--c-goldText); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .form-note a { color: var(--c-primaryText); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
   .form-success { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
   .form-success:focus { outline: none; }
-  .form-msg { font-weight: 600; padding: 0.85rem 1rem; border-radius: var(--r); background: color-mix(in srgb, var(--c-gold) 14%, transparent); border: 1px solid var(--line); }
+  .form-msg { font-weight: 600; padding: 0.85rem 1rem; border-radius: var(--r); background: color-mix(in srgb, var(--c-primary) 14%, transparent); border: 1px solid var(--line); }
   .form-error { color: #F2B8B5; background: rgba(179, 38, 30, 0.18); border-color: rgba(242, 184, 181, 0.4); }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
@@ -699,7 +655,7 @@ const content = {
   .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-weight: 600; font-size: 1.1rem; min-height: 48px; }
   .faq summary::-webkit-details-marker { display: none; }
   /* The "/ ''" keeps the plus out of each question's accessible name. */
-  .faq summary::after { content: "+"; content: "+" / ""; flex-shrink: 0; font-size: 1.6rem; font-weight: 400; line-height: 1; color: var(--c-gold); transition: transform 0.2s ease; }
+  .faq summary::after { content: "+"; content: "+" / ""; flex-shrink: 0; font-size: 1.6rem; font-weight: 400; line-height: 1; color: var(--c-primary); transition: transform 0.2s ease; }
   .faq details[open] summary::after { transform: rotate(45deg); }
   .faq details p { padding-bottom: 1.25rem; color: var(--muted); max-width: 62ch; }
 
@@ -709,19 +665,18 @@ const content = {
 
   /* ---------- Footer ---------- */
   /* Extra bottom padding on phones so the fixed call bar never covers the last line. */
-  footer { background: var(--c-deep); color: var(--c-white); padding: 0 1.25rem calc(2rem + 76px + env(safe-area-inset-bottom)); }
+  footer { background: var(--c-deep); color: var(--c-white); border-top: 1px solid var(--line); padding: 3rem 1.25rem calc(2rem + 76px + env(safe-area-inset-bottom)); }
   @media (min-width: 768px) { footer { padding-bottom: 2rem; } }
-  footer .road { margin: 0 -1.25rem 3rem; }
   .foot { display: grid; gap: 2rem; }
   @media (min-width: 768px) { .foot { grid-template-columns: 1.4fr 1fr 1fr; } }
   .foot-logo { width: 220px; height: auto; margin-bottom: 1rem; }
-  .foot h2 { font-size: 1rem; line-height: 1.25; margin-bottom: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-goldText); }
+  .foot h2 { font-size: 1.1rem; line-height: 1.25; margin-bottom: 0.6rem; font-weight: 700; letter-spacing: -0.01em; }
   .foot p, .foot a { color: var(--muted); }
-  .foot a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 36px; }
+  .foot a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 48px; }
   .foot a:hover { color: var(--c-white); }
   .foot-list { display: grid; gap: 0.15rem; justify-items: start; }
   .foot-list a { overflow-wrap: anywhere; }
-  .foot-list p { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 36px; }
+  .foot-list p { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 48px; }
   .foot-base { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line-soft); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; font-size: 0.88rem; color: #A3978D; }
 
   /* ---------- Hover pop (mouse only, never on touch or reduced motion) ---------- */
@@ -732,7 +687,7 @@ const content = {
     }
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0) scale(0.98); }
-    .svc-card:not(.svc-cta):hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--c-gold) 55%, transparent); box-shadow: 0 18px 32px -18px rgba(0, 0, 0, 0.9); }
+    .svc-card:not(.svc-cta):hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--c-primary) 55%, transparent); box-shadow: 0 18px 32px -18px rgba(0, 0, 0, 0.9); }
     .step:hover .step-icon { transform: scale(1.06); }
   }
 
@@ -751,7 +706,6 @@ const content = {
     }
     html.js-reveal .reveal.in { opacity: 1; transform: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .site-header, .mobile-bar { transition: none !important; } }
 
   /* ---------- Mobile call bar ---------- */
   .mobile-bar {
@@ -760,8 +714,8 @@ const content = {
     padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
     background: var(--c-deep); border-top: 1px solid var(--line);
     box-shadow: 0 -10px 28px -12px rgba(0, 0, 0, 0.8);
-    transition: transform 0.2s ease;
   }
+  @media (prefers-reduced-motion: no-preference) { .mobile-bar { transition: transform 0.2s ease; } }
   .mobile-bar .btn { min-height: 52px; padding: 0.6rem 0.75rem; font-size: 1.05rem; }
   /* Out of the way while someone is typing in the form (phone keyboards push fixed bars over fields). */
   .mobile-bar.typing { transform: translateY(110%); }
@@ -772,22 +726,20 @@ const content = {
     padding-left: max(1.25rem, env(safe-area-inset-left));
     padding-right: max(1.25rem, env(safe-area-inset-right));
   }
-  footer .road { margin-left: calc(-1 * max(1.25rem, env(safe-area-inset-left))); margin-right: calc(-1 * max(1.25rem, env(safe-area-inset-right))); }
 
   /* ---------- Windows high contrast (forced colours) ----------
      The white "MOVE" would vanish on a forced white background, so the logo keeps its black plate;
      buttons get a real border because forced colours drop backgrounds and box-shadows. */
   @media (forced-colors: active) {
-    .hero-logo, .brand-logo, .foot-logo { forced-color-adjust: none; background-color: var(--c-black); border-radius: 8px; padding: 6px 10px; }
+    .brand-logo, .foot-logo { forced-color-adjust: none; background-color: var(--c-black); border-radius: 8px; padding: 6px 10px; }
     .btn { border: 2px solid ButtonText; }
-    .gold { background: none; color: CanvasText; }
   }
 </style>
 </head>
 <body>
 <a class="skip-link" href="#quote-card">Skip to the quote form</a>
 <div id="app"></div>
-<noscript><p style="padding:2rem">Please enable JavaScript to view this page, or call Move Mate on 0422 394 487.</p></noscript>
+<noscript><div style="padding:2rem;font-family:sans-serif;color:#FCFBFB;background:#140B06"><h1>Move Mate Removals and Storage</h1><p>Local, interstate and commercial removals, property staging and storage. Based in Fyshwick, ACT.</p><p>Call <a href="tel:+61422394487" style="color:#D9A75A">0422 394 487</a> or email <a href="mailto:info@movematetransport.com.au" style="color:#D9A75A">info@movematetransport.com.au</a>.</p></div></noscript>
 
 <script>
 // Renders content into the page. Nothing here is client-specific.
@@ -827,13 +779,7 @@ const stars = (score, label) => {
   return s;
 };
 const section = (id, cls, inner) => h("section", { id, class: cls }, h("div", { class: "wrap" }, inner));
-const eyebrow = (text, ic) => text ? h("p", { class: "eyebrow" }, ic ? icon(ic, "fill") : null, text) : null;
-const head = (title, sub, eb) => h("div", { class: "sec-head" }, eyebrow(eb), h("h2", {}, title), sub ? h("p", {}, sub) : null);
-// Wraps one word of a heading in the logo's gold, the way "MATE" sits beside "MOVE".
-const accent = (text, word) => {
-  const i = word ? text.lastIndexOf(word) : -1;
-  return i < 0 ? text : [text.slice(0, i), h("span", { class: "gold" }, word), text.slice(i + word.length)];
-};
+const head = (title, sub) => h("div", { class: "sec-head" }, h("h2", {}, title), sub ? h("p", {}, sub) : null);
 const logoImg = (cls, eager) => h("img", { class: cls, src: c.logo, alt: c.logoAlt, width: c.logoWidth, height: c.logoHeight,
   decoding: "async", fetchpriority: eager ? "high" : null, loading: eager ? null : "lazy" });
 // External profiles open in a new tab so the site stays open.
@@ -871,9 +817,9 @@ const navLinks = [
 const header = h("header", { class: "site-header" },
   h("div", { class: "wrap" },
     h("a", { class: "brand", href: "#top", "aria-label": c.businessName + ", back to top" },
-      c.logo ? logoImg("brand-logo", false) : h("span", { class: "brand-text" }, c.brandShort)),
+      c.logo ? logoImg("brand-logo", true) : h("span", { class: "brand-text" }, c.brandShort)),
     h("nav", { class: "nav", "aria-label": "Main" }, navLinks.map(l => h("a", { href: l[1] }, l[0]))),
-    h("a", { class: "btn btn-gold header-cta", href: c.phoneHref, "aria-label": "Call " + c.phone },
+    h("a", { class: "btn btn-primary header-cta", href: c.phoneHref, "aria-label": "Call " + c.phone },
       icon("phone-call"), h("span", { class: "cta-long" }, c.phone), h("span", { class: "cta-short" }, "Call"))
   )
 );
@@ -886,7 +832,6 @@ app.append(main);
 // ----- Footer -----
 app.append(
   h("footer", {},
-    h("div", { class: "road", "aria-hidden": "true" }),
     h("div", { class: "wrap foot" },
       h("div", {},
         c.logo ? logoImg("foot-logo", false) : h("p", { class: "brand-text" }, c.businessName),
@@ -910,48 +855,30 @@ app.append(
 
 // ----- Mobile call bar -----
 const bar = h("nav", { class: "mobile-bar", "aria-label": "Call or get a quote" },
-  h("a", { class: "btn btn-gold", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+  h("a", { class: "btn btn-primary", href: c.phoneHref }, icon("phone-call"), c.ctaText),
   h("a", { class: "btn btn-line", href: "#quote-card" }, c.quoteText)
 );
 app.append(bar);
 
 // ----- Hero -----
-// The logo leads. The text headline under it says what they do and where (and is the page's h1).
-const heroLogo = c.logo ? logoImg("hero-logo", true) : null;
+// Headline, one sentence, two buttons. The logo is in the sticky header.
 main.append(
   h("section", { id: "top", class: "hero" },
     h("div", { class: "wrap hero-grid" },
       h("div", {},
-        heroLogo,
-        eyebrow(c.heroEyebrow, "map-pin"),
-        h("h1", {}, accent(c.heroHeading || c.businessName, c.heroHeadingAccent)),
+        h("h1", {}, c.heroHeading || c.businessName),
         c.heroSub ? h("p", { class: "hero-sub" }, c.heroSub) : null,
         h("div", { class: "hero-actions" },
-          h("a", { class: "btn btn-gold", href: c.phoneHref }, icon("phone-call"), c.heroCallText || c.ctaText),
-          h("a", { class: "btn btn-line", href: "#quote-card" }, c.quoteText, icon("arrow-right"))
-        ),
-        c.smsHref ? h("p", { class: "hero-text" }, c.textPrompt + " ", h("a", { href: c.smsHref }, "Text " + c.phone)) : null
+          h("a", { class: "btn btn-primary", href: c.phoneHref }, icon("phone-call"), c.heroCallText || c.ctaText),
+          h("a", { class: "btn btn-line", href: "#quote-card" }, c.quoteText)
+        )
       ),
       c.heroVisual && !c.heroImage ? h("div", { class: "hero-visual" },
         h("img", { src: c.heroVisual, alt: c.heroVisualAlt, width: "800", height: "400", decoding: "async" })
       ) : null
     )
-  ),
-  h("div", { class: "road", "aria-hidden": "true" })
+  )
 );
-// Header logo shows only while neither the hero logo nor the footer logo is on screen, so there are
-// never two at once. Keeps the latest state per logo: a delayed callback can deliver several entries.
-if (heroLogo && "IntersectionObserver" in window) {
-  document.documentElement.classList.add("hero-logo-live");
-  const onScreen = new Map();
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => onScreen.set(e.target, e.isIntersecting));
-    header.classList.toggle("scrolled", ![...onScreen.values()].some(Boolean));
-  }, { rootMargin: "-" + (header.offsetHeight || 68) + "px 0px 0px 0px" });
-  io.observe(heroLogo);
-  const footLogo = document.querySelector(".foot-logo");
-  if (footLogo) io.observe(footLogo);
-}
 
 // ----- Facts bar -----
 block("facts", () => {
@@ -988,11 +915,13 @@ block("services", () => {
       h("a", { class: "btn btn-dark", href: c.phoneHref }, icon("phone-call"), c.servicesCta.button)
     ));
   }
-  // Cards that span 2 columns on the 3-column layout so the grid never has an empty cell.
+  // Cards that span 2 columns on the 3-column layout: no empty cells, and never three identical
+  // cards in a row (6 or 9 cards get three wide ones).
   const n = cards.length;
   const extra = (3 - (n % 3)) % 3;
-  [0, n - 1].slice(0, extra).forEach(i => cards[i].classList.add("wide"));
-  main.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub, c.servicesEyebrow), h("div", { class: "svc-grid" }, cards)]));
+  const wideCount = extra === 0 && n >= 6 ? 3 : extra;
+  [0, n - 1, Math.floor(n / 2)].slice(0, wideCount).forEach(i => cards[i].classList.add("wide"));
+  main.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub), h("div", { class: "svc-grid" }, cards)]));
 });
 
 // ----- Storage feature -----
@@ -1003,10 +932,9 @@ block("storage", () => {
       c.storage.image ? h("div", { class: "feature-media" },
         h("img", { src: c.storage.image, alt: c.storage.alt, loading: "lazy", decoding: "async", width: "640", height: "440" })) : null,
       h("div", { class: "feature-body" },
-        eyebrow(c.storage.eyebrow),
         h("h2", {}, c.storage.heading),
         [].concat(c.storage.text || []).map(t => h("p", {}, t)),
-        h("a", { class: "btn btn-gold", href: "#quote-card" }, c.storage.button || c.quoteText, icon("arrow-right"))
+        h("a", { class: "btn btn-primary", href: "#quote-card" }, c.quoteText)
       )
     )
   ));
@@ -1015,7 +943,7 @@ block("storage", () => {
 // ----- Work -----
 block("work", () => {
   if (!hasWork) return;
-  const parts = [head(c.workHeading, c.workSub, c.workEyebrow)];
+  const parts = [head(c.workHeading, c.workSub)];
   if (c.beforeAfter && c.beforeAfter.length) {
     parts.push(h("div", { class: "ba-grid" }, c.beforeAfter.map(p => {
       const range = h("input", { type: "range", min: "0", max: "100", value: "50", "aria-label": "Drag to compare before and after" });
@@ -1054,7 +982,7 @@ block("reviews", () => {
       h("figcaption", {}, h("span", { class: "rev-author" }, r.author), meta(r))
     )
   )) : null;
-  main.append(section("reviews", "sec", [head(c.reviewsHeading, null, c.reviewsEyebrow), h("div", { class: rest.length ? "rev" : "rev rev-single" }, feature, list)]));
+  main.append(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: rest.length ? "rev" : "rev rev-single" }, feature, list)]));
 });
 
 // ----- Process -----
@@ -1062,10 +990,10 @@ block("steps", () => {
   if (!(c.steps && c.steps.length)) return;
   main.append(section("process", "sec",
     h("div", { class: "proc" },
-      head(c.processHeading, c.processSub, c.processEyebrow),
-      h("ol", { class: "steps", role: "list" }, c.steps.map((s, i) =>
+      head(c.processHeading, c.processSub),
+      h("ol", { class: "steps", role: "list" }, c.steps.map(s =>
         h("li", { class: "step" },
-          h("div", { class: "step-icon" }, icon(s.icon), h("span", { class: "step-num", "aria-hidden": "true" }, String(i + 1))),
+          h("div", { class: "step-icon" }, icon(s.icon)),
           h("div", {}, h("h3", {}, s.title), h("p", {}, s.text))
         )
       ))
@@ -1111,7 +1039,7 @@ block("form", () => {
   const form = h("form", { id: "quote-form" },
     fm.fields.map(field),
     h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
-    h("button", { type: "submit", class: "btn btn-gold" }, fm.submitText),
+    h("button", { type: "submit", class: "btn btn-primary" }, fm.submitText),
     h("p", { class: "form-note" }, "Prefer to talk? ", h("a", { href: c.phoneHref }, "Call"),
       c.smsHref ? [" or ", h("a", { href: c.smsHref }, "text")] : null, " " + c.phone + "."),
     status
@@ -1120,7 +1048,6 @@ block("form", () => {
     h("section", { id: "quote", class: "sec", "aria-labelledby": "quote-heading" },
       h("div", { class: "wrap contact-grid" },
         h("div", {},
-          eyebrow(c.contactEyebrow),
           h("h2", { id: "quote-heading" }, c.contactHeading),
           h("p", { class: "contact-sub" }, c.contactSub),
           h("ul", { class: "promises", role: "list" }, (c.promises || []).map(p => h("li", {}, icon("check-circle", "fill"), p))),
@@ -1185,7 +1112,7 @@ block("form", () => {
 block("faqs", () => {
   if (!(c.faqs && c.faqs.length)) return;
   main.append(section("faq", "sec", [
-    head(c.faqHeading, null, c.faqEyebrow),
+    head(c.faqHeading),
     h("div", { class: "faq" }, c.faqs.map(f => h("details", {}, h("summary", {}, f.q), h("p", {}, f.a))))
   ]));
 });
@@ -1193,7 +1120,7 @@ block("faqs", () => {
 // ----- Areas -----
 block("areas", () => {
   if (!(c.areas && c.areas.length)) return;
-  main.append(section("areas", "sec sec-alt", [head(c.areasHeading, null, c.areasEyebrow), h("ul", { class: "areas", role: "list" }, c.areas.map(a => h("li", {}, a)))]));
+  main.append(section("areas", "sec sec-alt", [head(c.areasHeading), h("ul", { class: "areas", role: "list" }, c.areas.map(a => h("li", {}, a)))]));
 });
 
 // ----- Scroll reveal -----

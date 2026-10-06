@@ -1,0 +1,4 @@
+# Keep internal notes off the client preview (Netlify serves every file in the published folder).
+/clients/*    /404    404!
+/CLAUDE.md    /404    404!
+/README.md    /404    404!
