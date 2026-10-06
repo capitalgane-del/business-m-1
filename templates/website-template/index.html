@@ -11,8 +11,11 @@
      The boot script warns in the console if they drift from the content object. -->
 <title>Move Mate Removals and Storage | Removalists in Fyshwick, Canberra</title>
 <meta name="description" content="Local, interstate and commercial removals, property staging and storage. Based in Fyshwick, ACT. Call 0422 394 487 or request a quote online.">
-<meta name="theme-color" content="#14365A">
-<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#140B06">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="images/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
 <!-- Open Graph. Absolute URLs: preview scrapers do not reliably resolve relative ones.
      Currently the Netlify branch deploy; swap for the real domain at launch. -->
@@ -25,17 +28,21 @@
 <meta property="og:image" content="https://move-mate--ganeworks-website.netlify.app/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Move Mate Removals and Storage, Fyshwick, Canberra. Phone 0422 394 487.">
+<meta property="og:image:alt" content="Move Mate Removals and Storage logo with a removal truck. Fyshwick, Canberra. Phone 0422 394 487.">
 <meta name="twitter:card" content="summary_large_image">
+
+<!-- The logo leads the hero, so fetch it alongside the HTML. -->
+<link rel="preload" as="image" href="images/move-mate-logo.webp" type="image/webp" fetchpriority="high">
 
 <!-- MOCKUP ONLY: fonts and icons load from CDNs. Self-host both before final delivery.
      Both load without blocking first paint, so the hero and form never wait on a CDN.
      Icons are linked as CSS: the @phosphor-icons/web JS loader declares a global `head`
-     that clashes with the renderer below and stops every icon loading (bug still on main). -->
+     that clashes with the renderer below and stops every icon loading (bug still on main).
+     Montserrat: the closest Google font to the logo's heavy geometric lettering. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Outfit:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css" media="print" onload="this.media='all'">
 
@@ -52,7 +59,7 @@
    - No em dashes anywhere in the copy. Use a comma, a colon or a full stop.
 
    SOURCES for Move Mate (see clients/move-mate/README.md for the full copy audit)
-   [Jett] = details Jett supplied: name, phone, email, Fyshwick base, Facebook.
+   [Jett] = details Jett supplied: name, phone, email, Fyshwick base, Facebook, logo.
    [IG]   = their Instagram bio (@movematetransports), read through search results:
             "Local Relocations, Interstate Relocations, Commercial Relocations,
             Property Staging Solutions, Storage facility Solutions".
@@ -61,7 +68,7 @@
    ============================================================ */
 const content = {
   sample: true,
-  sampleText: "Website preview: images are placeholders",
+  sampleText: "Website preview: photos are placeholders",
 
   // [ours] from [Jett] + [IG] facts. Keep in sync with the static copies in <head>.
   pageTitle: "Move Mate Removals and Storage | Removalists in Fyshwick, Canberra",
@@ -70,12 +77,16 @@ const content = {
   siteUrl: "https://move-mate--ganeworks-website.netlify.app/",
 
   businessName: "Move Mate Removals and Storage",                    // [Jett]
-  // Text wordmark used until their logo file is in.
+  // LOGO [Jett]: cut out of the 960px logo graphic they posted (original kept at the repo root),
+  // background removed so it sits on the site's black. TODO: ask for the original vector file
+  // (SVG/AI/PDF) from whoever designed it: this copy is soft on big retina screens.
+  logo: "images/move-mate-logo.webp",
+  logoWidth: 884,
+  logoHeight: 222,
+  logoAlt: "Move Mate, Removals and Storage",
+  // Text fallback if there is no logo file.
   brandShort: "Move Mate",
   brandSub: "Removals and Storage",
-  // TODO: their logo, e.g. "images/move-mate-logo.png" (wide, transparent background). Empty = text wordmark.
-  logo: "",
-  logoAlt: "Move Mate Removals and Storage",
 
   phone: "0422 394 487",                                            // [Jett]
   phoneHref: "tel:+61422394487",
@@ -90,17 +101,17 @@ const content = {
   ctaText: "Call now",
   quoteText: "Get a quote",
 
-  // HERO: one headline (2 lines max), one short sentence (under 20 words).
+  // HERO: the logo leads, then one headline (2 lines max) and one short sentence (under 20 words).
   heroEyebrow: "Fyshwick, Canberra",                                // [Jett]
   heroHeading: "Canberra removals and storage",                     // [ours] Fyshwick base + their name
+  heroHeadingAccent: "storage",                                     // set in the logo's gold, like "MATE"
   heroSub: "Local, interstate and commercial moves, plus storage. Based in Fyshwick, ACT.",   // [IG] + [Jett]
   heroCallText: "Call 0422 394 487",
   textPrompt: "Prefer to text?",
   // heroImage = full-bleed photo behind the headline. Best single upgrade: one real photo of their
   // truck or crew from their Facebook. Set it and heroVisual is hidden.
   heroImage: "",
-  // Neutral placeholder: unbranded truck and boxes (so it can't pass for their truck). Loads eagerly:
-  // it is above the fold, and lazy-loading it would only slow the hero.
+  // Neutral placeholder: unbranded truck and boxes (so it can't pass for their truck).
   heroVisual: "images/placeholder-truck.svg",
   heroVisualAlt: "Illustration of a white removal truck with cardboard moving boxes stacked beside it",
 
@@ -117,6 +128,7 @@ const content = {
     // { icon: "shield-check", value: "Fully insured", label: "Goods in transit and public liability, with [insurer]" },
   ],
 
+  servicesEyebrow: "Services",
   servicesHeading: "What we do",
   servicesSub: "Moving house, moving the office, or need somewhere to keep things for a while.",  // [ours] restates [IG]
   // Service names: [IG]. Descriptions: [ours], plain explanations, no promises.
@@ -135,6 +147,7 @@ const content = {
   // STORAGE feature. [IG] "Storage facility solutions"; the rest is [ours].
   // TODO: once confirmed, add details here (site, unit sizes, short or long term, access).
   storage: {
+    eyebrow: "Storage",
     heading: "Need storage between moves?",
     text: [
       "Settlement dates do not always line up. Tell us when you ask for a quote and we can talk through storage for your things."
@@ -154,6 +167,7 @@ const content = {
   // ],
 
   // [ours]: describes how any quote request works, no promises on times or prices.
+  processEyebrow: "The process",
   processHeading: "How it works",
   processSub: "Three steps from first message to moving day.",
   steps: [
@@ -162,6 +176,7 @@ const content = {
     { icon: "truck", title: "Moving day", text: "We load up, move your things and unload at the other end." }
   ],
 
+  contactEyebrow: "Moving soon?",
   contactHeading: "Get a quote",
   contactSub: "Tell us where you are moving from and to, and roughly when. The more detail you give, the easier it is to quote.",
   // Facts from [IG] + [Jett], not promises.
@@ -210,6 +225,7 @@ const content = {
   },
 
   // [ours] questions; answers use only [IG] and [Jett] facts.
+  faqEyebrow: "FAQ",
   faqHeading: "Common questions",
   faqs: [
     { q: "How do I get a quote?", a: "Call or text 0422 394 487, or send the quote form with where you are moving from and to. The more detail you give, the easier it is to quote." },
@@ -247,8 +263,8 @@ const content = {
     locality: "Fyshwick",
     region: "ACT",
     postcode: "2609",
-    logo: "",                    // TODO: absolute URL to the logo file
-    image: "https://move-mate--ganeworks-website.netlify.app/images/og-image.jpg",  // TODO: a real photo at launch
+    logo: "https://move-mate--ganeworks-website.netlify.app/images/move-mate-logo.png",  // TODO: real domain at launch
+    image: "https://move-mate--ganeworks-website.netlify.app/images/og-image.jpg",       // TODO: a real photo at launch
     areaServed: "",              // TODO: e.g. "Canberra" once the service area is confirmed
     openingHours: "",            // TODO: e.g. "Mo-Fr 07:00-17:00"
     priceRange: ""               // TODO: e.g. "$$", only if they are happy to
@@ -256,11 +272,22 @@ const content = {
 
   credit: "Preview prepared by Ganeworks",
 
-  // PLACEHOLDER COLOURS: their logo was not in the repo, so these are a neutral navy and
-  // high-vis amber. Swap for HEX codes sampled from the logo.
-  // primary = brand colour (hero, quote section). dark = deeper shade of it. accent = call buttons.
-  // onPrimary / onAccent = text on those (#FFFFFF on dark colours, #13171C on light ones).
-  colours: { primary: "#14365A", onPrimary: "#FFFFFF", dark: "#0B1E33", accent: "#F5A524", onAccent: "#13171C" }
+  // COLOURS: sampled from their logo. black = the logo's background, gold = "MATE",
+  // white = "MOVE". black2/surface are lifted shades of the same black for bands and cards;
+  // goldText is the gold nudged brighter for small text on black. Each key becomes a
+  // CSS variable (--c-black, --c-gold, ...).
+  colours: {
+    black: "#140B06",
+    deep: "#0C0603",
+    black2: "#1C120B",
+    surface: "#251810",
+    gold: "#C69548",
+    goldDeep: "#B07734",
+    goldText: "#D9A75A",
+    onGold: "#140B06",
+    white: "#FCFBFB",
+    muted: "#BFB3A8"
+  }
 };
 </script>
 <script>
@@ -274,9 +301,8 @@ const content = {
     }
     document.title = c.pageTitle;
     document.querySelector('meta[name="description"]').setAttribute("content", c.metaDescription);
-    document.querySelector('meta[name="theme-color"]').setAttribute("content", c.colours.primary);
-    const vars = { "--color-primary": "primary", "--on-primary": "onPrimary", "--dark": "dark", "--accent": "accent", "--on-accent": "onAccent" };
-    Object.entries(vars).forEach(([k, v]) => { if (c.colours[v]) root.style.setProperty(k, c.colours[v]); });
+    if (c.colours.black) document.querySelector('meta[name="theme-color"]').setAttribute("content", c.colours.black);
+    Object.entries(c.colours || {}).forEach(([k, v]) => root.style.setProperty("--c-" + k, v));
     if (c.heroImage) {
       root.style.setProperty("--hero-image", 'url("' + c.heroImage + '")');
       root.setAttribute("data-hero-image", "true");
@@ -326,49 +352,43 @@ const content = {
 
 <style>
   /* Design read: removalist lead-gen site for people mid-move, on their phone, comparing quotes.
-     Trust-first, call and quote always one tap away. Static HTML + CSS variables + Phosphor icons.
-     One radius, one accent (the call colour), light or dark follows the visitor's device. */
+     Built from their logo: white and gold lettering on a warm black, a road running through the O,
+     gold rules either side of "REMOVALS • STORAGE". So: black throughout, gold for every call to
+     action and accent, white type, tracked gold labels and a dashed gold "road" line as the motif.
+     Always dark (the brand is), so it ignores the device's light/dark setting. */
   :root {
-    --color-primary: #14365A;
-    --on-primary: #FFFFFF;
-    --dark: #0B1E33;
-    --accent: #F5A524;
-    --on-accent: #13171C;
+    color-scheme: dark;
+    /* Fallbacks; the boot script overwrites these from content.colours. */
+    --c-black: #140B06;
+    --c-deep: #0C0603;
+    --c-black2: #1C120B;
+    --c-surface: #251810;
+    --c-gold: #C69548;
+    --c-goldDeep: #B07734;
+    --c-goldText: #D9A75A;
+    --c-onGold: #140B06;
+    --c-white: #FCFBFB;
+    --c-muted: #BFB3A8;
 
-    --bg: #F4F6F9;
-    --surface: #FFFFFF;
-    --ink: #111A26;
-    --muted: #4A5666;
-    --border: rgba(17, 26, 38, 0.12);
-    --field: #FFFFFF;
-    --field-border: rgba(17, 26, 38, 0.55);
-    --band: color-mix(in srgb, var(--color-primary) 6%, var(--bg));
-    --primary-text: var(--color-primary);
-    --tile: color-mix(in srgb, var(--color-primary) 9%, var(--surface));
+    --bg: var(--c-black);
+    --ink: var(--c-white);
+    --muted: var(--c-muted);
+    --line: color-mix(in srgb, var(--c-gold) 22%, transparent);
+    --line-soft: rgba(252, 251, 251, 0.1);
+    --field: var(--c-black);
+    --field-border: rgba(252, 251, 251, 0.42);
+    --gold-grad: linear-gradient(100deg, var(--c-gold) 0%, #D4A253 45%, var(--c-goldDeep) 100%);
 
     --font: "Outfit", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: "Montserrat", "Outfit", ui-sans-serif, system-ui, sans-serif;
     --r: 12px;
     --max: 1200px;
-    --header-h: 64px;
+    --header-h: 68px;
     --hero-image: none;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0B1520;
-      --surface: #122131;
-      --ink: #E8EEF5;
-      --muted: #A9B6C5;
-      --border: rgba(232, 238, 245, 0.14);
-      --field: #0B1520;
-      --field-border: rgba(232, 238, 245, 0.45);
-      --band: color-mix(in srgb, var(--color-primary) 22%, var(--bg));
-      --primary-text: color-mix(in srgb, var(--color-primary) 30%, #FFFFFF);
-      --tile: color-mix(in srgb, var(--color-primary) 45%, var(--surface));
-    }
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; background: var(--bg); }
   @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   body {
     font-family: var(--font);
@@ -383,19 +403,34 @@ const content = {
   /* Reserve icon space so nothing shifts when the icon font arrives. */
   i[class^="ph"] { display: inline-block; width: 1em; height: 1em; line-height: 1; flex-shrink: 0; }
 
-  h1, h2, h3 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; overflow-wrap: break-word; }
-  h2 { font-size: clamp(2rem, 5vw, 3.3rem); }
-  h3 { font-size: 1.25rem; letter-spacing: -0.015em; line-height: 1.2; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; line-height: 1.08; overflow-wrap: break-word; }
+  h2 { font-size: clamp(1.95rem, 4.6vw, 3.1rem); }
+  h3 { font-size: 1.18rem; letter-spacing: -0.01em; line-height: 1.25; }
 
-  :focus-visible { outline: 3px solid var(--primary-text); outline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--c-gold); outline-offset: 3px; }
 
   .wrap { max-width: var(--max); margin: 0 auto; }
   .sec { padding: clamp(3.5rem, 8vw, 6.5rem) 1.25rem; }
+  .sec-alt { background: var(--c-black2); }
   .sec-head { margin-bottom: clamp(1.75rem, 4vw, 3rem); }
-  .sec-head p { margin-top: 0.85rem; color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
+  .sec-head p:not(.eyebrow) { margin-top: 0.9rem; color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
   section[id] { scroll-margin-top: var(--header-h); }
 
-  .skip-link { position: absolute; left: 0.75rem; top: -100px; z-index: 100; padding: 0.75rem 1rem; border-radius: var(--r); background: var(--accent); color: var(--on-accent); font-weight: 700; }
+  /* Tracked gold label with a rule, like "REMOVALS • STORAGE" on the logo. */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--c-goldText);
+  }
+  .eyebrow::before { content: ""; width: 34px; height: 2px; border-radius: 1px; background: var(--c-gold); }
+  .eyebrow i { font-size: 1rem; margin-left: -0.2rem; }
+  .gold { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  @media (forced-colors: active) { .gold { background: none; color: CanvasText; } }
+
+  /* Dashed gold road line: the logo's road, used as a divider. */
+  .road { height: 4px; background: repeating-linear-gradient(90deg, var(--c-gold) 0 30px, transparent 30px 54px); opacity: 0.55; }
+
+  .skip-link { position: absolute; left: 0.75rem; top: -100px; z-index: 100; padding: 0.75rem 1rem; border-radius: var(--r); background: var(--c-gold); color: var(--c-onGold); font-weight: 700; }
   .skip-link:focus { top: 0.75rem; }
 
   /* ---------- Buttons ---------- */
@@ -407,74 +442,73 @@ const content = {
     transition: transform 0.15s ease, filter 0.15s ease, background-color 0.15s ease;
   }
   .btn:active { transform: translateY(1px) scale(0.98); }
-  .btn-accent { background: var(--accent); color: var(--on-accent); }
-  .btn-accent:hover { filter: brightness(1.06); }
-  .btn-primary { background: var(--color-primary); color: var(--on-primary); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); }
-  .btn-primary:hover { filter: brightness(1.15); }
-  @media (prefers-color-scheme: dark) { .btn-primary { box-shadow: inset 0 0 0 2px var(--primary-text); } }
-  .btn-ghost { background: rgba(255, 255, 255, 0.06); color: #FFFFFF; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7); }
-  .btn-ghost:hover { background: rgba(255, 255, 255, 0.14); }
+  .btn-gold { background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+  .btn-gold:hover { filter: brightness(1.08); }
+  .btn-line { background: transparent; color: var(--c-white); box-shadow: inset 0 0 0 2px rgba(252, 251, 251, 0.75); }
+  .btn-line:hover { background: rgba(252, 251, 251, 0.08); }
+  .btn-dark { background: var(--c-black); color: var(--c-white); }
+  .btn-dark:hover { background: var(--c-deep); }
 
   /* ---------- Preview strip ---------- */
-  .preview-strip { background: #0A111A; color: #DCE3EC; font-size: 0.82rem; font-weight: 500; text-align: center; padding: 0.4rem 1rem; letter-spacing: 0.01em; }
+  .preview-strip { background: var(--c-deep); color: var(--muted); font-size: 0.82rem; font-weight: 500; text-align: center; padding: 0.4rem 1rem; border-bottom: 1px solid var(--line-soft); }
 
   /* ---------- Header ---------- */
   .site-header {
     position: sticky; top: 0; z-index: 50; height: var(--header-h);
-    display: flex; align-items: center; background: var(--surface); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; background: var(--c-black); border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
   }
+  .site-header.scrolled { border-bottom-color: var(--line); }
   .site-header .wrap { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1.25rem; }
-  .brand { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
-  .brand-mark { width: 38px; height: 38px; flex-shrink: 0; display: grid; place-items: center; border-radius: 10px; background: var(--color-primary); color: var(--accent); font-size: 1.3rem; }
-  .brand-text { display: grid; min-width: 0; line-height: 1.05; }
-  .brand-name { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; white-space: nowrap; }
-  .brand-sub { font-size: 0.78rem; font-weight: 500; color: var(--muted); white-space: nowrap; }
-  .brand-logo { height: 44px; width: auto; }
+  .brand { display: flex; align-items: center; min-width: 0; transition: opacity 0.2s ease, visibility 0.2s ease; }
+  .brand-logo { height: 40px; width: auto; }
+  .brand-text { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; }
+  /* The hero shows the big logo, so the header one waits until that has scrolled away. */
+  .hero-logo-live .site-header:not(.scrolled) .brand { opacity: 0; visibility: hidden; }
   .nav { display: none; gap: 1.75rem; font-weight: 500; }
   .nav a { color: var(--muted); }
-  .nav a:hover { color: var(--ink); }
+  .nav a:hover { color: var(--c-white); }
   @media (min-width: 960px) { .nav { display: flex; } }
-  .header-cta { min-height: 46px; padding: 0.5rem 1rem; font-size: 1rem; flex-shrink: 0; }
+  .header-cta { min-height: 46px; padding: 0.5rem 1rem; font-size: 1rem; flex-shrink: 0; margin-left: auto; }
+  @media (min-width: 960px) { .header-cta { margin-left: 0; } }
   .cta-short { display: none; }
   @media (max-width: 400px) { .cta-long { display: none; } .cta-short { display: inline; } }
 
   /* ---------- Hero ---------- */
   .hero {
-    position: relative; isolation: isolate; color: #FFFFFF; overflow: hidden;
-    padding: clamp(2rem, 6vw, 5rem) 1.25rem clamp(2rem, 5vw, 4rem);
+    position: relative; isolation: isolate; overflow: hidden;
+    padding: clamp(1.25rem, 4vw, 3.5rem) 1.25rem clamp(2rem, 5vw, 4rem);
     background:
-      radial-gradient(90% 70% at 85% 15%, color-mix(in srgb, var(--color-primary) 70%, #FFFFFF 18%) 0%, transparent 65%),
-      linear-gradient(160deg, var(--color-primary) 0%, var(--dark) 100%);
+      radial-gradient(60% 55% at 78% 62%, color-mix(in srgb, var(--c-gold) 20%, transparent) 0%, transparent 70%),
+      var(--c-black);
   }
-  html[data-hero-image] .hero { min-height: min(80dvh, 760px); display: flex; align-items: center; background: var(--hero-image) center / cover, var(--dark); }
+  html[data-hero-image] .hero { min-height: min(84dvh, 780px); display: flex; align-items: center; background: var(--hero-image) center / cover, var(--c-black); }
   html[data-hero-image] .hero::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(90deg, rgba(6, 14, 24, 0.86) 0%, rgba(6, 14, 24, 0.6) 55%, rgba(6, 14, 24, 0.3) 100%);
+    background: linear-gradient(90deg, rgba(20, 11, 6, 0.9) 0%, rgba(20, 11, 6, 0.65) 55%, rgba(20, 11, 6, 0.35) 100%);
   }
   .hero .wrap { width: 100%; }
-  .hero-grid { display: grid; gap: 1.75rem; align-items: center; }
-  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.15fr 1fr; gap: 3rem; } }
-  .eyebrow { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; font-size: 0.98rem; color: var(--accent); margin-bottom: 0.9rem; }
-  .hero h1 { font-size: clamp(2.5rem, 7.2vw, 4.6rem); max-width: 14ch; letter-spacing: -0.04em; }
-  @media (min-width: 900px) { .hero h1 { font-size: clamp(3rem, 5.1vw, 4.1rem); max-width: 16ch; } }
-  .hero-sub { margin-top: 1rem; font-size: clamp(1.12rem, 2.1vw, 1.4rem); max-width: 34ch; color: rgba(255, 255, 255, 0.9); line-height: 1.4; }
-  .hero-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .hero-grid { display: grid; gap: 1.5rem; align-items: center; }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.1fr 1fr; gap: 3rem; } }
+  .hero-logo { width: min(100%, 560px); height: auto; margin: 0 0 1.5rem -0.35rem; }
+  .hero h1 { font-size: clamp(2.1rem, 6.4vw, 3.6rem); max-width: 15ch; }
+  .hero-sub { margin-top: 1rem; font-size: clamp(1.1rem, 2vw, 1.35rem); max-width: 36ch; color: var(--muted); line-height: 1.45; }
+  .hero-actions { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
   @media (max-width: 480px) { .hero-actions .btn { width: 100%; } }
-  .hero-text { margin-top: 1rem; color: rgba(255, 255, 255, 0.85); font-size: 1rem; }
-  .hero-text a { color: #FFFFFF; font-weight: 700; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
-  .hero-visual img { width: 100%; max-width: 640px; height: auto; margin: 0 auto; }
-  .hero :focus-visible { outline-color: #FFFFFF; }
+  .hero-text { margin-top: 1rem; color: var(--muted); font-size: 1rem; }
+  .hero-text a { color: var(--c-white); font-weight: 700; text-decoration: underline; text-decoration-color: var(--c-gold); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .hero-visual img { width: 100%; max-width: 620px; height: auto; margin: 0 auto; }
 
   /* ---------- Facts bar ---------- */
-  .facts { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.75rem 1.25rem; }
+  .facts { background: var(--c-black2); border-block: 1px solid var(--line); padding: 1.75rem 1.25rem; }
   .facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem 1rem; }
   @media (min-width: 900px) { .facts-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; } }
   .fact { display: flex; gap: 0.75rem; align-items: flex-start; }
-  .fact > i { font-size: 1.35rem; padding: 0.5rem; box-sizing: content-box; border-radius: 10px; background: var(--tile); color: var(--primary-text); }
-  .fact-value { font-weight: 700; font-size: 1.05rem; line-height: 1.2; letter-spacing: -0.01em; }
-  .fact-label { font-size: 0.92rem; color: var(--muted); line-height: 1.35; margin-top: 0.15rem; }
+  .fact > i { font-size: 1.3rem; padding: 0.5rem; box-sizing: content-box; border-radius: 10px; background: color-mix(in srgb, var(--c-gold) 14%, transparent); color: var(--c-goldText); }
+  .fact-value { font-family: var(--font-display); font-weight: 700; font-size: 1rem; line-height: 1.25; }
+  .fact-label { font-size: 0.92rem; color: var(--muted); line-height: 1.35; margin-top: 0.2rem; }
   .fact a.fact-value { text-decoration: underline; text-underline-offset: 3px; }
-  .stars { display: inline-flex; gap: 2px; font-size: 0.95rem; margin-top: 0.25rem; color: var(--accent); }
+  .stars { display: inline-flex; gap: 2px; font-size: 0.95rem; margin-top: 0.25rem; color: var(--c-gold); }
 
   /* ---------- Services ---------- */
   .svc-grid { display: grid; grid-template-columns: 1fr; gap: 0.85rem; }
@@ -484,45 +518,43 @@ const content = {
   }
   .svc-card {
     display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 1rem; align-items: start;
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.25rem;
+    background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.25rem;
   }
-  .svc-icon { grid-row: span 2; width: 52px; height: 52px; display: grid; place-items: center; border-radius: var(--r); background: var(--tile); color: var(--primary-text); font-size: 1.55rem; }
+  .svc-icon { grid-row: span 2; width: 52px; height: 52px; display: grid; place-items: center; border-radius: var(--r); background: color-mix(in srgb, var(--c-gold) 14%, transparent); color: var(--c-goldText); font-size: 1.55rem; }
   .svc-card p { color: var(--muted); font-size: 1rem; line-height: 1.45; }
   .svc-photo { grid-column: 1 / -1; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: calc(var(--r) - 4px); margin-bottom: 0.75rem; }
   @media (min-width: 768px) {
     .svc-card { grid-template-columns: 1fr; padding: 1.5rem; }
     .svc-icon { grid-row: auto; margin-bottom: 1rem; }
   }
-  .svc-cta { background: var(--color-primary); color: var(--on-primary); border-color: transparent; display: flex; flex-direction: column; justify-content: center; gap: 0.35rem; }
-  .svc-cta p { color: var(--on-primary); opacity: 0.92; }
+  .svc-cta { background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); border-color: transparent; display: flex; flex-direction: column; justify-content: center; gap: 0.35rem; }
+  .svc-cta p { color: var(--c-onGold); }
   .svc-cta .btn { margin-top: 0.85rem; align-self: flex-start; min-height: 50px; padding: 0.6rem 1.2rem; font-size: 1rem; }
-  .svc-cta :focus-visible { outline-color: #FFFFFF; }
+  .svc-cta :focus-visible { outline-color: var(--c-onGold); }
   @media (max-width: 480px) { .svc-cta .btn { align-self: stretch; } }
 
   /* ---------- Storage feature ---------- */
-  #storage { background: var(--band); }
   .feature { display: grid; gap: 2rem; align-items: center; }
   @media (min-width: 900px) { .feature { grid-template-columns: 1fr 1fr; gap: 4rem; } }
-  .feature-media { background: var(--surface); border-radius: var(--r); padding: clamp(1rem, 3vw, 2rem); }
+  .feature-media { background: radial-gradient(70% 70% at 50% 60%, color-mix(in srgb, var(--c-gold) 16%, var(--c-surface)) 0%, var(--c-surface) 75%); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1rem, 3vw, 2rem); }
   .feature-media img { width: 100%; height: auto; }
   .feature-body p { margin-top: 1rem; color: var(--muted); font-size: 1.15rem; max-width: 44ch; }
   .feature-body .btn { margin-top: 1.75rem; }
   @media (max-width: 480px) { .feature-body .btn { width: 100%; } }
 
   /* ---------- Work (shown once real photos are in) ---------- */
-  #work { background: var(--band); }
   .ba-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
-  .ba-stage { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--r); --pos: 50%; background: var(--surface); }
+  .ba-stage { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--r); --pos: 50%; background: var(--c-surface); }
   .ba-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .ba-before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
-  .ba-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; background: #F6F6F3; transform: translateX(-50%); pointer-events: none; }
+  .ba-line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; background: var(--c-white); transform: translateX(-50%); pointer-events: none; }
   .ba-knob {
     position: absolute; top: 50%; left: var(--pos); transform: translate(-50%, -50%);
-    width: 48px; height: 48px; border-radius: var(--r); background: #F6F6F3; color: #15191C;
+    width: 48px; height: 48px; border-radius: var(--r); background: var(--c-gold); color: var(--c-onGold);
     display: grid; place-items: center; font-size: 1.4rem; pointer-events: none;
   }
   .ba-stage input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
-  .ba-stage:has(input:focus-visible) { outline: 3px solid var(--primary-text); outline-offset: 3px; }
+  .ba-stage:has(input:focus-visible) { outline: 3px solid var(--c-gold); outline-offset: 3px; }
   .ba-caption { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.75rem; font-weight: 600; }
   .ba-caption span:nth-child(2) { color: var(--muted); font-weight: 500; text-align: center; }
   .gallery { margin-top: 3rem; columns: 2; column-gap: 1rem; }
@@ -533,46 +565,45 @@ const content = {
   .rev { display: grid; gap: 1.25rem; }
   @media (min-width: 900px) { .rev { grid-template-columns: 5fr 7fr; } }
   .rev-feature {
-    background: var(--color-primary); color: var(--on-primary); border-radius: var(--r);
+    background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); border-radius: var(--r);
     padding: clamp(1.75rem, 4vw, 2.75rem); display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
   }
+  .rev-feature .stars { color: var(--c-onGold); }
   .rev-feature blockquote { font-size: clamp(1.35rem, 2.6vw, 1.9rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
   .rev-list { display: grid; gap: 1rem; align-content: start; }
-  .rev-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem; }
+  .rev-card { background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.5rem; }
   .rev-card blockquote { font-size: 1.1rem; margin: 0.6rem 0 1rem; }
   .rev-author { font-weight: 700; }
   .rev-meta { font-size: 0.95rem; color: var(--muted); }
   .rev-meta a { text-decoration: underline; text-underline-offset: 3px; }
-  .rev-feature .rev-meta { color: var(--on-primary); }
+  .rev-feature .rev-meta { color: var(--c-onGold); }
 
   /* ---------- Process ---------- */
   .proc { display: grid; gap: 2rem; }
   @media (min-width: 900px) { .proc { grid-template-columns: 5fr 7fr; align-items: start; } }
-  .step { display: grid; grid-template-columns: 56px 1fr; gap: 1rem; padding: 1.3rem 0; border-top: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 56px 1fr; gap: 1rem; padding: 1.3rem 0; border-top: 1px solid var(--line); }
   .step:first-child { border-top: 0; padding-top: 0; }
-  .step-icon { position: relative; width: 56px; height: 56px; border-radius: var(--r); background: var(--color-primary); color: var(--on-primary); display: grid; place-items: center; font-size: 1.5rem; }
-  .step-num { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-size: 0.8rem; font-weight: 800; display: grid; place-items: center; }
+  .step-icon { position: relative; width: 56px; height: 56px; border-radius: var(--r); background: var(--gold-grad); background-color: var(--c-gold); color: var(--c-onGold); display: grid; place-items: center; font-size: 1.5rem; }
+  .step-num { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: var(--c-white); color: var(--c-black); font-family: var(--font-display); font-size: 0.78rem; font-weight: 800; display: grid; place-items: center; }
   .step p { color: var(--muted); margin-top: 0.3rem; }
 
   /* ---------- Quote / contact ---------- */
-  #quote { background: linear-gradient(160deg, var(--color-primary) 0%, var(--dark) 100%); color: var(--on-primary); }
+  #quote { background: radial-gradient(70% 60% at 15% 20%, color-mix(in srgb, var(--c-gold) 12%, transparent) 0%, transparent 70%), var(--c-black2); border-top: 1px solid var(--line); }
   .contact-grid { display: grid; gap: 2rem; }
   @media (min-width: 900px) {
     .contact-grid { grid-template-columns: 5fr 6fr; align-items: start; gap: 4rem; }
     .contact-grid > div:first-child { position: sticky; top: calc(var(--header-h) + 2rem); }
   }
-  .contact-sub { margin-top: 1rem; font-size: 1.15rem; opacity: 0.92; max-width: 40ch; }
+  .contact-sub { margin-top: 1rem; font-size: 1.15rem; color: var(--muted); max-width: 40ch; }
   .promises { margin-top: 1.5rem; display: grid; gap: 0.7rem; }
-  .promises li { display: flex; gap: 0.7rem; align-items: center; font-size: 1.1rem; font-weight: 500; }
-  .promises i { font-size: 1.4rem; color: var(--accent); }
-  .big-phone { display: inline-flex; align-items: center; gap: 0.7rem; margin-top: 1.75rem; font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 800; letter-spacing: -0.03em; }
-  .big-phone i { color: var(--accent); }
+  .promises li { display: flex; gap: 0.7rem; align-items: center; font-size: 1.08rem; font-weight: 500; }
+  .promises i { font-size: 1.35rem; color: var(--c-gold); }
+  .big-phone { display: inline-flex; align-items: center; gap: 0.7rem; margin-top: 1.75rem; font-family: var(--font-display); font-size: clamp(1.7rem, 4.4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; }
+  .big-phone i { color: var(--c-gold); }
   .contact-alt { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-weight: 600; }
-  .contact-alt a { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 40px; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; overflow-wrap: anywhere; }
-  #quote :focus-visible { outline-color: #FFFFFF; }
-  #quote .form-card :focus-visible { outline-color: var(--primary-text); }
+  .contact-alt a { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 40px; text-decoration: underline; text-decoration-color: var(--c-gold); text-underline-offset: 4px; overflow-wrap: anywhere; }
 
-  .form-card { scroll-margin-top: calc(var(--header-h) + 0.75rem); background: var(--surface); color: var(--ink); border-radius: var(--r); padding: clamp(1.25rem, 3vw, 2.25rem); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55); }
+  .form-card { scroll-margin-top: calc(var(--header-h) + 0.75rem); background: var(--c-surface); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(1.25rem, 3vw, 2.25rem); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
   .form-title { font-size: 1.35rem; margin-bottom: 0.25rem; }
   .form-req { font-size: 0.95rem; color: var(--muted); margin-bottom: 1.1rem; }
   #quote-form { display: grid; gap: 1rem; }
@@ -585,75 +616,77 @@ const content = {
     min-height: 52px; padding: 0.75rem 0.9rem; border: 1.5px solid var(--field-border); border-radius: var(--r);
     -webkit-appearance: none; appearance: none;
   }
-  #quote-form input::placeholder, #quote-form textarea::placeholder { color: var(--muted); opacity: 0.85; }
+  #quote-form input::placeholder, #quote-form textarea::placeholder { color: var(--muted); opacity: 0.8; }
   #quote-form input::-webkit-date-and-time-value { text-align: left; }
+  #quote-form input::-webkit-calendar-picker-indicator { filter: invert(0.85) sepia(0.4); cursor: pointer; }
   #quote-form select {
     padding-right: 2.5rem; cursor: pointer;
-    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-image: linear-gradient(45deg, transparent 50%, var(--c-gold) 50%), linear-gradient(135deg, var(--c-gold) 50%, transparent 50%);
     background-position: calc(100% - 20px) 52%, calc(100% - 14px) 52%;
     background-size: 6px 6px; background-repeat: no-repeat;
   }
+  #quote-form select option { background: var(--c-black); color: var(--c-white); }
   #quote-form textarea { min-height: 104px; resize: vertical; }
-  #quote-form :is(input, select, textarea):focus-visible { outline: 3px solid var(--primary-text); outline-offset: 1px; border-color: var(--primary-text); }
+  #quote-form :is(input, select, textarea):focus-visible { outline: 3px solid var(--c-gold); outline-offset: 1px; border-color: var(--c-gold); }
   .choice { border: 0; min-width: 0; }
   .choice legend { font-weight: 600; font-size: 0.98rem; margin-bottom: 0.45rem; padding: 0; }
   .choice-opts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .choice-opt { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 46px; padding: 0.5rem 0.9rem; border: 1.5px solid var(--field-border); border-radius: var(--r); font-weight: 500; cursor: pointer; }
-  .choice-opt input { width: 1.15rem; height: 1.15rem; accent-color: var(--primary-text); margin: 0; }
-  .choice-opt:has(input:checked) { border-color: var(--primary-text); background: var(--tile); }
-  .choice-opt:has(input:focus-visible) { outline: 3px solid var(--primary-text); outline-offset: 2px; }
+  .choice-opt input { width: 1.15rem; height: 1.15rem; accent-color: var(--c-gold); margin: 0; }
+  .choice-opt:has(input:checked) { border-color: var(--c-gold); background: color-mix(in srgb, var(--c-gold) 14%, transparent); }
+  .choice-opt:has(input:focus-visible) { outline: 3px solid var(--c-gold); outline-offset: 2px; }
   #quote-form button[type="submit"] { width: 100%; margin-top: 0.25rem; }
   .form-note { font-size: 0.95rem; color: var(--muted); }
-  .form-note a { color: var(--primary-text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .form-note a { color: var(--c-goldText); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
   .form-success { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
-  .form-msg { font-weight: 600; padding: 0.85rem 1rem; border-radius: var(--r); background: var(--tile); }
-  .form-error { color: #B3261E; background: color-mix(in srgb, #B3261E 8%, var(--surface)); }
-  @media (prefers-color-scheme: dark) { .form-error { color: #F2B8B5; } }
+  .form-msg { font-weight: 600; padding: 0.85rem 1rem; border-radius: var(--r); background: color-mix(in srgb, var(--c-gold) 14%, transparent); border: 1px solid var(--line); }
+  .form-error { color: #F2B8B5; background: rgba(179, 38, 30, 0.18); border-color: rgba(242, 184, 181, 0.4); }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
   /* ---------- FAQ ---------- */
   .faq { max-width: 820px; }
-  .faq details { border-top: 1px solid var(--border); }
-  .faq details:last-child { border-bottom: 1px solid var(--border); }
-  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-weight: 700; font-size: 1.1rem; min-height: 48px; }
+  .faq details { border-top: 1px solid var(--line); }
+  .faq details:last-child { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-weight: 600; font-size: 1.1rem; min-height: 48px; }
   .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: "+"; flex-shrink: 0; font-size: 1.6rem; font-weight: 400; line-height: 1; color: var(--primary-text); transition: transform 0.2s ease; }
+  .faq summary::after { content: "+"; flex-shrink: 0; font-size: 1.6rem; font-weight: 400; line-height: 1; color: var(--c-gold); transition: transform 0.2s ease; }
   .faq details[open] summary::after { transform: rotate(45deg); }
   .faq details p { padding-bottom: 1.25rem; color: var(--muted); max-width: 62ch; }
 
   /* ---------- Areas (shown once confirmed) ---------- */
   .areas { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .areas li { padding: 0.6rem 1.1rem; border: 1.5px solid var(--border); border-radius: var(--r); font-weight: 600; background: var(--surface); }
+  .areas li { padding: 0.6rem 1.1rem; border: 1.5px solid var(--line); border-radius: var(--r); font-weight: 600; background: var(--c-surface); }
 
   /* ---------- Footer ---------- */
   /* Extra bottom padding on phones so the fixed call bar never covers the last line. */
-  footer { background: #07111D; color: #E6ECF3; padding: 3rem 1.25rem calc(2rem + 76px + env(safe-area-inset-bottom)); }
+  footer { background: var(--c-deep); color: var(--c-white); padding: 0 1.25rem calc(2rem + 76px + env(safe-area-inset-bottom)); }
   @media (min-width: 768px) { footer { padding-bottom: 2rem; } }
+  footer .road { margin: 0 -1.25rem 3rem; }
   .foot { display: grid; gap: 2rem; }
   @media (min-width: 768px) { .foot { grid-template-columns: 1.4fr 1fr 1fr; } }
-  .foot h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
-  .foot p, .foot a { color: #B4C0CE; }
+  .foot-logo { width: 220px; height: auto; margin-bottom: 1rem; }
+  .foot h3 { font-size: 1rem; margin-bottom: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-goldText); }
+  .foot p, .foot a { color: var(--muted); }
   .foot a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 36px; }
-  .foot a:hover { color: #FFFFFF; }
+  .foot a:hover { color: var(--c-white); }
   .foot-list { display: grid; gap: 0.15rem; justify-items: start; }
   .foot-list a { overflow-wrap: anywhere; }
-  footer :focus-visible { outline-color: #FFFFFF; }
-  .foot-base { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(230, 236, 243, 0.14); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; font-size: 0.88rem; color: #93A1B2; }
+  .foot-base { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line-soft); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; font-size: 0.88rem; color: #A3978D; }
 
   /* ---------- Hover pop (mouse only, never on touch or reduced motion) ---------- */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
     .btn, .svc-card, .step-icon {
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease,
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease,
                   background-color 0.15s ease, filter 0.15s ease;
     }
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0) scale(0.98); }
-    .svc-card:hover { transform: translateY(-4px); box-shadow: 0 18px 32px -16px color-mix(in srgb, var(--color-primary) 55%, transparent); }
+    .svc-card:not(.svc-cta):hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--c-gold) 55%, transparent); box-shadow: 0 18px 32px -18px rgba(0, 0, 0, 0.9); }
     .step:hover .step-icon { transform: scale(1.06); }
   }
 
   /* ---------- Motion ----------
-     Hero and form are never hidden or delayed: the hero text paints immediately and the truck
+     Hero and form are never hidden or delayed: logo and text paint immediately and the truck
      only slides a few pixels. Everything else gets one short fade-up as it scrolls into view.
      Skipped for reduced motion. Content is only hidden once the script confirms it can reveal it. */
   @media (prefers-reduced-motion: no-preference) {
@@ -673,12 +706,11 @@ const content = {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
     display: grid; grid-template-columns: 1.15fr 1fr; gap: 0.6rem;
     padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
-    background: var(--surface); border-top: 1px solid var(--border);
-    box-shadow: 0 -8px 24px -12px rgba(0, 0, 0, 0.25);
+    background: var(--c-deep); border-top: 1px solid var(--line);
+    box-shadow: 0 -10px 28px -12px rgba(0, 0, 0, 0.8);
     transition: transform 0.2s ease;
   }
   .mobile-bar .btn { min-height: 52px; padding: 0.6rem 0.75rem; font-size: 1.05rem; }
-  .mobile-bar .btn-quote { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
   /* Out of the way while someone is typing in the form (phone keyboards push fixed bars over fields). */
   .mobile-bar.typing { transform: translateY(110%); }
   @media (min-width: 768px) { .mobile-bar { display: none; } }
@@ -711,7 +743,15 @@ const stars = (n, label) => {
   return s;
 };
 const section = (id, cls, inner) => h("section", { id, class: cls }, h("div", { class: "wrap" }, inner));
-const head = (title, sub) => h("div", { class: "sec-head" }, h("h2", {}, title), sub ? h("p", {}, sub) : null);
+const eyebrow = (text, ic) => text ? h("p", { class: "eyebrow" }, ic ? icon(ic, "ph-fill") : null, text) : null;
+const head = (title, sub, eb) => h("div", { class: "sec-head" }, eyebrow(eb), h("h2", {}, title), sub ? h("p", {}, sub) : null);
+// Wraps one word of a heading in the logo's gold, the way "MATE" sits beside "MOVE".
+const accent = (text, word) => {
+  const i = word ? text.lastIndexOf(word) : -1;
+  return i < 0 ? text : [text.slice(0, i), h("span", { class: "gold" }, word), text.slice(i + word.length)];
+};
+const logoImg = (cls, eager) => h("img", { class: cls, src: c.logo, alt: c.logoAlt, width: c.logoWidth, height: c.logoHeight,
+  decoding: "async", fetchpriority: eager ? "high" : null, loading: eager ? null : "lazy" });
 // External profiles open in a new tab so the site stays open.
 const ext = (href, cls, ...kids) => h("a", { href, class: cls, target: "_blank", rel: "noopener" }, kids);
 
@@ -734,44 +774,50 @@ const navLinks = [
   ["FAQ", "#faq", c.faqs && c.faqs.length],
   [c.quoteText, "#quote-card", true]
 ].filter(l => l[2]);
-app.append(
-  h("header", { class: "site-header" },
-    h("div", { class: "wrap" },
-      h("a", { class: "brand", href: "#top", "aria-label": c.businessName + ", back to top" },
-        c.logo ? h("img", { class: "brand-logo", src: c.logo, alt: c.logoAlt })
-               : [h("span", { class: "brand-mark" }, icon("package", "ph-fill")),
-                  h("span", { class: "brand-text" }, h("span", { class: "brand-name" }, c.brandShort), h("span", { class: "brand-sub" }, c.brandSub))]
-      ),
-      h("nav", { class: "nav", "aria-label": "Main" }, navLinks.map(l => h("a", { href: l[1] }, l[0]))),
-      h("a", { class: "btn btn-accent header-cta", href: c.phoneHref, "aria-label": "Call " + c.phone },
-        icon("phone-call"), h("span", { class: "cta-long" }, c.phone), h("span", { class: "cta-short" }, "Call"))
-    )
+const header = h("header", { class: "site-header" },
+  h("div", { class: "wrap" },
+    h("a", { class: "brand", href: "#top", "aria-label": c.businessName + ", back to top" },
+      c.logo ? logoImg("brand-logo", false) : h("span", { class: "brand-text" }, c.brandShort)),
+    h("nav", { class: "nav", "aria-label": "Main" }, navLinks.map(l => h("a", { href: l[1] }, l[0]))),
+    h("a", { class: "btn btn-gold header-cta", href: c.phoneHref, "aria-label": "Call " + c.phone },
+      icon("phone-call"), h("span", { class: "cta-long" }, c.phone), h("span", { class: "cta-short" }, "Call"))
   )
 );
+app.append(header);
 
 const main = h("main", { id: "main" });
 app.append(main);
 
 // ----- Hero -----
+// The logo leads. The text headline under it says what they do and where (and is the page's h1).
+const heroLogo = c.logo ? logoImg("hero-logo", true) : null;
 main.append(
   h("section", { id: "top", class: "hero" },
     h("div", { class: "wrap hero-grid" },
       h("div", {},
-        c.heroEyebrow ? h("p", { class: "eyebrow" }, icon("map-pin", "ph-fill"), c.heroEyebrow) : null,
-        h("h1", {}, c.heroHeading),
+        heroLogo,
+        eyebrow(c.heroEyebrow, "map-pin"),
+        h("h1", {}, accent(c.heroHeading, c.heroHeadingAccent)),
         h("p", { class: "hero-sub" }, c.heroSub),
         h("div", { class: "hero-actions" },
-          h("a", { class: "btn btn-accent", href: c.phoneHref }, icon("phone-call"), c.heroCallText || c.ctaText),
-          h("a", { class: "btn btn-ghost", href: "#quote-card" }, c.quoteText, icon("arrow-right"))
+          h("a", { class: "btn btn-gold", href: c.phoneHref }, icon("phone-call"), c.heroCallText || c.ctaText),
+          h("a", { class: "btn btn-line", href: "#quote-card" }, c.quoteText, icon("arrow-right"))
         ),
         c.smsHref ? h("p", { class: "hero-text" }, c.textPrompt + " ", h("a", { href: c.smsHref }, "Text " + c.phone)) : null
       ),
       c.heroVisual && !c.heroImage ? h("div", { class: "hero-visual" },
-        h("img", { src: c.heroVisual, alt: c.heroVisualAlt, width: "800", height: "400", fetchpriority: "high", decoding: "async" })
+        h("img", { src: c.heroVisual, alt: c.heroVisualAlt, width: "800", height: "400", decoding: "async" })
       ) : null
     )
-  )
+  ),
+  h("div", { class: "road", "aria-hidden": "true" })
 );
+// Header logo appears once the hero logo has scrolled out of view, so there are never two on screen.
+if (heroLogo && "IntersectionObserver" in window) {
+  document.documentElement.classList.add("hero-logo-live");
+  new IntersectionObserver(([e]) => header.classList.toggle("scrolled", !e.isIntersecting),
+    { rootMargin: "-" + (header.offsetHeight || 68) + "px 0px 0px 0px" }).observe(heroLogo);
+}
 
 // ----- Facts bar -----
 const factCells = [];
@@ -802,26 +848,27 @@ if (c.services && c.services.length) {
     cards.push(h("div", { class: "svc-card svc-cta" },
       h("h3", {}, c.servicesCta.title),
       h("p", {}, c.servicesCta.text),
-      h("a", { class: "btn btn-accent", href: c.phoneHref }, icon("phone-call"), c.servicesCta.button)
+      h("a", { class: "btn btn-dark", href: c.phoneHref }, icon("phone-call"), c.servicesCta.button)
     ));
   }
   // Cards that span 2 columns on the 3-column layout so the grid never has an empty cell.
   const n = cards.length;
   const extra = (3 - (n % 3)) % 3;
   [0, n - 1].slice(0, extra).forEach(i => cards[i].classList.add("wide"));
-  main.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub), h("div", { class: "svc-grid" }, cards)]));
+  main.append(section("services", "sec", [head(c.servicesHeading, c.servicesSub, c.servicesEyebrow), h("div", { class: "svc-grid" }, cards)]));
 }
 
 // ----- Storage feature -----
 if (c.storage) {
-  main.append(section("storage", "sec",
+  main.append(section("storage", "sec sec-alt",
     h("div", { class: "feature" },
       c.storage.image ? h("div", { class: "feature-media" },
         h("img", { src: c.storage.image, alt: c.storage.alt, loading: "lazy", decoding: "async", width: "640", height: "440" })) : null,
       h("div", { class: "feature-body" },
+        eyebrow(c.storage.eyebrow),
         h("h2", {}, c.storage.heading),
         c.storage.text.map(t => h("p", {}, t)),
-        h("a", { class: "btn btn-primary", href: "#quote-card" }, c.storage.button, icon("arrow-right"))
+        h("a", { class: "btn btn-gold", href: "#quote-card" }, c.storage.button, icon("arrow-right"))
       )
     )
   ));
@@ -829,7 +876,7 @@ if (c.storage) {
 
 // ----- Work -----
 if (hasWork) {
-  const parts = [head(c.workHeading, c.workSub)];
+  const parts = [head(c.workHeading, c.workSub, c.workEyebrow)];
   if (c.beforeAfter && c.beforeAfter.length) {
     parts.push(h("div", { class: "ba-grid" }, c.beforeAfter.map(p => {
       const range = h("input", { type: "range", min: "0", max: "100", value: "50", "aria-label": "Drag to compare before and after" });
@@ -847,7 +894,7 @@ if (hasWork) {
   if (c.gallery && c.gallery.length) {
     parts.push(h("div", { class: "gallery" }, c.gallery.map(g => h("img", { src: g.image, alt: g.alt, loading: "lazy" }))));
   }
-  main.append(section("work", "sec", parts));
+  main.append(section("work", "sec sec-alt", parts));
 }
 
 // ----- Reviews -----
@@ -856,24 +903,24 @@ if (hasReviews) {
   const meta = r => h("div", { class: "rev-meta" }, r.href ? ext(r.href, null, r.meta) : r.meta);
   const feature = h("figure", { class: "rev-feature" },
     stars(5),
-    h("blockquote", {}, "\u201C" + first.quote + "\u201D"),
+    h("blockquote", {}, "“" + first.quote + "”"),
     h("figcaption", {}, h("div", { class: "rev-author" }, first.author), meta(first))
   );
   const list = h("div", { class: "rev-list" }, rest.map(r =>
     h("figure", { class: "rev-card" },
       stars(5),
-      h("blockquote", {}, "\u201C" + r.quote + "\u201D"),
+      h("blockquote", {}, "“" + r.quote + "”"),
       h("figcaption", {}, h("span", { class: "rev-author" }, r.author), meta(r))
     )
   ));
-  main.append(section("reviews", "sec", [head(c.reviewsHeading), h("div", { class: "rev" }, feature, list)]));
+  main.append(section("reviews", "sec", [head(c.reviewsHeading, null, c.reviewsEyebrow), h("div", { class: "rev" }, feature, list)]));
 }
 
 // ----- Process -----
 if (c.steps && c.steps.length) {
   main.append(section("process", "sec",
     h("div", { class: "proc" },
-      head(c.processHeading, c.processSub),
+      head(c.processHeading, c.processSub, c.processEyebrow),
       h("ol", { class: "steps" }, c.steps.map((s, i) =>
         h("li", { class: "step" },
           h("div", { class: "step-icon" }, icon(s.icon), h("span", { class: "step-num", "aria-hidden": "true" }, String(i + 1))),
@@ -918,7 +965,7 @@ function field(f) {
 const form = h("form", { id: "quote-form" },
   (c.form.fields || []).map(field),
   h("input", { type: "checkbox", name: "botcheck", class: "hp", tabindex: "-1", autocomplete: "off", "aria-hidden": "true" }),
-  h("button", { type: "submit", class: "btn btn-primary" }, c.form.submitText),
+  h("button", { type: "submit", class: "btn btn-gold" }, c.form.submitText),
   h("p", { class: "form-note" }, "Prefer to talk? ", h("a", { href: c.phoneHref }, "Call"),
     c.smsHref ? [" or ", h("a", { href: c.smsHref }, "text")] : null, " " + c.phone + "."),
   h("div", { class: "form-status", role: "status", "aria-live": "polite" })
@@ -927,6 +974,7 @@ main.append(
   h("section", { id: "quote", class: "sec", "aria-labelledby": "quote-heading" },
     h("div", { class: "wrap contact-grid" },
       h("div", {},
+        eyebrow(c.contactEyebrow),
         h("h2", { id: "quote-heading" }, c.contactHeading),
         h("p", { class: "contact-sub" }, c.contactSub),
         h("ul", { class: "promises" }, (c.promises || []).map(p => h("li", {}, icon("check-circle", "ph-fill"), p))),
@@ -947,21 +995,24 @@ main.append(
 // Native <details> so it works with a keyboard and screen reader, no script needed.
 if (c.faqs && c.faqs.length) {
   main.append(section("faq", "sec", [
-    head(c.faqHeading),
+    head(c.faqHeading, null, c.faqEyebrow),
     h("div", { class: "faq" }, c.faqs.map(f => h("details", {}, h("summary", {}, f.q), h("p", {}, f.a))))
   ]));
 }
 
 // ----- Areas -----
 if (c.areas && c.areas.length) {
-  main.append(section("areas", "sec", [head(c.areasHeading), h("ul", { class: "areas" }, c.areas.map(a => h("li", {}, a)))]));
+  main.append(section("areas", "sec sec-alt", [head(c.areasHeading, null, c.areasEyebrow), h("ul", { class: "areas" }, c.areas.map(a => h("li", {}, a)))]));
 }
 
 // ----- Footer -----
 app.append(
   h("footer", {},
+    h("div", { class: "road", "aria-hidden": "true" }),
     h("div", { class: "wrap foot" },
-      h("div", {}, h("h3", {}, c.businessName), h("p", {}, c.heroSub)),
+      h("div", {},
+        c.logo ? logoImg("foot-logo", false) : h("h3", {}, c.businessName),
+        h("p", {}, c.heroSub)),
       h("div", {}, h("h3", {}, "Contact"),
         h("div", { class: "foot-list" },
           h("a", { href: c.phoneHref }, icon("phone-call"), c.phone),
@@ -973,7 +1024,7 @@ app.append(
         h("ul", { class: "foot-list" }, c.links.map(l => h("li", {}, ext(l.href, null, icon(l.icon || "arrow-up-right"), l.label))))) : null
     ),
     h("div", { class: "wrap foot-base" },
-      h("p", {}, "\u00A9 " + new Date().getFullYear() + " " + c.businessName),
+      h("p", {}, "© " + new Date().getFullYear() + " " + c.businessName),
       c.credit ? h("p", {}, c.credit) : null
     )
   )
@@ -981,8 +1032,8 @@ app.append(
 
 // ----- Mobile call bar -----
 const bar = h("nav", { class: "mobile-bar", "aria-label": "Call or get a quote" },
-  h("a", { class: "btn btn-accent", href: c.phoneHref }, icon("phone-call"), c.ctaText),
-  h("a", { class: "btn btn-quote", href: "#quote-card" }, c.quoteText)
+  h("a", { class: "btn btn-gold", href: c.phoneHref }, icon("phone-call"), c.ctaText),
+  h("a", { class: "btn btn-line", href: "#quote-card" }, c.quoteText)
 );
 app.append(bar);
 form.addEventListener("focusin", () => bar.classList.add("typing"));
