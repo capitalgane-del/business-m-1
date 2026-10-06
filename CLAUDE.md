@@ -89,7 +89,7 @@ For a layout change (not a reskin), first write a compact plan: palette as 4 to 
 
 **Real photos beat stock.** The actual owner, van, shopfront or finished work beats any polished image.
 
-**Short form:** name, phone, message. Never add fields unless the client asks. Every extra field loses leads.
+**Short form:** name, phone, message. Never add fields unless the client asks. Every extra field loses leads. Exception: removalists, where "moving from", "moving to" and an optional date replace the message box, so each enquiry arrives ready to quote.
 
 **Page order:** hero, trust bar, services, work and photos, reviews, how it works, contact, service areas, footer. Get creative inside the sections, not with their order.
 
@@ -178,7 +178,7 @@ For a layout change (not a reskin), first write a compact plan: palette as 4 to 
 - The hero image is set from JavaScript, so the browser cannot discover it early. Add `<link rel="preload" as="image" href="<hero url>" fetchpriority="high">` to the head.
 - Below-the-fold images use `loading="lazy"` (the template already does).
 - No new libraries, frameworks or build tools. Static HTML, CSS and vanilla JS. Do not add React, Tailwind, jQuery, Bootstrap, chat widgets or analytics scripts unless asked.
-- Google Fonts and the Phosphor CDN script are acceptable for mockups only. At go-live: self-host Outfit (woff2, only the weights used, `font-display: swap`) and replace the Phosphor script with inline SVGs of only the icons used, copied from Phosphor's official icon files. That is sourcing icons, not hand-drawing them.
+- Google Fonts and the Phosphor CDN stylesheets are acceptable for mockups only. At go-live: self-host Outfit (woff2, only the weights used, `font-display: swap`) and replace the Phosphor stylesheets with inline SVGs of only the icons used, copied from Phosphor's official icon files. That is sourcing icons, not hand-drawing them.
 
 ### Accessibility
 - One `h1`. Headings in order.
@@ -259,6 +259,8 @@ Run every item before saying a task is done. If an item fails, fix it, then reru
 13. Copy self-audit done (section 8).
 14. Contact form works with the real Web3Forms key, or the missing key is listed as a TODO.
 15. If you can run a headless browser, screenshot 375px and 1280px in light and dark mode and review the screenshots yourself before reporting. If you cannot, say so, and list exactly what the user should check on their phone.
+16. Icons actually render: in the headless browser, every `i[class*="ph-"]` has a non-zero width (excluding the mobile bar on desktop). A blank trust bar or missing stars means the icon stylesheets did not load.
+17. Form test: intercept `api.web3forms.com` in the headless browser, submit once with a success reply and once with a failure reply, and confirm every field is posted and both messages show.
 
 ---
 
@@ -273,3 +275,59 @@ End every task with:
 - **Pre-flight:** pass, or which items failed
 
 Keep the report short. Do not praise your own work.
+
+---
+
+## 15. Field notes from past builds
+
+Lessons from the Dutchies Removals build (October 2026). Each one cost real time once. Read them before starting a new client.
+
+### Intake
+- Expect the first message to be a filled-in `CLIENT-BRIEF.md`. Anything blank, research yourself and list what you could not find. Do not stall on it.
+- Confirm the exact trading name on ABN Lookup (abr.business.gov.au) before anything else. It also gives the owner, postcode and start date. Clients get called by near-miss names ("Dutchies Removalists" trades as "Dutchies Removals").
+- A Claude session can only push to its own `claude/...` branch unless the user names another branch in chat. If the brief does not name one, ask once.
+
+### What your sandbox can and cannot reach
+- **Blocked:** Facebook, Instagram, most directory sites (Muval, Oneflare, ServiceSeeking, Sirelo, Localsearch, Yellow Pages), competitor websites, Netlify preview URLs, unpkg, jsDelivr and font download sites.
+- **Works:** web search (it returns summaries of blocked pages), Google Fonts (fonts.googleapis.com and fonts.gstatic.com), the npm registry and PyPI.
+- Quotes read through search summaries are unverified until the user checks them on the live page. Say so in the report and keep `sample: true` until they have.
+- To check the page in headless Chromium: Chromium does not trust the sandbox proxy certificate, so serve the Phosphor stylesheets from the npm package (`npm pack @phosphor-icons/web`) and Google Fonts from files downloaded with curl, through Playwright request routing.
+- For image work: `pip install --target <scratchpad> pillow`.
+
+### Research playbook (local service businesses)
+- Order: ABN Lookup, Google listing, Facebook (vymaps.com mirrors Facebook pages, including page ID, hours and about text), then the category's directories. For removalists: Muval, Oneflare, Find a Mover, ServiceSeeking, Sirelo, Localsearch, Service.com.au, MovingSelect.
+- Directory badges can belong to the directory. Muval shows "4.7/5 from 640+ Google reviews" on every listing: that is Muval's own rating, not the business's.
+- Yelp page titles say "Updated <month year>" when Yelp refreshes the page. It does not mean the business posted anything.
+- Listings from a previous location carry stale hours and addresses. Check postcodes against ABN Lookup.
+- Review counts change between crawls. Use the latest number, or a floor like "80+".
+- Google's old `business.site` websites were shut down in 2024. A business that had one probably has no website now, which is a pitch angle.
+- Check for an existing domain with `getent hosts <name>.com.au`. If a reverse lookup points at a registrar's redirection server, the domain is registered but forwarding. The user can confirm the registrant at whois.auda.org.au (blocked from the sandbox).
+- When sources conflict (hours, address, years), default to the most recently posted owner-controlled source, and record the others in the client notes.
+- Note the claims competitors make in the same category and area. Canberra removalists almost all say "fully insured", "no hidden fees" or fixed price, AFRA accredited, and "from $X/hr". List the ones this client cannot yet back up as questions for the client.
+
+### Copy provenance
+- Put a short source comment above each `content` field: their own words (name the listing), their facts in our words, or ours.
+- Keep a copy audit in the client notes listing every inferred or judgment-call line, so the user can confirm them with the client.
+- The render code hardcodes "No obligation. We reply the same business day." in the form note. That is a claim. Change it for each client unless they confirm it.
+
+### Matching a client's brand
+- Sample colours from the logo's pixels (Pillow quantize), never by eye.
+- When the user asks to match the logo's look, the logo's style overrides the section 7 typography locks (serif or display faces, uppercase, script). Say which locks you are overriding.
+- Logo fonts are often not on Google Fonts. Score candidates objectively: render one of the logo's words in each font, binarise it, and compare its overlap with the logo's word. Show the top two beside the logo, and ask the user for the real font name (WhatTheFont) if they want an exact match. Dutchies' Western Tuscan lettering matched Sancreek with `-webkit-text-stroke: 0.018em currentColor`; Rye looked close but adds inline strokes the logo does not have.
+- A logo printed on a coloured background can be lifted onto transparency: estimate the background (max filter, blur), un-blend the ink colour to get alpha, then drop specks and anything touching the crop border. Ask for the original logo file first; it is faster and sharper.
+- On gradient or photo backgrounds, measure contrast from the rendered pixels behind each text element, not from the gradient stops.
+
+### Photos
+- Users upload photos to the client branch root on GitHub. Look for "Add files via upload" commits. If the user says they uploaded something and you cannot see it, list the branches and the newest commits, and remind them to press Commit changes.
+- Facebook downloads (`<digits>_<digits>_<digits>_n.jpg`) already have location data stripped. Re-save with Pillow anyway so no metadata survives, crop away empty sky or road, and resize.
+- Flag photos that show a customer's house or people, so the client can confirm consent.
+- If a section's grid has no photos, a compact carousel of icon cards uses far less space than empty photo tiles (Dutchies services).
+
+### Deploy and go-live
+- The repo is public. Everything committed, including client notes, can be read by anyone and gets indexed by search engines. Keep pitch angles and anything sensitive out of the repo.
+- Files at the root of a client branch are published on its preview URL. Keep notes out of any folder Netlify publishes.
+- `main` is the shared template. Never merge a client branch or PR into it. At go-live each client gets its own Netlify site from their branch, then their domain.
+- You cannot open Netlify previews from the sandbox. Verify by rendering locally, and say that is what you did.
+
+### Template issues found
+- The Phosphor JavaScript loader declared a global `head` that clashed with the renderer's `head` helper, so no icon ever rendered. Fixed: the template links the bold and fill stylesheets directly.
