@@ -5,7 +5,7 @@ Reskinning a client = editing the `content` object in `index.html` (first `<scri
 
 ## To use for a new site
 
-1. Copy `index.html` for the new client.
+1. Create a branch off `main` named `client-<business-slug>`. Netlify deploys it to `https://<branch>--ganeworks-website.netlify.app`.
 2. Edit the `content` object:
    - `sample` — `true` shows a red "SAMPLE CONTENT" ribbon. Set to `false` only when every review, photo and number is real and from the client.
    - `pageTitle`, `metaDescription` — browser tab / Google search snippet.
