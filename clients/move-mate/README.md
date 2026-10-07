@@ -111,3 +111,75 @@ The whole site is built from their logo:
 | Secondary CTA "Get a Free Quote" | "Get a quote" | "Free" isn't confirmed by the client |
 | List the suburbs a trade services | No areas section | Service area unconfirmed (placeholder in `content`) |
 | Hours and ABN in the footer | Not shown | Not found; placeholders in `content` |
+
+## Online presence audit (October 2026, Jett)
+
+| Gap | Cost to them | Fix | Time |
+| --- | --- | --- | --- |
+| Facebook page links to an unrelated website | Highest: anyone tapping "website" on their Facebook lands somewhere else | Replace with the new site's URL (needs page admin access) | 2 min |
+| Google Maps: 3rd for their own name | High: people typing "Move Mate" are ready to call and see someone else first (likely Moving Mates, Throsby) | Claim and verify the Google Business Profile, category "Moving company", photos, hours, website, services; same name, phone and suburb everywhere; then reviews from past customers | 1 hr, then ongoing |
+| Not on Apple Maps | Medium: iPhone users searching Maps or Siri for removalists don't see them | Register in Apple Business Connect (free) | 30 min |
+| Facebook quiet 2 months, Instagram 1 month | Low: looks slightly inactive; nobody picks a removalist on Instagram | A job photo once or twice a week, posted by them | Ongoing |
+
+Before pitching the Facebook point, open the link and note where it goes (lapsed old domain, competitor, spam page). "Your Facebook sends customers to a competitor" is a far stronger line than "it's outdated".
+
+Photos uploaded from their Facebook (repo root, not on the site yet):
+- `117973069_..._n.jpg`: truck open on its tail lift with furniture, boxes and trolleys. Looks like a real job. Check it is their truck: the boxes carry another company's crown logo and there is lettering on the tail lift.
+- `117302328_..._n.jpg`: two men carrying a fridge up apartment stairs. Looks like a stock photo (American-style building). Don't use it unless they confirm it is their crew.
+
+## What Ganeworks offers Move Mate
+
+Three parts. The website gets the yes; listings fix the problems they can see themselves; monthly care is the recurring income. Prices are starting estimates for a student's first clients, not market research: adjust after the first few deals.
+
+### 1. Website (one-off, suggested $500 to $800)
+
+What they get:
+- The site in the preview, with their real photos, hours, suburbs and confirmed details swapped in
+- Their own domain (e.g. `movemate.com.au` or similar; a `.com.au` needs their ABN). The client pays the domain, roughly $20 to $40 a year; check current prices at purchase
+- Hosting on Netlify (free tier) and the quote form sending leads to their email (Web3Forms, free tier)
+- Built for phones first: tap to call, sticky call bar, quote form with move details, fast loading
+- Set up for Google: page title and description, business details for search engines (structured data), link previews that show their logo when shared
+- Launch checks: every button, the form, phone number and links tested on a real phone
+
+What we need from them:
+- Photos of their truck, crew and jobs (their own, not stock)
+- Suburbs and regions they cover, opening hours, ABN
+- Insurance details (only if they want it shown), how they price (hourly or fixed), whether they take texts and small jobs
+- Which name to use: "Move Mate Removals and Storage" or "Move Mate Transports"
+- Confirmation of what property staging and storage include
+- Real Google reviews they are happy to show (once they have them)
+
+Timeline: about a week after we have the photos and details.
+
+### 2. Listings setup (one-off, suggested $150 to $250)
+
+- Google Business Profile: claim and verify (Google sends a code by postcard, phone, email or video, so the owner has to take part), category "Moving company", services, service area, hours, photos, website link, booking/quote link
+- Apple Maps: register through Apple Business Connect (free; Apple also verifies the business)
+- Facebook: replace the wrong website link with the new site, update the about section, hours and phone
+- Instagram: add the website link to the bio
+- Consistency: the same business name, phone and suburb on every listing (Google uses this to decide which business to show)
+- A review link: a short link they can text to happy customers so they can leave a Google review in one tap
+
+What we need: the owner's login or admin access to Facebook and Instagram, and them on hand for the Google and Apple verification steps.
+
+### 3. Monthly care (recurring, suggested $50 to $100 a month)
+
+- Site updates: new photos, changed hours, prices, services, seasonal notes (up to an agreed number of small changes a month)
+- Two Google posts a month on their Business Profile (see below)
+- Reviews: a monthly reminder and message template so they ask recent customers, plus replying to new Google reviews on their behalf if they want
+- A short monthly check: does the site load, does the form deliver, are listings still correct, how many calls and quote requests came through (Google Business Profile shows calls and website clicks)
+- Domain and hosting kept running and renewed
+
+Not included: social media posting, paid ads, logo or brand design, photography, copywriting for other channels. Quote separately if they ask.
+
+### What a "Google post" is
+
+A short update published on their Google Business Profile, shown on their listing in Google Search and Maps. It is a photo, a few sentences and a button (for example "Call now" or "Learn more" linking to the site). Examples for a removalist: a photo from a recent job ("Two-bedroom move from Belconnen to Gungahlin today"), a storage reminder before end-of-lease season, or a note about available dates. Posts are made from the Business Profile dashboard or the Google Maps app once you are a manager on the listing. They show the business is active and give people something to look at besides competitors; they are a small ranking signal at most, so sell them as keeping the listing fresh, not as a ranking guarantee. Use real job photos only, and never promise rankings.
+
+### How the deal runs
+
+1. Preview link sent by text, follow-up call if no reply (day 2), last text (day 5 or 6)
+2. Call: walk through the preview, ask the "what we need" questions above, quote the price
+3. Deposit (suggested 50%) before the full build, balance at launch
+4. Build and listings setup, owner checks the site on their phone, launch
+5. Monthly care starts the month after launch (month to month, cancel anytime makes it an easier yes)
